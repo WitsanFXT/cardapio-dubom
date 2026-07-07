@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Churrasquinho Dubom</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="hero">
+        <div class="overlay">
+
+            <img
+                src="./img/logo.png"
+                alt="Logo Churrasquinho Dubom"
+                class="logo"
+            >
+
+            <h1>Churrasquinho Dubom</h1>
+
+            <p>
+                Os melhores espetinhos e jantinhas da cidade.
+            </p>
+
+        </div>
+    </header>
+
+
+    <!-- ================= INTRO ================= -->
+
+    <section class="intro">
+
+        <h2>Conheça nosso cardápio</h2>
+
+        <p>
+            Escolha seus produtos favoritos e faça seu pedido.
+        </p>
+
+    </section>
+
+
+    <!-- ================= CATEGORIAS ================= -->
+
+    <nav class="categorias">
+
+        <a href="#jantinhas">Jantinhas</a>
+
+        <a href="#lanches">Lanches</a>
+
+        <a href="#espetinhos">Espetinhos</a>
+
+        <a href="#porcoes">Porções</a>
+
+        <a href="#bebidas">Bebidas</a>
+
+    </nav>
+
+
+    <!-- ================= PRODUTOS ================= -->
+
+    <main>
+
+        <section id="jantinhas">
+
+            <h2 class="titulo-categoria">
+                Jantinhas
+            </h2>
+
+            <div
+                class="produtos"
+                id="listaJantinhas">
+            </div>
+
+        </section>
+
+
+        <section id="lanches">
+
+            <h2 class="titulo-categoria">
+                Lanches
+            </h2>
+
+            <div
+                class="produtos"
+                id="listaLanches">
+            </div>
+
+        </section>
+
+
+        <section id="espetinhos">
+
+            <h2 class="titulo-categoria">
+                Espetinhos
+            </h2>
+
+            <div
+                class="produtos"
+                id="listaEspetinhos">
+            </div>
+
+        </section>
+
+
+        <section id="porcoes">
+
+            <h2 class="titulo-categoria">
+                Porções
+            </h2>
+
+            <div
+                class="produtos"
+                id="listaPorcoes">
+            </div>
+
+        </section>
+
+
+        <section id="bebidas">
+
+            <h2 class="titulo-categoria">
+                Bebidas
+            </h2>
+
+            <div
+                class="produtos"
+                id="listaBebidas">
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= BOTÃO CARRINHO ================= -->
+
+    <button
+        id="btnCarrinho"
+        type="button"
+        aria-label="Abrir Carrinho">
+
+        🛒
+
+        <span id="badgeCarrinho">
+            0
+        </span>
+
+    </button>
+
+
+    <!-- ================= CARRINHO ================= -->
+
+    <aside
+    id="carrinho"
+    class="carrinho">
+
+    <!-- TOPO -->
+
+    <div class="carrinho-topo">
+
+        <h2>Seu Pedido</h2>
+
+        <button
+            id="fecharCarrinho"
+            type="button">
+
+            ×
+
+        </button>
+
+    </div>
+
+
+    <!-- LISTA DE ITENS -->
+
+    <div id="itensCarrinho">
+
+        <!-- Produtos adicionados via JS -->
+
+    </div>
+
+
+    <!-- RODAPÉ -->
+
+    <div class="carrinho-rodape">
+
+        <h3 id="totalCarrinho">
+            Total: R$ 0,00
+        </h3>
+
+
+        <div class="form-pedido">
+
+            <input
+                id="nomeCliente"
+                type="text"
+                placeholder="Seu nome"
+            >
+
+            <input
+                id="celularCliente"
+                type="tel"
+                placeholder="Celular / WhatsApp"
+            >
+
+            <input
+                id="enderecoCliente"
+                type="text"
+                placeholder="Endereço completo"
+            >
+
+
+            <!-- ENTREGA -->
+
+            <select id="tipoEntrega">
+
+                <option value="Entrega">
+                    Receber em casa
+                </option>
+
+                <option value="Retirada">
+                    Retirar na loja
+                </option>
+
+            </select>
+
+
+            <!-- BAIRRO -->
+
+            <select id="bairroCliente">
+
+                <option value="">
+                    Selecione o bairro
+                </option>
+
+            </select>
+
+
+            <!-- PAGAMENTO -->
+
+            <select id="pagamentoCliente">
+
+                <option value="">
+                    Forma de pagamento
+                </option>
+
+                <option value="Dinheiro">
+                    Dinheiro
+                </option>
+
+                <option value="Pix">
+                    Pix
+                </option>
+
+                <option value="Cartão">
+                    Cartão
+                </option>
+
+            </select>
+
+
+            <!-- TROCO -->
+
+            <div
+                id="campoTroco"
+                style="display:none;">
+
+                <input
+                    id="trocoCliente"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="Troco para quanto? Ex: 100"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- BOTÃO FINALIZAR -->
+
+        <button
+            id="finalizarPedido"
+            type="button">
+
+            Finalizar Pedido via WhatsApp
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+    <!-- ================= MODAL PRODUTO ================= -->
+
+    <div
+        id="modalProduto"
+        class="modal">
+
+        <div class="modal-content">
+
+            <button
+                id="fecharModal"
+                type="button">
+
+                ×
+
+            </button>
+
+
+            <h2 id="produtoNome"></h2>
+
+            <p id="produtoPreco"></p>
+
+
+
+            <div class="quantidade-container">
+
+            <button id="menosBtn" type="button">
+                -
+            </button>
+
+            <input
+                type="number"
+                id="quantidadeInput"
+                min="1"
+                value="1"
+            >
+
+            <button id="maisBtn" type="button">
+                +
+            </button>
+
+                </div>
+
+                <h3 id="subtotalModal">
+                    Total: R$ 0,00
+                </h3>
+
+
+            <textarea
+                id="observacao"
+                placeholder="Ex: sem cebola, ponto da carne..."
+            ></textarea>
+
+
+            <button
+                id="adicionarCarrinho"
+                type="button">
+
+                Adicionar ao Carrinho
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <h3>Contato</h3>
+
+        <p>(38) 99899-3135</p>
+        <p>@churrasquinhodubom_unaí</p>
+
+    </footer>
+
+
+    <script src="./js/app.js"></script>
+
+</body>
+
+</html>
