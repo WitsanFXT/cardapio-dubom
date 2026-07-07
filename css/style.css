@@ -74,8 +74,10 @@ body {
     line-height: 1.5;
 }
 
-body.sem-scroll {
+body.sem-scroll,
+html.sem-scroll {
     overflow: hidden;
+    height: 100vh;
 }
 
 html {
@@ -487,7 +489,7 @@ textarea:focus-visible {
     width: 420px;
     max-width: 100%;
 
-    height: 100vh;
+    height: 100dvh;
 
     background: var(--fundo);
 
@@ -497,6 +499,10 @@ textarea:focus-visible {
     transition: right .3s ease;
 
     z-index: 9999;
+
+    overscroll-behavior: contain;
+
+    touch-action: pan-y;
 
     box-shadow: -8px 0 30px rgba(27, 21, 18, .2);
     border-radius: var(--raio-lg) 0 0 var(--raio-lg);
@@ -553,7 +559,8 @@ textarea:focus-visible {
 
 /* LISTA DE ITENS */
 
-#itensCarrinho {
+#itensCarrinho{
+
 
     flex: 1;
 
@@ -574,6 +581,7 @@ textarea:focus-visible {
     font-size: .95rem;
     padding: 40px 20px;
 }
+
 
 /* Item individual do carrinho (gerado via JS) */
 .carrinho-item {
@@ -655,6 +663,11 @@ textarea:focus-visible {
     overflow-y: auto;
 
     max-height: 48vh;
+
+
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+
 
     border-radius: 0 0 0 var(--raio-lg);
 }
@@ -794,7 +807,7 @@ textarea:focus-visible {
     left: 0;
 
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
 
     background: rgba(27, 21, 18, .7);
 
@@ -803,8 +816,12 @@ textarea:focus-visible {
 
     padding: 20px;
 
+    touch-action: none;
+
     z-index: 99999;
+
 }
+
 
 .modal.ativo {
     display: flex !important;

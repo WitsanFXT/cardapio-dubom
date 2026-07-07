@@ -555,16 +555,25 @@ document.getElementById('adicionarCarrinho').addEventListener('click', () => {
         item.observacao === observacao
     );
 
-    if (index !== -1) {
-        carrinho[index].quantidade += quantidadeAtual;
-    } else {
-        carrinho.push({
-            ...produtoSelecionado,
-            quantidade: Number(
+    const quantidade = Number(
     document.getElementById('quantidadeInput').value
-    ),
-            observacao
-        });
+    );
+
+    if (index !== -1) {
+
+        carrinho[index].quantidade += quantidade;
+
+    } else {
+
+       carrinho.push({
+    ...produtoSelecionado,
+        chave: Date.now(),
+        quantidade: Number(
+            document.getElementById('quantidadeInput').value
+        ),
+        observacao
+});
+
     }
 
     atualizarCarrinho();
@@ -593,7 +602,7 @@ function atualizarCarrinho() {
                 <small>${item.observacao || ''}</small>
 
                 <button
-                    onclick="removerItem(${item.id})"
+                    onclick="removerItem(${item.chave})"
                     class="btn-remover">
 
                     Remover
@@ -619,9 +628,11 @@ function atualizarCarrinho() {
     }
 }
 
-function removerItem(id) {
+function removerItem(chave) {
 
-    carrinho = carrinho.filter(item => item.id !== id);
+    carrinho = carrinho.filter(
+        item => item.chave !== chave
+    );
 
     atualizarCarrinho();
 }
@@ -688,7 +699,16 @@ document.getElementById('finalizarPedido').addEventListener('click', () => {
     mensagem += `*DADOS DO CLIENTE*\n\n`;
     mensagem += `Nome: ${nome}\n`;
     mensagem += `Celular: ${celular}\n`;
+    if (tipoEntrega === "Entrega") {
+
     mensagem += `Endereco: ${endereco}\n`;
+    mensagem += `Bairro: ${bairroSelecionado}\n`;
+
+    } else {
+
+        mensagem += `Retirada na loja\n`;
+
+    }
     mensagem += `Bairro: ${bairroSelecionado}\n`;
     mensagem += `Pagamento: ${pagamento}\n`;
 
