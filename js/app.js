@@ -8,7 +8,7 @@ const produtos = [
         id: 1,
         nome: 'Jantinha Completa G',
         descricao: 'Arroz, feijão tropeiro, vinagrete, mandioca e espetinho de sua preferência (OBS: Informe o espetinho nas observações do pedido!) 500g-600g .',
-        preco: 24.99,
+        preco: 25.00,
         categoria: 'jantinha',
         imagem: './img/produtos/jantinha-com-churrasco.jpg'
     },
@@ -17,7 +17,7 @@ const produtos = [
         id: 2,
         nome: 'Jantinha Completa P',
         descricao: 'Arroz, feijão tropeiro, vinagrete, mandioca e espetinho de sua preferência (OBS: Informe o espetinho nas observações do pedido!) 200g-300g .',
-        preco: 21.99,
+        preco: 22.00,
         categoria: 'jantinha',
         imagem: './img/produtos/jantinha-com-churrasco.jpg'
     },
@@ -30,7 +30,7 @@ const produtos = [
         id: 8,
         nome: 'Pão De Costela Desfiada',
         descricao: 'Pão Francês, costela desfiada, molho de alho, vinagrete e mussarela.',
-        preco: 19.99,
+        preco: 20.00,
         categoria: 'lanche',
         imagem: './img/produtos/pao-costela.jpg'
     },
@@ -39,7 +39,7 @@ const produtos = [
         id: 9,
         nome: 'Pão com Churrasco',
         descricao: 'Pão Francês, molho de alho, vinagrete, mussarela e churrasco da sua preferência. (OBS: Informe o espetinho nas observações do pedido!)',
-        preco: 21.99,
+        preco: 22.00,
         categoria: 'lanche',
         imagem: './img/produtos/pao-churrasco.jpg'
     },
@@ -52,7 +52,7 @@ const produtos = [
         id: 10,
         nome: 'Espetinho Barrigada',
         descricao: 'Espetinho de barrigada.',
-        preco: 13.99,
+        preco: 14.00,
         categoria: 'espetinho',
         imagem: './img/produtos/barrigada.jpg'
     },
@@ -61,7 +61,7 @@ const produtos = [
         id: 11,
         nome: 'Espetinho Contra Filé',
         descricao: 'Espetinho de contra filé.',
-        preco: 13.99,
+        preco: 14.00,
         categoria: 'espetinho',
         imagem: './img/produtos/contra-file.jpg'
     },
@@ -70,7 +70,7 @@ const produtos = [
         id: 12,
         nome: 'Espetinho Frango com Bacon',
         descricao: 'Espetinho de frango com bacon.',
-        preco: 13.99,
+        preco: 14.00,
         categoria: 'espetinho',
         imagem: './img/produtos/frango-bacon.jpg'
     },
@@ -79,7 +79,7 @@ const produtos = [
         id: 13,
         nome: 'Espetinho Linguiça Mista',
         descricao: 'Espetinho de linguiça mista.',
-        preco: 13.99,
+        preco: 14.00,
         categoria: 'espetinho',
         imagem: './img/produtos/linguica-mista.jpg'
     },
@@ -88,7 +88,7 @@ const produtos = [
         id: 14,
         nome: 'Espetinho Tulipa',
         descricao: 'Espetinho de tulipa de frango.',
-        preco: 13.99,
+        preco: 14.00,
         categoria: 'espetinho',
         imagem: './img/produtos/tulipa.jpg'
     },
@@ -97,7 +97,7 @@ const produtos = [
         id: 23,
         nome: 'Espetinho Cupim',
         descricao: 'Espetinho de Cupim.',
-        preco: 13.99,
+        preco: 14.00,
         categoria: 'espetinho',
         imagem: './img/produtos/cupim.jpg'
     },
@@ -106,7 +106,7 @@ const produtos = [
         id: 24,
         nome: 'Espetinho Coração',
         descricao: 'Espetinho de Coração de frango.',
-        preco: 13.99,
+        preco: 14.00,
         categoria: 'espetinho',
         imagem: './img/produtos/coracao.jpg'
     },
@@ -115,7 +115,7 @@ const produtos = [
         id: 25,
         nome: 'Espetinho Linguiça com Pimenta',
         descricao: 'Espetinho de Cupim.',
-        preco: 13.99,
+        preco: 14.00,
         categoria: 'espetinho',
         imagem: './img/produtos/linguica_pimenta.jpg'
     },
@@ -124,7 +124,7 @@ const produtos = [
         id: 26,
         nome: 'Pão de Alho',
         descricao: 'Pão de Alho.',
-        preco: 8.99,
+        preco: 9.00,
         categoria: 'espetinho',
         imagem: './img/produtos/pao.jpg'
     },
@@ -133,7 +133,7 @@ const produtos = [
         id: 27,
         nome: 'Queijo Coalho',
         descricao: 'Queijo Coalho.',
-        preco: 13.99,
+        preco: 14.00,
         categoria: 'espetinho',
         imagem: './img/produtos/queijo.jpg'
     },
@@ -147,7 +147,7 @@ const produtos = [
         id: 4,
         nome: 'Porção de Arroz',
         descricao: 'Porção individual de arroz.',
-        preco: 14.99,
+        preco: 15.00,
         categoria: 'porcao',
         imagem: './img/produtos/arroz.jpg'
     },
@@ -156,7 +156,7 @@ const produtos = [
         id: 5,
         nome: 'Porção de Feijão Tropeiro P',
         descricao: 'Porção de feijão tropeiro.',
-        preco: 17.99,
+        preco: 18.00,
         categoria: 'porcao',
         imagem: './img/produtos/tropeiroP.jpg'
     },
@@ -165,7 +165,7 @@ const produtos = [
         id: 28,
         nome: 'Porção de Feijão Tropeiro G',
         descricao: 'Porção de feijão tropeiro.',
-        preco: 19.99,
+        preco: 20.00,
         categoria: 'porcao',
         imagem: './img/produtos/tropeiroG.jpg'
     },
@@ -174,7 +174,7 @@ const produtos = [
         id: 29,
         nome: 'Porção de Feijão Tropeiro P + Espetinho',
         descricao: 'Porção de feijão tropeiro + Espetinho de sua preferência. (OBS: Informe o espetinho nas observações do pedido!).',
-        preco: 21.99,
+        preco: 22.00,
         categoria: 'porcao',
         imagem: './img/produtos/tropeiroE.jpg'
     },
@@ -183,7 +183,7 @@ const produtos = [
         id: 88,
         nome: 'Porção de Feijão Tropeiro G + Espetinho',
         descricao: 'Porção de feijão tropeiro + Espetinho de sua preferência. (OBS: Informe o espetinho nas observações do pedido!).',
-        preco: 24.99,
+        preco: 25.00,
         categoria: 'porcao',
         imagem: './img/produtos/tropeiroE.jpg'
     },
@@ -192,7 +192,7 @@ const produtos = [
         id: 6,
         nome: 'Porção de Mandioca',
         descricao: 'Porção de mandioca cozida.',
-        preco: 2.99,
+        preco: 3.00,
         categoria: 'porcao',
         imagem: './img/produtos/mandioca.jpg'
     },
@@ -201,7 +201,7 @@ const produtos = [
         id: 7,
         nome: 'Porção de Vinagrete',
         descricao: 'Porção de vinagrete fresco.',
-        preco: 2.99,
+        preco: 3.00,
         categoria: 'porcao',
         imagem: './img/produtos/vinagrete.jpg'
     },
@@ -214,7 +214,7 @@ const produtos = [
         id: 15,
         nome: 'Guaraná Zero Antarctica 350ml',
         descricao: 'Lata gelada.',
-        preco: 4.99,
+        preco: 5.00,
         categoria: 'bebida',
         imagem: './img/produtos/guarana-zero.jpg'
     },
@@ -223,7 +223,7 @@ const produtos = [
         id: 16,
         nome: 'Coca-Cola Zero 350ml',
         descricao: 'Lata 350ml.',
-        preco: 4.99,
+        preco: 5.00,
         categoria: 'bebida',
         imagem: './img/produtos/coca-zero.jpg'
     },
@@ -232,7 +232,7 @@ const produtos = [
         id: 17,
         nome: 'Guaraná Antarctica 350ml',
         descricao: 'Lata 350ml.',
-        preco: 4.99,
+        preco: 5.00,
         categoria: 'bebida',
         imagem: './img/produtos/guarana-antartica.jpg'
     },
@@ -241,7 +241,7 @@ const produtos = [
         id: 18,
         nome: 'Guaraná Mineiro 350ml',
         descricao: 'Lata 350ml.',
-        preco: 4.99,
+        preco: 5.00,
         categoria: 'bebida',
         imagem: './img/produtos/guarana-mineiro.jpg'
     },
@@ -250,7 +250,7 @@ const produtos = [
         id: 30,
         nome: 'Guaraná Mineiro Zero 350ml',
         descricao: 'Lata 350ml.',
-        preco: 4.99,
+        preco: 5.00,
         categoria: 'bebida',
         imagem: './img/produtos/guarana-mineiro-zero.jpg'
     },
@@ -259,7 +259,7 @@ const produtos = [
         id: 19,
         nome: 'Coca-Cola 350ml',
         descricao: 'Lata 350ml.',
-        preco: 4.99,
+        preco: 5.00,
         categoria: 'bebida',
         imagem: './img/produtos/coca-cola.jpg'
     },
@@ -268,7 +268,7 @@ const produtos = [
         id: 20,
         nome: 'Guaraná Mineiro 1,5L',
         descricao: 'Garrafa 1,5 litros.',
-        preco: 7.99,
+        preco: 8.00,
         categoria: 'bebida',
         imagem: './img/produtos/guarana-mineiro-15.jpg'
     },
@@ -277,7 +277,7 @@ const produtos = [
         id: 22,
         nome: 'Sprite 350ml',
         descricao: 'Lata 350ml.',
-        preco: 4.99,
+        preco: 5.00,
         categoria: 'bebida',
         imagem: './img/produtos/sprite.jpg'
     },
@@ -287,7 +287,7 @@ const produtos = [
         id: 21,
         nome: 'H2O Limoneto 500ml',
         descricao: 'Garrafa 500ml.',
-        preco: 6.99,
+        preco: 7.00,
         categoria: 'bebida',
         imagem: './img/produtos/h2o.jpg'
     }
@@ -702,7 +702,6 @@ document.getElementById('finalizarPedido').addEventListener('click', () => {
     if (tipoEntrega === "Entrega") {
 
     mensagem += `Endereco: ${endereco}\n`;
-    mensagem += `Bairro: ${bairroSelecionado}\n`;
 
     } else {
 
