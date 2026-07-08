@@ -630,9 +630,10 @@ if (produtoSelecionado.precisaEscolherEspetinho) {
     const observacao = document.getElementById('observacao').value;
 
     const index = carrinho.findIndex(item =>
-        item.id === produtoSelecionado.id &&
-        item.observacao === observacao
-    );
+    item.id === produtoSelecionado.id &&
+    item.observacao === observacao &&
+    item.espetinho === espetinhoSelecionado
+);
 
     const quantidade = Number(
     document.getElementById('quantidadeInput').value
@@ -646,7 +647,7 @@ if (produtoSelecionado.precisaEscolherEspetinho) {
 
        carrinho.push({
     ...produtoSelecionado,
-        chave: Date.now(),
+        chave: crypto.randomUUID(),
         quantidade: Number(
             document.getElementById('quantidadeInput').value
         ),
