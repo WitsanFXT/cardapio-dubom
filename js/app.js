@@ -689,7 +689,7 @@ function atualizarCarrinho() {
                 }
 
                 <button
-                    onclick="removerItem(${item.chave})"
+                    onclick="removerItem('${item.chave}')"
                     class="btn-remover">
 
                     Remover
