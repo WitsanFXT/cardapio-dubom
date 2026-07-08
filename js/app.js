@@ -7,19 +7,21 @@ const produtos = [
     {
         id: 1,
         nome: 'Jantinha Completa G',
-        descricao: 'Arroz, feijão tropeiro, vinagrete, mandioca e espetinho de sua preferência (OBS: Informe o espetinho nas observações do pedido!) 500g-600g .',
+        descricao: 'Arroz, feijão tropeiro, vinagrete, mandioca e espetinho de sua preferência 500g-600g .',
         preco: 25.00,
         categoria: 'jantinha',
-        imagem: './img/produtos/jantinha-com-churrasco.jpg'
+        imagem: './img/produtos/jantinha-com-churrasco.jpg',
+        precisaEscolherEspetinho: true
     },
 
     {
         id: 2,
         nome: 'Jantinha Completa P',
-        descricao: 'Arroz, feijão tropeiro, vinagrete, mandioca e espetinho de sua preferência (OBS: Informe o espetinho nas observações do pedido!) 200g-300g .',
+        descricao: 'Arroz, feijão tropeiro, vinagrete, mandioca e espetinho de sua preferência 200g-300g .',
         preco: 22.00,
         categoria: 'jantinha',
-        imagem: './img/produtos/jantinha-com-churrasco.jpg'
+        imagem: './img/produtos/jantinha-com-churrasco.jpg',
+        precisaEscolherEspetinho: true
     },
 
     // =========================
@@ -38,10 +40,11 @@ const produtos = [
     {
         id: 9,
         nome: 'Pão com Churrasco',
-        descricao: 'Pão Francês, molho de alho, vinagrete, mussarela e churrasco da sua preferência. (OBS: Informe o espetinho nas observações do pedido!)',
+        descricao: 'Pão Francês, molho de alho, vinagrete, mussarela e churrasco da sua preferência. ',
         preco: 22.00,
         categoria: 'lanche',
-        imagem: './img/produtos/pao-churrasco.jpg'
+        imagem: './img/produtos/pao-churrasco.jpg',
+        precisaEscolherEspetinho: true
     },
 
     // =========================
@@ -114,7 +117,7 @@ const produtos = [
     {
         id: 25,
         nome: 'Espetinho Linguiça com Pimenta',
-        descricao: 'Espetinho de Cupim.',
+        descricao: 'Espetinho de Linguiça com Pimenta.',
         preco: 14.00,
         categoria: 'espetinho',
         imagem: './img/produtos/linguica_pimenta.jpg'
@@ -173,19 +176,21 @@ const produtos = [
     {
         id: 29,
         nome: 'Porção de Feijão Tropeiro P + Espetinho',
-        descricao: 'Porção de feijão tropeiro + Espetinho de sua preferência. (OBS: Informe o espetinho nas observações do pedido!).',
+        descricao: 'Porção de feijão tropeiro + Espetinho de sua preferência.',
         preco: 22.00,
         categoria: 'porcao',
-        imagem: './img/produtos/tropeiroE.jpg'
+        imagem: './img/produtos/tropeiroE.jpg',
+        precisaEscolherEspetinho: true
     },
 
     {
         id: 88,
         nome: 'Porção de Feijão Tropeiro G + Espetinho',
-        descricao: 'Porção de feijão tropeiro + Espetinho de sua preferência. (OBS: Informe o espetinho nas observações do pedido!).',
+        descricao: 'Porção de feijão tropeiro + Espetinho de sua preferência.',
         preco: 25.00,
         categoria: 'porcao',
-        imagem: './img/produtos/tropeiroE.jpg'
+        imagem: './img/produtos/tropeiroE.jpg',
+        precisaEscolherEspetinho: true
     },
 
     {
@@ -265,6 +270,15 @@ const produtos = [
     },
 
     {
+        id: 22,
+        nome: 'Sprite 350ml',
+        descricao: 'Lata 350ml.',
+        preco: 5.00,
+        categoria: 'bebida',
+        imagem: './img/produtos/sprite.jpg'
+    },
+
+    {
         id: 20,
         nome: 'Guaraná Mineiro 1,5L',
         descricao: 'Garrafa 1,5 litros.',
@@ -274,12 +288,21 @@ const produtos = [
     },
 
     {
-        id: 22,
-        nome: 'Sprite 350ml',
-        descricao: 'Lata 350ml.',
-        preco: 5.00,
+        id: 89,
+        nome: 'Coca-Cola 1,5L',
+        descricao: 'Coca-Cola 1,5 litros.',
+        preco: 10.00,
         categoria: 'bebida',
-        imagem: './img/produtos/sprite.jpg'
+        imagem: './img/produtos/coca-cola-15.jpg'
+    },
+
+    {
+        id: 90,
+        nome: 'Coca-Cola Zero 1,5L',
+        descricao: 'Coca-Cola Zero 1,5 litros.',
+        preco: 10.00,
+        categoria: 'bebida',
+        imagem: './img/produtos/coca-cola-zero-15.jpg'
     },
 
 
@@ -292,6 +315,17 @@ const produtos = [
         imagem: './img/produtos/h2o.jpg'
     }
 
+];
+
+const opcoesEspetinho = [
+    'Barrigada',
+    'Contra Filé',
+    'Frango com Bacon',
+    'Linguiça Mista',
+    'Tulipa',
+    'Cupim',
+    'Coração',
+    'Linguiça com Pimenta'
 ];
 
 
@@ -457,6 +491,35 @@ function abrirModal(id) {
 
     document.getElementById('quantidadeInput').value = 1;
 
+    const campoEspetinho =
+    document.getElementById('campoEspetinho');
+
+const selectEspetinho =
+    document.getElementById('selectEspetinho');
+
+selectEspetinho.innerHTML =
+    '<option value="">Selecione</option>';
+
+if (produtoSelecionado.precisaEscolherEspetinho) {
+
+    campoEspetinho.style.display = 'block';
+
+    opcoesEspetinho.forEach(espetinho => {
+
+        selectEspetinho.innerHTML += `
+            <option value="${espetinho}">
+                ${espetinho}
+            </option>
+        `;
+
+    });
+
+} else {
+
+    campoEspetinho.style.display = 'none';
+
+}
+
     document.getElementById('observacao').value = '';
 
     atualizarSubtotalModal();
@@ -548,6 +611,22 @@ document.getElementById('quantidadeInput')
 
 document.getElementById('adicionarCarrinho').addEventListener('click', () => {
 
+    let espetinhoSelecionado = '';
+
+if (produtoSelecionado.precisaEscolherEspetinho) {
+
+    espetinhoSelecionado =
+        document.getElementById('selectEspetinho').value;
+
+    if (!espetinhoSelecionado) {
+
+        alert('Selecione um espetinho.');
+
+        return;
+    }
+
+}
+
     const observacao = document.getElementById('observacao').value;
 
     const index = carrinho.findIndex(item =>
@@ -571,7 +650,8 @@ document.getElementById('adicionarCarrinho').addEventListener('click', () => {
         quantidade: Number(
             document.getElementById('quantidadeInput').value
         ),
-        observacao
+        observacao,
+        espetinho: espetinhoSelecionado
 });
 
     }
@@ -586,6 +666,7 @@ function atualizarCarrinho() {
     container.innerHTML = '';
 
     let total = 0;
+    
 
     carrinho.forEach(item => {
 
@@ -600,6 +681,11 @@ function atualizarCarrinho() {
                 <p>${item.quantidade}x - R$ ${subtotal.toFixed(2)}</p>
 
                 <small>${item.observacao || ''}</small>
+
+                ${item.espetinho
+                ? `<small>Espetinho: ${item.espetinho}</small>`
+                : ''
+                }
 
                 <button
                     onclick="removerItem(${item.chave})"
@@ -671,12 +757,16 @@ document.getElementById('finalizarPedido').addEventListener('click', () => {
         const subtotal = item.preco * item.quantidade;
         total += subtotal;
 
-        mensagem += `- *${item.nome}*\n`;
+        mensagem += ` *${item.nome.toUpperCase()}*\n`;
         mensagem += `   Qtd: ${item.quantidade} | Subtotal: R$ ${subtotal.toFixed(2)}\n`;
 
         if (item.observacao) {
-            mensagem += `   Obs: ${item.observacao}\n`;
-        }
+    mensagem += `   ► *OBSERVACAO:* *${item.observacao.toUpperCase()}*\n`;
+}
+
+if (item.espetinho) {
+    mensagem += `   ► *ESPETINHO:* *${item.espetinho.toUpperCase()}*\n`;
+}
 
         mensagem += `\n`;
     });
@@ -725,6 +815,8 @@ document.getElementById('finalizarPedido').addEventListener('click', () => {
 
     mensagem += divisor;
     mensagem += `Obrigado pela preferencia!`;
+
+
 
     const telefone = "5538998993135"; //NUMERO DO CHURRASQUINHO DUBOM
 
