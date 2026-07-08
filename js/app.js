@@ -11,7 +11,8 @@ const produtos = [
         preco: 25.00,
         categoria: 'jantinha',
         imagem: './img/produtos/jantinha-com-churrasco.jpg',
-        precisaEscolherEspetinho: true
+        precisaEscolherEspetinho: true,
+        exigeEspetinho: true
     },
 
     {
@@ -21,7 +22,8 @@ const produtos = [
         preco: 22.00,
         categoria: 'jantinha',
         imagem: './img/produtos/jantinha-com-churrasco.jpg',
-        precisaEscolherEspetinho: true
+        precisaEscolherEspetinho: true,
+        exigeEspetinho: true
     },
 
     // =========================
@@ -44,7 +46,8 @@ const produtos = [
         preco: 22.00,
         categoria: 'lanche',
         imagem: './img/produtos/pao-churrasco.jpg',
-        precisaEscolherEspetinho: true
+        precisaEscolherEspetinho: true,
+        exigeEspetinho: true
     },
 
     // =========================
@@ -180,7 +183,8 @@ const produtos = [
         preco: 22.00,
         categoria: 'porcao',
         imagem: './img/produtos/tropeiroE.jpg',
-        precisaEscolherEspetinho: true
+        precisaEscolherEspetinho: true,
+        exigeEspetinho: true
     },
 
     {
@@ -190,7 +194,8 @@ const produtos = [
         preco: 25.00,
         categoria: 'porcao',
         imagem: './img/produtos/tropeiroE.jpg',
-        precisaEscolherEspetinho: true
+        precisaEscolherEspetinho: true,
+        exigeEspetinho: true
     },
 
     {
@@ -613,30 +618,30 @@ document.getElementById('adicionarCarrinho').addEventListener('click', () => {
 
     let espetinhoSelecionado = '';
 
-if (produtoSelecionado.precisaEscolherEspetinho) {
+    if (produtoSelecionado.precisaEscolherEspetinho) {
 
-    espetinhoSelecionado =
-        document.getElementById('selectEspetinho').value;
+        espetinhoSelecionado =
+            document.getElementById('selectEspetinho').value;
 
-    if (!espetinhoSelecionado) {
+        if (!espetinhoSelecionado) {
 
-        alert('Selecione um espetinho.');
+            alert('Selecione um espetinho.');
 
-        return;
+            return;
+        }
+
     }
-
-}
 
     const observacao = document.getElementById('observacao').value;
 
     const index = carrinho.findIndex(item =>
-    item.id === produtoSelecionado.id &&
-    item.observacao === observacao &&
-    item.espetinho === espetinhoSelecionado
-);
+        item.id === produtoSelecionado.id &&
+        item.observacao === observacao &&
+        item.espetinho === espetinhoSelecionado
+    );
 
     const quantidade = Number(
-    document.getElementById('quantidadeInput').value
+        document.getElementById('quantidadeInput').value
     );
 
     if (index !== -1) {
@@ -645,20 +650,21 @@ if (produtoSelecionado.precisaEscolherEspetinho) {
 
     } else {
 
-       carrinho.push({
-    ...produtoSelecionado,
-        chave: crypto.randomUUID(),
-        quantidade: Number(
-            document.getElementById('quantidadeInput').value
-        ),
-        observacao,
-        espetinho: espetinhoSelecionado
-});
+        carrinho.push({
+            ...produtoSelecionado,
+            chave: crypto.randomUUID(),
+            quantidade: Number(
+                document.getElementById('quantidadeInput').value
+            ),
+            observacao,
+            espetinho: espetinhoSelecionado
+        });
 
     }
 
     atualizarCarrinho();
     fecharModal();
+
 });
 
 function atualizarCarrinho() {
@@ -732,18 +738,47 @@ window.removerItem = removerItem;
    WHATSAPP FINALIZAR PEDIDO
 =================================== */
 
+
 document.getElementById('finalizarPedido').addEventListener('click', () => {
 
     if (carrinho.length === 0) {
         alert("Seu carrinho está vazio!");
         return;
     }
-
-    const nome = document.getElementById('nomeCliente').value;
-    const celular = document.getElementById('celularCliente').value;
-    const endereco = document.getElementById('enderecoCliente').value;
+    const nome = document.getElementById('nomeCliente').value.trim();
+    const celular = document.getElementById('celularCliente').value.trim();
+    const endereco = document.getElementById('enderecoCliente').value.trim();
     const pagamento = document.getElementById('pagamentoCliente').value;
     const troco = document.getElementById('trocoCliente').value;
+
+    if (!nome) {
+    alert('Informe seu nome.');
+    return;
+}
+
+if (!celular) {
+    alert('Informe seu WhatsApp.');
+    return;
+}
+
+if (!pagamento) {
+    alert('Selecione a forma de pagamento.');
+    return;
+}
+
+if (tipoEntrega === 'Entrega') {
+
+    if (!endereco) {
+        alert('Informe o endereço.');
+        return;
+    }
+
+    if (!bairroSelecionado) {
+        alert('Selecione o bairro.');
+        return;
+    }
+
+}
 
     let total = 0;
     const divisor = `------------------------------\n`;
