@@ -333,6 +333,25 @@ const opcoesEspetinho = [
     'Linguiça com Pimenta'
 ];
 
+const sugestoesUpsell = {
+    1: [18, 26, 27], // Jantinha G
+    2: [18, 26, 27], // Jantinha P
+
+    9: [18, 26], // Pão com churrasco
+
+    10: [18, 26, 27],
+    11: [18, 26, 27],
+    12: [18, 26, 27],
+    13: [18, 26, 27],
+    14: [18, 26, 27],
+    23: [18, 26, 27],
+    24: [18, 26, 27],
+    25: [18, 26, 27],
+
+    29: [18, 26],
+    88: [18, 26]
+};
+
 
 let carrinho = [];
 let produtoSelecionado = null;
@@ -568,6 +587,109 @@ document
 
 });
 
+function abrirUpsell(produtoId){
+
+    const ids = sugestoesUpsell[produtoId];
+
+    if(!ids) return;
+
+    const lista =
+        document.getElementById('listaUpsell');
+
+    lista.innerHTML = '';
+
+    ids.forEach(id => {
+
+        const produto =
+            produtos.find(p => p.id === id);
+
+        lista.innerHTML += `
+            <div class="upsell-item">
+
+                <img
+                    src="${produto.imagem}"
+                    alt="${produto.nome}"
+                    class="upsell-img"
+                >
+
+                <div class="upsell-info">
+
+                    <strong>${produto.nome}</strong>
+
+                    <span>
+                        R$ ${produto.preco.toFixed(2)}
+                    </span>
+
+                    <small
+                        id="upsell-status-${id}"
+                        class="upsell-status">
+                    </small>
+
+                </div>
+
+                <button
+                    class="btn-upsell"
+                    onclick="adicionarUpsell(${id})">
+
+                    + Adicionar
+
+                </button>
+
+            </div>
+        `;
+    });
+
+    document
+        .getElementById('modalUpsell')
+        .classList.add('ativo');
+}
+
+function adicionarUpsell(id){
+
+    const produto =
+        produtos.find(p => p.id === id);
+
+    carrinho.push({
+        ...produto,
+        chave: crypto.randomUUID(),
+        quantidade: 1,
+        observacao: '',
+        espetinho: ''
+    });
+
+    atualizarCarrinho();
+
+    const status =
+        document.getElementById(`upsell-status-${id}`);
+
+    if(status){
+
+        let quantidadeAtual =
+            Number(status.dataset.qtd || 0);
+
+        quantidadeAtual++;
+
+        status.dataset.qtd = quantidadeAtual;
+
+        status.innerHTML =
+            `✓ Adicionado ${quantidadeAtual}x`;
+
+        status.style.display = 'block';
+    }
+}
+
+window.adicionarUpsell = adicionarUpsell;
+
+document
+.getElementById('fecharUpsell')
+.addEventListener('click', () => {
+
+    document
+    .getElementById('modalUpsell')
+    .classList.remove('ativo');
+
+});
+
 /* ===================================
    QUANTIDADE
 =================================== */
@@ -663,7 +785,14 @@ document.getElementById('adicionarCarrinho').addEventListener('click', () => {
     }
 
     atualizarCarrinho();
-    fecharModal();
+
+const idProduto = produtoSelecionado.id;
+
+fecharModal();
+
+setTimeout(() => {
+    abrirUpsell(idProduto);
+}, 300);
 
 });
 
