@@ -352,6 +352,54 @@ const sugestoesUpsell = {
     88: [18, 26]
 };
 
+const maisPedidos = [
+    1, // Contra Filé
+    8, // Tulipa
+    11,  // Jantinha G
+    12,  // Jantinha P
+    19  // Pão de Alho
+];
+
+function renderizarMaisPedidos(){
+
+    const container =
+        document.getElementById('listaMaisPedidos');
+
+    container.innerHTML = '';
+
+    maisPedidos.forEach(id => {
+
+        const produto =
+            produtos.find(p => p.id === id);
+
+        container.innerHTML += `
+            <div class="produto-card">
+
+                <img
+                    src="${produto.imagem}"
+                    alt="${produto.nome}"
+                >
+
+                <h3>${produto.nome}</h3>
+
+                <span class="preco">
+                    R$ ${produto.preco.toFixed(2)}
+                </span>
+
+                <button
+                    onclick="abrirModal(${produto.id})"
+                    class="btn-adicionar">
+
+                    Adicionar
+
+                </button>
+
+            </div>
+        `;
+    });
+
+}
+
 
 let carrinho = [];
 let produtoSelecionado = null;
@@ -432,6 +480,51 @@ let quantidadeAtual = 1;
 /* ===================================
    RENDERIZAR PRODUTOS
 =================================== */
+
+function atualizarStatusLoja(){
+
+    const status =
+        document.getElementById('statusLoja');
+
+    const agora = new Date();
+
+    const dia = agora.getDay();
+    const hora = agora.getHours();
+    const minuto = agora.getMinutes();
+
+    const horarioAtual =
+        hora * 60 + minuto;
+
+    const abre = 18 * 60;
+    const fecha = 22 * 60 + 40;
+
+    const abertoHoje =
+        dia >= 0 && dia <= 5;
+
+    const abertoAgora =
+        abertoHoje &&
+        horarioAtual >= abre &&
+        horarioAtual <= fecha;
+
+    if(abertoAgora){
+
+        status.className =
+            'status-loja aberto';
+
+        status.innerHTML =
+            '🟢 Aberto agora • Até 22:40';
+
+    }else{
+
+        status.className =
+            'status-loja fechado';
+
+        status.innerHTML =
+            '🔴 Fechado • Atendimento das 18h às 22h40';
+
+    }
+
+}
 
 function renderizarProdutos(lista) {
 
@@ -981,6 +1074,59 @@ if (item.espetinho) {
     mensagem += divisor;
     mensagem += `Obrigado pela preferencia!`;
 
+       if(document
+    .getElementById('statusLoja')
+    .classList.contains('fechado')){
+
+    document
+    .getElementById('modalFechado')
+    .classList.add('ativo');
+
+    document
+.getElementById('fecharModalFechado')
+.addEventListener('click', () => {
+
+    document
+    .getElementById('modalFechado')
+    .classList.remove('ativo');
+
+});
+
+document
+.getElementById('fecharModalFechado')
+.addEventListener('click', fecharModalFechado);
+
+function fecharModalFechado(){
+
+    document
+    .getElementById('modalFechado')
+    .classList.remove('ativo');
+
+}
+
+const modalFechado =
+    document.getElementById('modalFechado');
+
+modalFechado.addEventListener('click', (e) => {
+
+    if(e.target === modalFechado){
+
+        fecharModalFechado();
+
+    }
+
+});
+
+function fecharModalFechado(){
+
+    modalFechado.classList.remove('ativo');
+
+}
+}
+
+
+return;
+
 
 
     const telefone = "5538998993135"; //NUMERO DO CHURRASQUINHO DUBOM
@@ -1080,4 +1226,7 @@ function carregarBairros() {
 renderizarProdutos(produtos);
 carregarBairros();
 atualizarCarrinho();
+atualizarStatusLoja();
+renderizarMaisPedidos();
+fecharModalFechado();
 toggleTroco();

@@ -183,6 +183,91 @@ textarea:focus-visible {
     z-index: 1;
 }
 
+.status-loja{
+    text-align:center;
+    padding:10px;
+    font-weight:bold;
+    color:white;
+    border-radius:8px;
+    margin:10px;
+}
+
+.aberto{
+    background:#16a34a;
+}
+
+.fechado{
+    background:#dc2626;
+}
+
+.modal-fechado{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.75);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    padding: 20px;
+}
+
+.modal-fechado.ativo{
+    display: flex;
+}
+
+.modal-fechado-content{
+    background: #fff;
+    width: 100%;
+    max-width: 380px;
+    border-radius: 18px;
+    padding: 25px;
+    text-align: center;
+    animation: abrirModal .25s ease;
+}
+
+.icone-fechado{
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.modal-fechado-content h3{
+    color: #d32f2f;
+    margin-bottom: 10px;
+}
+
+.modal-fechado-content p{
+    color: #555;
+    line-height: 1.5;
+}
+
+.modal-fechado-content button{
+    width: 100%;
+    margin-top: 20px;
+    border: none;
+    background: #ff6b00;
+    color: white;
+    padding: 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.modal-fechado-content button:hover{
+    transform: translateY(-2px);
+}
+
+@keyframes abrirModal{
+    from{
+        opacity: 0;
+        transform: scale(.9);
+    }
+    to{
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 
 /* =========================
    INTRODUÇÃO
@@ -302,6 +387,23 @@ textarea:focus-visible {
     font-size: 22px;
 
     box-shadow: var(--sombra-suave);
+}
+
+.mais-pedidos-carousel{
+    display:flex;
+    gap:15px;
+    overflow-x:auto;
+    padding:10px;
+    scroll-snap-type:x mandatory;
+}
+
+.mais-pedidos-carousel::-webkit-scrollbar{
+    display:none;
+}
+
+.mais-pedidos-carousel .produto-card{
+    min-width:220px;
+    scroll-snap-align:start;
 }
 
 
