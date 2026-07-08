@@ -440,6 +440,16 @@ textarea:focus-visible {
     transition: transform .25s ease, box-shadow .25s ease;
 }
 
+.produto-card h3 {
+    padding: 14px 14px 4px;
+    font-size: 1.05rem;
+    color: var(--fumaca);
+
+    height: 60px;
+    display: flex;
+    align-items: flex-start;
+}
+
 .produto-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--sombra-media);
