@@ -959,14 +959,13 @@ window.removerItem = removerItem;
 /* ===================================
    WHATSAPP FINALIZAR PEDIDO
 =================================== */
-
-
 document.getElementById('finalizarPedido').addEventListener('click', () => {
 
     if (carrinho.length === 0) {
         alert("Seu carrinho está vazio!");
         return;
     }
+
     const nome = document.getElementById('nomeCliente').value.trim();
     const celular = document.getElementById('celularCliente').value.trim();
     const endereco = document.getElementById('enderecoCliente').value.trim();
@@ -974,33 +973,32 @@ document.getElementById('finalizarPedido').addEventListener('click', () => {
     const troco = document.getElementById('trocoCliente').value;
 
     if (!nome) {
-    alert('Informe seu nome.');
-    return;
-}
-
-if (!celular) {
-    alert('Informe seu WhatsApp.');
-    return;
-}
-
-if (!pagamento) {
-    alert('Selecione a forma de pagamento.');
-    return;
-}
-
-if (tipoEntrega === 'Entrega') {
-
-    if (!endereco) {
-        alert('Informe o endereço.');
+        alert('Informe seu nome.');
         return;
     }
 
-    if (!bairroSelecionado) {
-        alert('Selecione o bairro.');
+    if (!celular) {
+        alert('Informe seu WhatsApp.');
         return;
     }
 
-}
+    if (!pagamento) {
+        alert('Selecione a forma de pagamento.');
+        return;
+    }
+
+    if (tipoEntrega === 'Entrega') {
+
+        if (!endereco) {
+            alert('Informe o endereço.');
+            return;
+        }
+
+        if (!bairroSelecionado) {
+            alert('Selecione o bairro.');
+            return;
+        }
+    }
 
     let total = 0;
     const divisor = `------------------------------\n`;
@@ -1012,6 +1010,7 @@ if (tipoEntrega === 'Entrega') {
     mensagem += `*ITENS DO PEDIDO*\n\n`;
 
     carrinho.forEach(item => {
+
         const subtotal = item.preco * item.quantidade;
         total += subtotal;
 
@@ -1019,12 +1018,12 @@ if (tipoEntrega === 'Entrega') {
         mensagem += `   Qtd: ${item.quantidade} | Subtotal: R$ ${subtotal.toFixed(2)}\n`;
 
         if (item.observacao) {
-    mensagem += `   ► *OBSERVACAO:* *${item.observacao.toUpperCase()}*\n`;
-}
+            mensagem += `   ► *OBSERVACAO:* *${item.observacao.toUpperCase()}*\n`;
+        }
 
-if (item.espetinho) {
-    mensagem += `   ► *ESPETINHO:* *${item.espetinho.toUpperCase()}*\n`;
-}
+        if (item.espetinho) {
+            mensagem += `   ► *ESPETINHO:* *${item.espetinho.toUpperCase()}*\n`;
+        }
 
         mensagem += `\n`;
     });
@@ -1047,19 +1046,16 @@ if (item.espetinho) {
     mensagem += `*DADOS DO CLIENTE*\n\n`;
     mensagem += `Nome: ${nome}\n`;
     mensagem += `Celular: ${celular}\n`;
+
     if (tipoEntrega === "Entrega") {
-
-    mensagem += `Endereco: ${endereco}\n`;
-
+        mensagem += `Endereco: ${endereco}\n`;
     } else {
-
         mensagem += `Retirada na loja\n`;
-
     }
+
     mensagem += `Bairro: ${bairroSelecionado}\n`;
     mensagem += `Pagamento: ${pagamento}\n`;
 
-    // 👇 SÓ MOSTRA TROCO SE FOR DINHEIRO
     if (pagamento === "Dinheiro" && troco) {
 
         const valorRecebido = Number(troco);
@@ -1074,64 +1070,25 @@ if (item.espetinho) {
     mensagem += divisor;
     mensagem += `Obrigado pela preferencia!`;
 
-       if(document
-    .getElementById('statusLoja')
-    .classList.contains('fechado')){
+    // LOJA FECHADA
+    if (
+        document
+            .getElementById('statusLoja')
+            .classList.contains('fechado')
+    ) {
 
-    document
-    .getElementById('modalFechado')
-    .classList.add('ativo');
+        document
+            .getElementById('modalFechado')
+            .classList.add('ativo');
 
-    document
-.getElementById('fecharModalFechado')
-.addEventListener('click', () => {
-
-    document
-    .getElementById('modalFechado')
-    .classList.remove('ativo');
-
-});
-
-document
-.getElementById('fecharModalFechado')
-.addEventListener('click', fecharModalFechado);
-
-function fecharModalFechado(){
-
-    document
-    .getElementById('modalFechado')
-    .classList.remove('ativo');
-
-}
-
-const modalFechado =
-    document.getElementById('modalFechado');
-
-modalFechado.addEventListener('click', (e) => {
-
-    if(e.target === modalFechado){
-
-        fecharModalFechado();
-
+        return;
     }
 
-});
+    // WHATSAPP
+    const telefone = "5538998993135";
 
-function fecharModalFechado(){
-
-    modalFechado.classList.remove('ativo');
-
-}
-}
-
-
-return;
-
-
-
-    const telefone = "5538998993135"; //NUMERO DO CHURRASQUINHO DUBOM
-
-    const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+    const url =
+        `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
 
     window.open(url, "_blank");
 
@@ -1139,16 +1096,25 @@ return;
     atualizarCarrinho();
 });
 
-document
-.getElementById('fecharCarrinho')
-.addEventListener('click',()=>{
-
+function fecharModalFechado() {
     document
-    .getElementById('carrinho')
-    .classList.remove('aberto');
+        .getElementById('modalFechado')
+        .classList.remove('ativo');
+}
 
-});
+document
+    .getElementById('fecharModalFechado')
+    .addEventListener('click', fecharModalFechado);
 
+document
+    .getElementById('modalFechado')
+    .addEventListener('click', (e) => {
+
+        if (e.target.id === 'modalFechado') {
+            fecharModalFechado();
+        }
+
+    });
 /* ===================================
    CARRINHO TOGGLE
 =================================== */
@@ -1228,5 +1194,4 @@ carregarBairros();
 atualizarCarrinho();
 atualizarStatusLoja();
 renderizarMaisPedidos();
-fecharModalFechado();
 toggleTroco();
