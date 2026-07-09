@@ -430,6 +430,74 @@
 
 </div>
 
+<div id="modalPix" class="modal">
+
+    <div class="modal-content">
+
+        <h2>Pagamento via PIX</h2>
+
+        <div id="resumoPix"></div>
+
+        <img
+            src="./img/qrcode-pix.png"
+            alt="PIX"
+            class="qr-pix"
+        >
+
+        <div class="pix-box">
+
+            <input
+                type="text"
+                id="chavePix"
+                readonly
+                value="09901362130"
+            >
+
+            <small class="pix-titular">
+            <strong>Recebedor:</strong><br>
+            Isabele Pereira<br>
+            Banco NuBank
+            </small>
+
+            <button id="copiarPix">
+                Copiar Chave
+            </button>
+
+            <button id="fecharPix" class="btn-fechar-pix">
+                ✕
+            </button>
+
+        </div>
+
+        <p class="aviso-pix">
+
+            ⚠️ Após realizar o pagamento,
+            clique em enviar pedido e envie
+            também o comprovante nesta conversa.
+
+        </p>
+
+        <label>
+
+            <input
+                type="checkbox"
+                id="pixPago"
+            >
+
+            Já realizei o pagamento
+
+        </label>
+
+        <button id="btnFinalizarPix">
+
+            Enviar Pedido no WhatsApp
+
+        </button>
+
+    </div>
+
+</div>
+
 
     <!-- ================= FOOTER ================= -->
 

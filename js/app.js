@@ -380,6 +380,15 @@ const maisPedidos = [
     19  // Pão de Alho
 ];
 
+function salvarCarrinho() {
+
+    localStorage.setItem(
+        'carrinho',
+        JSON.stringify(carrinho)
+    );
+
+}
+
 function renderizarMaisPedidos(){
 
     const container =
@@ -503,47 +512,39 @@ let quantidadeAtual = 1;
 
 function atualizarStatusLoja(){
 
-    const status =
-        document.getElementById('statusLoja');
+    const status = document.getElementById('statusLoja');
 
+    // ================== MODO TESTE ==================
+    // Mude para `false` quando for colocar em produção
+    const modoTeste = false;   
+
+    if (modoTeste) {
+        status.className = 'status-loja aberto';
+        status.innerHTML = '🟢 Aberto agora (Modo Teste) • Até 22:40';
+        return; // Sai da função, ignora o horário real
+    }
+    // ================================================
+
+    // Horário normal (só funciona quando modoTeste = false)
     const agora = new Date();
-
     const dia = agora.getDay();
     const hora = agora.getHours();
     const minuto = agora.getMinutes();
 
-    const horarioAtual =
-        hora * 60 + minuto;
-
+    const horarioAtual = hora * 60 + minuto;
     const abre = 18 * 60;
     const fecha = 22 * 60 + 40;
 
-    const abertoHoje =
-        dia >= 0 && dia <= 5;
-
-    const abertoAgora =
-        abertoHoje &&
-        horarioAtual >= abre &&
-        horarioAtual <= fecha;
+    const abertoHoje = dia >= 0 && dia <= 5;
+    const abertoAgora = abertoHoje && horarioAtual >= abre && horarioAtual <= fecha;
 
     if(abertoAgora){
-
-        status.className =
-            'status-loja aberto';
-
-        status.innerHTML =
-            '🟢 Aberto agora • Até 22:40';
-
-    }else{
-
-        status.className =
-            'status-loja fechado';
-
-        status.innerHTML =
-            '🔴 Fechado • Atendimento das 18h às 22h40';
-
+        status.className = 'status-loja aberto';
+        status.innerHTML = '🟢 Aberto agora • Até 22:40';
+    } else {
+        status.className = 'status-loja fechado';
+        status.innerHTML = '🔴 Fechado • Atendimento das 18h às 22h40';
     }
-
 }
 
 function renderizarProdutos(lista) {
@@ -770,6 +771,8 @@ function adicionarUpsell(id){
         espetinho: ''
     });
 
+    salvarCarrinho();
+
     atualizarCarrinho();
 
     const status =
@@ -961,6 +964,8 @@ function atualizarCarrinho() {
             0
         );
     }
+
+    localStorage.setItem('carrinho', JSON.stringify(carrinho));
 }
 
 function removerItem(chave) {
@@ -970,6 +975,7 @@ function removerItem(chave) {
     );
 
     atualizarCarrinho();
+    salvarCarrinho();
 }
 
 window.removerItem = removerItem;
@@ -979,18 +985,180 @@ window.removerItem = removerItem;
 /* ===================================
    WHATSAPP FINALIZAR PEDIDO
 =================================== */
-document.getElementById('finalizarPedido').addEventListener('click', () => {
 
-    if (carrinho.length === 0) {
-        alert("Seu carrinho está vazio!");
+let pixConfirmado = false;
+
+/* ===================================
+   PIX
+=================================== */
+
+function atualizarResumoPix() {
+
+    let total = 0;
+    let html = '';
+
+    carrinho.forEach(item => {
+
+        const subtotal =
+            item.preco * item.quantidade;
+
+        total += subtotal;
+
+        html += `
+            <p>
+                ${item.quantidade}x ${item.nome}
+            </p>
+        `;
+    });
+
+    total += taxaEntrega;
+
+    html += `
+        <hr>
+        <strong>
+            Total: R$ ${total.toFixed(2)}
+        </strong>
+    `;
+
+    document
+        .getElementById('resumoPix')
+        .innerHTML = html;
+}
+
+function abrirModalPix() {
+
+    atualizarResumoPix();
+
+    document
+        .getElementById('modalPix')
+        .classList.add('ativo');
+
+    localStorage.setItem(
+        'pixPendente',
+        'true'
+    );
+}
+
+
+function fecharModalPix() {
+
+    document
+        .getElementById('modalPix')
+        .classList.remove('ativo');
+}
+
+document
+.getElementById('fecharPix')
+.addEventListener('click', fecharModalPix);
+
+document
+.getElementById('modalPix')
+.addEventListener('click', (e) => {
+
+    if (e.target.id === 'modalPix') {
+
+        fecharModalPix();
+
+    }
+
+});
+
+function verificarPixPendente() {
+
+    const pixPendente =
+        localStorage.getItem('pixPendente');
+
+    if (
+        pixPendente === 'true' &&
+        carrinho.length > 0
+    ) {
+
+        abrirModalPix();
+
+    }
+}
+
+/* ===================================
+   COPIAR CHAVE PIX
+=================================== */
+
+document
+.getElementById('copiarPix')
+.addEventListener('click', async () => {
+
+    const chave =
+        document.getElementById('chavePix').value;
+
+    await navigator.clipboard.writeText(chave);
+
+    alert('Chave PIX copiada!');
+});
+
+/* ===================================
+   CONFIRMAR PIX
+=================================== */
+
+document
+.getElementById('btnFinalizarPix')
+.addEventListener('click', () => {
+
+    if (
+        !document.getElementById('pixPago').checked
+    ) {
+
+        alert(
+            'Confirme que realizou o pagamento.'
+        );
+
         return;
     }
 
-    const nome = document.getElementById('nomeCliente').value.trim();
-    const celular = document.getElementById('celularCliente').value.trim();
-    const endereco = document.getElementById('enderecoCliente').value.trim();
-    const pagamento = document.getElementById('pagamentoCliente').value;
-    const troco = document.getElementById('trocoCliente').value;
+    pixConfirmado = true;
+
+    fecharModalPix();
+
+    document
+        .getElementById('finalizarPedido')
+        .click();
+});
+
+/* ===================================
+   FINALIZAR PEDIDO
+=================================== */
+
+document
+.getElementById('finalizarPedido')
+.addEventListener('click', () => {
+
+    if (carrinho.length === 0) {
+
+        alert("Seu carrinho está vazio!");
+
+        return;
+    }
+
+    const nome =
+        document.getElementById('nomeCliente')
+        .value
+        .trim();
+
+    const celular =
+        document.getElementById('celularCliente')
+        .value
+        .trim();
+
+    const endereco =
+        document.getElementById('enderecoCliente')
+        .value
+        .trim();
+
+    const pagamento =
+        document.getElementById('pagamentoCliente')
+        .value;
+
+    const troco =
+        document.getElementById('trocoCliente')
+        .value;
 
     if (!nome) {
         alert('Informe seu nome.');
@@ -1020,10 +1188,24 @@ document.getElementById('finalizarPedido').addEventListener('click', () => {
         }
     }
 
-    let total = 0;
-    const divisor = `------------------------------\n`;
+    if (
+        pagamento === 'Pix' &&
+        !pixConfirmado
+    ) {
 
-    let mensagem = `*CHURRASQUINHO DUBOM*\n`;
+        abrirModalPix();
+
+        return;
+    }
+
+    let total = 0;
+
+    const divisor =
+        `------------------------------\n`;
+
+    let mensagem =
+        `*CHURRASQUINHO DUBOM*\n`;
+
     mensagem += `*Novo Pedido*\n`;
     mensagem += divisor;
 
@@ -1031,110 +1213,172 @@ document.getElementById('finalizarPedido').addEventListener('click', () => {
 
     carrinho.forEach(item => {
 
-        const subtotal = item.preco * item.quantidade;
+        const subtotal =
+            item.preco * item.quantidade;
+
         total += subtotal;
 
-        mensagem += ` *${item.nome.toUpperCase()}*\n`;
-        mensagem += `   Qtd: ${item.quantidade} | Subtotal: R$ ${subtotal.toFixed(2)}\n`;
+        mensagem +=
+            ` *${item.nome.toUpperCase()}*\n`;
+
+        mensagem +=
+            `   Qtd: ${item.quantidade} | Subtotal: R$ ${subtotal.toFixed(2)}\n`;
 
         if (item.observacao) {
-            mensagem += `   ► *OBSERVACAO:* *${item.observacao.toUpperCase()}*\n`;
+
+            mensagem +=
+                `   ► *OBSERVACAO:* *${item.observacao.toUpperCase()}*\n`;
         }
 
         if (item.espetinho) {
-            mensagem += `   ► *ESPETINHO:* *${item.espetinho.toUpperCase()}*\n`;
+
+            mensagem +=
+                `   ► *ESPETINHO:* *${item.espetinho.toUpperCase()}*\n`;
         }
 
         mensagem += `\n`;
     });
 
-    const totalFinal = total + taxaEntrega;
+    const totalFinal =
+        total + taxaEntrega;
 
     mensagem += divisor;
+
     mensagem += `*RESUMO DO PEDIDO*\n\n`;
-    mensagem += `Subtotal: R$ ${total.toFixed(2)}\n`;
 
-    if (tipoEntrega === "Entrega") {
-        mensagem += `Taxa de entrega: R$ ${taxaEntrega.toFixed(2)}\n`;
+    mensagem +=
+        `Subtotal: R$ ${total.toFixed(2)}\n`;
+
+    if (tipoEntrega === 'Entrega') {
+
+        mensagem +=
+            `Taxa de entrega: R$ ${taxaEntrega.toFixed(2)}\n`;
+
     } else {
-        mensagem += `Retirada na loja\n`;
+
+        mensagem +=
+            `Retirada na loja\n`;
     }
 
-    mensagem += `*TOTAL: R$ ${totalFinal.toFixed(2)}*\n`;
+    mensagem +=
+        `*TOTAL: R$ ${totalFinal.toFixed(2)}*\n`;
+
     mensagem += divisor;
 
-    mensagem += `*DADOS DO CLIENTE*\n\n`;
-    mensagem += `Nome: ${nome}\n`;
-    mensagem += `Celular: ${celular}\n`;
+    mensagem +=
+        `*DADOS DO CLIENTE*\n\n`;
 
-    if (tipoEntrega === "Entrega") {
-        mensagem += `Endereco: ${endereco}\n`;
+    mensagem += `Nome: ${nome}\n`;
+
+    mensagem +=
+        `Celular: ${celular}\n`;
+
+    if (tipoEntrega === 'Entrega') {
+
+        mensagem +=
+            `Endereco: ${endereco}\n`;
+
     } else {
-        mensagem += `Retirada na loja\n`;
+
+        mensagem +=
+            `Retirada na loja\n`;
     }
 
-    mensagem += `Bairro: ${bairroSelecionado}\n`;
-    mensagem += `Pagamento: ${pagamento}\n`;
+    mensagem +=
+        `Bairro: ${bairroSelecionado}\n`;
 
-    if (pagamento === "Dinheiro" && troco) {
+    mensagem +=
+        `Pagamento: ${pagamento}\n`;
 
-        const valorRecebido = Number(troco);
-        const valorTroco = valorRecebido - totalFinal;
+    if (
+        pagamento === 'Dinheiro' &&
+        troco
+    ) {
+
+        const valorRecebido =
+            Number(troco);
+
+        const valorTroco =
+            valorRecebido - totalFinal;
 
         mensagem += divisor;
+
         mensagem += `*TROCO*\n\n`;
-        mensagem += `Cliente paga com: R$ ${valorRecebido.toFixed(2)}\n`;
-        mensagem += `Troco: R$ ${valorTroco.toFixed(2)}\n`;
+
+        mensagem +=
+            `Cliente paga com: R$ ${valorRecebido.toFixed(2)}\n`;
+
+        mensagem +=
+            `Troco: R$ ${valorTroco.toFixed(2)}\n`;
     }
 
     mensagem += divisor;
-    mensagem += `Obrigado pela preferencia!`;
 
-    // LOJA FECHADA
+    mensagem +=
+        `Obrigado pela preferencia!`;
+
     if (
         document
-            .getElementById('statusLoja')
-            .classList.contains('fechado')
+        .getElementById('statusLoja')
+        .classList.contains('fechado')
     ) {
 
         document
-            .getElementById('modalFechado')
-            .classList.add('ativo');
+        .getElementById('modalFechado')
+        .classList.add('ativo');
 
         return;
     }
 
-    // WHATSAPP
-    const telefone = "5538998993135";
+    const telefone =
+        "5538998993135";
 
     const url =
         `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
 
     window.open(url, "_blank");
 
+    pixConfirmado = false;
+
+    localStorage.removeItem('carrinho');
+    localStorage.removeItem('pixPendente');
+    localStorage.removeItem('dadosPedido');
+
     carrinho = [];
+
     atualizarCarrinho();
 });
 
+/* ===================================
+   MODAL FECHADO
+=================================== */
+
 function fecharModalFechado() {
+
     document
         .getElementById('modalFechado')
         .classList.remove('ativo');
 }
 
 document
-    .getElementById('fecharModalFechado')
-    .addEventListener('click', fecharModalFechado);
+.getElementById('fecharModalFechado')
+.addEventListener(
+    'click',
+    fecharModalFechado
+);
 
 document
-    .getElementById('modalFechado')
-    .addEventListener('click', (e) => {
+.getElementById('modalFechado')
+.addEventListener('click', (e) => {
 
-        if (e.target.id === 'modalFechado') {
-            fecharModalFechado();
-        }
+    if (
+        e.target.id === 'modalFechado'
+    ) {
 
-    });
+        fecharModalFechado();
+    }
+});
+
 /* ===================================
    CARRINHO TOGGLE
 =================================== */
@@ -1217,10 +1461,26 @@ if (btnFecharCarrinho) {
     });
 }
 
+function carregarCarrinhoSalvo(){
+
+    const carrinhoSalvo =
+        localStorage.getItem('carrinho');
+
+    if(carrinhoSalvo){
+
+        carrinho =
+            JSON.parse(carrinhoSalvo);
+
+    }
+
+}
+
 /* ===================================
    INIT
 =================================== */
 
+verificarPixPendente();
+carregarCarrinhoSalvo();
 renderizarProdutos(produtos);
 carregarBairros();
 atualizarCarrinho();
