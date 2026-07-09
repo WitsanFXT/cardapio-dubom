@@ -2038,3 +2038,40 @@ footer p {
         margin: 22px 12px 10px;
     }
 }
+
+/* ====================== BOTÕES DE ENTREGA ====================== */
+.tipo-entrega-container {
+    display: flex;
+    gap: 10px;
+    margin: 12px 0 16px;
+}
+
+.btn-tipo-entrega {
+    flex: 1;
+    padding: 16px 12px;
+    font-size: 15px;
+    font-weight: 600;
+    border: 2px solid #444;
+    background: #2c2c2c;
+    color: #ddd;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.btn-tipo-entrega.ativo {
+    background: var(--brasa);
+    border-color: var(--brasa);
+    color: white;
+    box-shadow: 0 4px 15px rgba(232, 84, 30, 0.4);
+}
+
+#camposEntrega {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#end-retirada {
+    color: white;
+}

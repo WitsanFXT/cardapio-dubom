@@ -595,21 +595,37 @@ function renderizarProdutos(lista) {
    TIPO DE ENTREGA OU RETIRADA
 =================================== */
 
-document.getElementById('tipoEntrega').addEventListener('change', (e) => {
-    tipoEntrega = e.target.value;
+// ================== CONTROLE DE ENTREGA COM BOTÕES ==================
+const btnEntrega = document.getElementById('btnEntrega');
+const btnRetirada = document.getElementById('btnRetirada');
+const camposEntrega = document.getElementById('camposEntrega');
+const avisoRetirada = document.getElementById('avisoRetirada');
 
-    const bairroSelect = document.getElementById('bairroCliente');
+function alternarTipoEntrega(tipo) {
+    tipoEntrega = tipo;
 
-    if (tipoEntrega === "Retirada") {
-        bairroSelect.disabled = true;
+    if (tipo === "Entrega") {
+        btnEntrega.classList.add('ativo');
+        btnRetirada.classList.remove('ativo');
+        camposEntrega.style.display = 'flex';
+        avisoRetirada.style.display = 'none';
+    } else {
+        btnRetirada.classList.add('ativo');
+        btnEntrega.classList.remove('ativo');
+        camposEntrega.style.display = 'none';
+        avisoRetirada.style.display = 'block';
         taxaEntrega = 0;
         bairroSelecionado = "Retirada na loja";
-    } else {
-        bairroSelect.disabled = false;
     }
-
     atualizarCarrinho();
-});
+}
+
+// Inicialização
+if (btnEntrega && btnRetirada) {
+    btnEntrega.addEventListener('click', () => alternarTipoEntrega("Entrega"));
+    btnRetirada.addEventListener('click', () => alternarTipoEntrega("Retirada"));
+    alternarTipoEntrega("Entrega"); // padrão
+}
 
 /* ===================================
    MODAL
@@ -1131,34 +1147,16 @@ document
 .addEventListener('click', () => {
 
     if (carrinho.length === 0) {
-
         alert("Seu carrinho está vazio!");
-
         return;
     }
 
-    const nome =
-        document.getElementById('nomeCliente')
-        .value
-        .trim();
-
-    const celular =
-        document.getElementById('celularCliente')
-        .value
-        .trim();
-
-    const endereco =
-        document.getElementById('enderecoCliente')
-        .value
-        .trim();
-
-    const pagamento =
-        document.getElementById('pagamentoCliente')
-        .value;
-
-    const troco =
-        document.getElementById('trocoCliente')
-        .value;
+    const nome = document.getElementById('nomeCliente').value.trim();
+    const celular = document.getElementById('celularCliente').value.trim();
+    const endereco = document.getElementById('enderecoCliente').value.trim();
+    const referencia = document.getElementById('referenciaCliente').value.trim();
+    const pagamento = document.getElementById('pagamentoCliente').value;
+    const troco = document.getElementById('trocoCliente').value;
 
     if (!nome) {
         alert('Informe seu nome.');
@@ -1176,176 +1174,104 @@ document
     }
 
     if (tipoEntrega === 'Entrega') {
-
         if (!endereco) {
-            alert('Informe o endereço.');
+            alert('Informe o endereço completo (rua e número).');
             return;
         }
-
-        if (!bairroSelecionado) {
+        if (!bairroSelecionado || bairroSelecionado === "") {
             alert('Selecione o bairro.');
             return;
         }
     }
 
-    if (
-        pagamento === 'Pix' &&
-        !pixConfirmado
-    ) {
-
+    if (pagamento === 'Pix' && !pixConfirmado) {
         abrirModalPix();
-
         return;
     }
 
     let total = 0;
+    const divisor = `------------------------------\n`;
 
-    const divisor =
-        `------------------------------\n`;
-
-    let mensagem =
-        `*CHURRASQUINHO DUBOM*\n`;
-
+    let mensagem = `*CHURRASQUINHO DUBOM*\n`;
     mensagem += `*Novo Pedido*\n`;
     mensagem += divisor;
 
     mensagem += `*ITENS DO PEDIDO*\n\n`;
 
     carrinho.forEach(item => {
-
-        const subtotal =
-            item.preco * item.quantidade;
-
+        const subtotal = item.preco * item.quantidade;
         total += subtotal;
 
-        mensagem +=
-            ` *${item.nome.toUpperCase()}*\n`;
-
-        mensagem +=
-            `   Qtd: ${item.quantidade} | Subtotal: R$ ${subtotal.toFixed(2)}\n`;
+        mensagem += ` *${item.nome.toUpperCase()}*\n`;
+        mensagem += `   Qtd: ${item.quantidade} | Subtotal: R$ ${subtotal.toFixed(2)}\n`;
 
         if (item.observacao) {
-
-            mensagem +=
-                `   ► *OBSERVACAO:* *${item.observacao.toUpperCase()}*\n`;
+            mensagem += `   ► *OBSERVAÇÃO:* ${item.observacao}\n`;
         }
-
         if (item.espetinho) {
-
-            mensagem +=
-                `   ► *ESPETINHO:* *${item.espetinho.toUpperCase()}*\n`;
+            mensagem += `   ► *ESPETINHO:* ${item.espetinho}\n`;
         }
-
         mensagem += `\n`;
     });
 
-    const totalFinal =
-        total + taxaEntrega;
+    const totalFinal = total + taxaEntrega;
 
     mensagem += divisor;
-
     mensagem += `*RESUMO DO PEDIDO*\n\n`;
-
-    mensagem +=
-        `Subtotal: R$ ${total.toFixed(2)}\n`;
+    mensagem += `Subtotal: R$ ${total.toFixed(2)}\n`;
 
     if (tipoEntrega === 'Entrega') {
-
-        mensagem +=
-            `Taxa de entrega: R$ ${taxaEntrega.toFixed(2)}\n`;
-
+        mensagem += `Taxa de entrega: R$ ${taxaEntrega.toFixed(2)}\n`;
     } else {
-
-        mensagem +=
-            `Retirada na loja\n`;
+        mensagem += `Retirada na loja\n`;
     }
 
-    mensagem +=
-        `*TOTAL: R$ ${totalFinal.toFixed(2)}*\n`;
-
+    mensagem += `*TOTAL: R$ ${totalFinal.toFixed(2)}*\n`;
     mensagem += divisor;
 
-    mensagem +=
-        `*DADOS DO CLIENTE*\n\n`;
-
+    mensagem += `*DADOS DO CLIENTE*\n\n`;
     mensagem += `Nome: ${nome}\n`;
-
-    mensagem +=
-        `Celular: ${celular}\n`;
+    mensagem += `Celular: ${celular}\n`;
 
     if (tipoEntrega === 'Entrega') {
-
-        mensagem +=
-            `Endereco: ${endereco}\n`;
-
+        mensagem += `Endereço: ${endereco}\n`;
+        if (referencia) mensagem += `Referência: ${referencia}\n`;
+        mensagem += `Bairro: ${bairroSelecionado}\n`;
     } else {
-
-        mensagem +=
-            `Retirada na loja\n`;
+        mensagem += `Retirada na loja\n`;
     }
 
-    mensagem +=
-        `Bairro: ${bairroSelecionado}\n`;
+    mensagem += `Pagamento: ${pagamento}\n`;
 
-    mensagem +=
-        `Pagamento: ${pagamento}\n`;
-
-    if (
-        pagamento === 'Dinheiro' &&
-        troco
-    ) {
-
-        const valorRecebido =
-            Number(troco);
-
-        const valorTroco =
-            valorRecebido - totalFinal;
-
+    if (pagamento === 'Dinheiro' && troco) {
+        const valorRecebido = Number(troco);
+        const valorTroco = valorRecebido - totalFinal;
         mensagem += divisor;
-
         mensagem += `*TROCO*\n\n`;
-
-        mensagem +=
-            `Cliente paga com: R$ ${valorRecebido.toFixed(2)}\n`;
-
-        mensagem +=
-            `Troco: R$ ${valorTroco.toFixed(2)}\n`;
+        mensagem += `Cliente paga com: R$ ${valorRecebido.toFixed(2)}\n`;
+        mensagem += `Troco: R$ ${valorTroco.toFixed(2)}\n`;
     }
 
     mensagem += divisor;
+    mensagem += `Obrigado pela preferência!`;
 
-    mensagem +=
-        `Obrigado pela preferencia!`;
-
-    if (
-        document
-        .getElementById('statusLoja')
-        .classList.contains('fechado')
-    ) {
-
-        document
-        .getElementById('modalFechado')
-        .classList.add('ativo');
-
+    // Verifica se loja está fechada
+    if (document.getElementById('statusLoja').classList.contains('fechado')) {
+        document.getElementById('modalFechado').classList.add('ativo');
         return;
     }
 
-    const telefone =
-        "5538998993135";
-
-    const url =
-        `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+    const telefone = "5538998993135";
+    const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
 
     window.open(url, "_blank");
 
+    // Limpeza
     pixConfirmado = false;
-
     localStorage.removeItem('carrinho');
     localStorage.removeItem('pixPendente');
-    localStorage.removeItem('dadosPedido');
 
     carrinho = [];
-
     atualizarCarrinho();
 });
 

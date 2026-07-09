@@ -224,116 +224,63 @@
 
 
     <!-- RODAPÉ -->
-
     <div class="carrinho-rodape">
 
         <h3 id="totalCarrinho">
             Total: R$ 0,00
         </h3>
 
-
         <div class="form-pedido">
 
-            <input
-                id="nomeCliente"
-                type="text"
-                placeholder="Seu nome"
-            >
+            <input id="nomeCliente" type="text" placeholder="Seu nome">
 
-            <input
-                id="celularCliente"
-                type="tel"
-                placeholder="Celular / WhatsApp"
-            >
+            <input id="celularCliente" type="tel" placeholder="Celular / WhatsApp">
 
-            <input
-                id="enderecoCliente"
-                type="text"
-                placeholder="Endereço completo"
-            >
+            <!-- TIPO DE ENTREGA -->
+            <div class="tipo-entrega-container">
+                <button id="btnEntrega" class="btn-tipo-entrega ativo" type="button">
+                    🏠 Entrega em Casa
+                </button>
+                <button id="btnRetirada" class="btn-tipo-entrega" type="button">
+                    🛍️ Retirada na Loja
+                </button>
+            </div>
 
+            <!-- CAMPOS DE ENDEREÇO -->
+            <div id="camposEntrega">
+                <input id="enderecoCliente" type="text" placeholder="Rua, número e complemento">
+                <input id="referenciaCliente" type="text" placeholder="Ponto de referência (opcional)">
+                <select id="bairroCliente">
+                    <option value="">Selecione o bairro</option>
+                </select>
+            </div>
 
-            <!-- ENTREGA -->
-
-            <select id="tipoEntrega">
-
-                <option value="Entrega">
-                    Receber em casa
-                </option>
-
-                <option value="Retirada">
-                    Retirar na loja
-                </option>
-
-            </select>
-
-
-            <!-- BAIRRO -->
-
-            <select id="bairroCliente">
-
-                <option value="">
-                    Selecione o bairro
-                </option>
-
-            </select>
-
+            <!-- AVISO RETIRADA -->
+            <div id="avisoRetirada" style="display:none; background:#2c2c2c; padding:16px; border-radius:12px; text-align:center; margin:12px 0;">
+                <strong id="end-retirada">✅ Pedido para Retirada na Loja</strong><br>
+                <small id="end-retirada">Endereço para retirada: Rua Afonso Pena, 258, Centro </small>
+            </div>
 
             <!-- PAGAMENTO -->
-
             <select id="pagamentoCliente">
-
-                <option value="">
-                    Forma de pagamento
-                </option>
-
-                <option value="Dinheiro">
-                    Dinheiro
-                </option>
-
-                <option value="Pix">
-                    Pix
-                </option>
-
-                <option value="Cartão">
-                    Cartão
-                </option>
-
+                <option value="">Forma de pagamento</option>
+                <option value="Dinheiro">Dinheiro</option>
+                <option value="Pix">Pix</option>
+                <option value="Cartão">Cartão</option>
             </select>
 
-
             <!-- TROCO -->
-
-            <div
-                id="campoTroco"
-                style="display:none;">
-
-                <input
-                    id="trocoCliente"
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    placeholder="Troco para quanto? Ex: 100"
-                >
-
+            <div id="campoTroco" style="display:none;">
+                <input id="trocoCliente" type="number" min="0" step="0.01" placeholder="Troco para quanto? Ex: 100">
             </div>
 
         </div>
 
-
-        <!-- BOTÃO FINALIZAR -->
-
-        <button
-            id="finalizarPedido"
-            type="button">
-
+        <button id="finalizarPedido" type="button">
             Finalizar Pedido via WhatsApp
-
         </button>
 
     </div>
-
-</aside>
 
 
     <!-- ================= MODAL PRODUTO ================= -->
