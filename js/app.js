@@ -1,407 +1,398 @@
 const produtos = [
+  // =========================
+  // JANTINHAS
+  // =========================
 
-    // =========================
-    // JANTINHAS
-    // =========================
+  {
+    id: 1,
+    nome: "Jantinha Completa G",
+    descricao:
+      "Arroz, feijão tropeiro, vinagrete, mandioca e espetinho de sua preferência 500g-600g .",
+    preco: 25.0,
+    categoria: "jantinha",
+    imagem: "./img/produtos/jantinha-com-churrasco.jpg",
+    precisaEscolherEspetinho: true,
+    exigeEspetinho: true,
+  },
 
-    {
-        id: 1,
-        nome: 'Jantinha Completa G',
-        descricao: 'Arroz, feijão tropeiro, vinagrete, mandioca e espetinho de sua preferência 500g-600g .',
-        preco: 25.00,
-        categoria: 'jantinha',
-        imagem: './img/produtos/jantinha-com-churrasco.jpg',
-        precisaEscolherEspetinho: true,
-        exigeEspetinho: true
-    },
+  {
+    id: 2,
+    nome: "Jantinha Completa P",
+    descricao:
+      "Arroz, feijão tropeiro, vinagrete, mandioca e espetinho de sua preferência 200g-300g .",
+    preco: 22.0,
+    categoria: "jantinha",
+    imagem: "./img/produtos/jantinha-com-churrasco.jpg",
+    precisaEscolherEspetinho: true,
+    exigeEspetinho: true,
+  },
 
-    {
-        id: 2,
-        nome: 'Jantinha Completa P',
-        descricao: 'Arroz, feijão tropeiro, vinagrete, mandioca e espetinho de sua preferência 200g-300g .',
-        preco: 22.00,
-        categoria: 'jantinha',
-        imagem: './img/produtos/jantinha-com-churrasco.jpg',
-        precisaEscolherEspetinho: true,
-        exigeEspetinho: true
-    },
+  // =========================
+  // LANCHES
+  // =========================
 
-    // =========================
-    // LANCHES
-    // =========================
+  {
+    id: 8,
+    nome: "Pão De Costela Desfiada",
+    descricao:
+      "Pão Francês, costela desfiada, molho de alho, vinagrete e mussarela.",
+    preco: 20.0,
+    categoria: "lanche",
+    imagem: "./img/produtos/pao-costela.jpg",
+  },
 
-    {
-        id: 8,
-        nome: 'Pão De Costela Desfiada',
-        descricao: 'Pão Francês, costela desfiada, molho de alho, vinagrete e mussarela.',
-        preco: 20.00,
-        categoria: 'lanche',
-        imagem: './img/produtos/pao-costela.jpg'
-    },
+  {
+    id: 9,
+    nome: "Pão com Churrasco",
+    descricao:
+      "Pão Francês, molho de alho, vinagrete, mussarela e churrasco da sua preferência. ",
+    preco: 22.0,
+    categoria: "lanche",
+    imagem: "./img/produtos/pao-churrasco.jpg",
+    precisaEscolherEspetinho: true,
+    exigeEspetinho: true,
+  },
 
-    {
-        id: 9,
-        nome: 'Pão com Churrasco',
-        descricao: 'Pão Francês, molho de alho, vinagrete, mussarela e churrasco da sua preferência. ',
-        preco: 22.00,
-        categoria: 'lanche',
-        imagem: './img/produtos/pao-churrasco.jpg',
-        precisaEscolherEspetinho: true,
-        exigeEspetinho: true
-    },
+  // =========================
+  // ESPETINHOS
+  // =========================
 
-    // =========================
-    // ESPETINHOS
-    // =========================
+  {
+    id: 10,
+    nome: "Espetinho Barrigada",
+    descricao: "Espetinho de barrigada.",
+    preco: 14.0,
+    categoria: "espetinho",
+    imagem: "./img/produtos/barrigada.jpg",
+  },
 
-    {
-        id: 10,
-        nome: 'Espetinho Barrigada',
-        descricao: 'Espetinho de barrigada.',
-        preco: 14.00,
-        categoria: 'espetinho',
-        imagem: './img/produtos/barrigada.jpg'
-    },
+  {
+    id: 11,
+    nome: "Espetinho Contra Filé",
+    descricao: "Espetinho de contra filé.",
+    preco: 14.0,
+    categoria: "espetinho",
+    imagem: "./img/produtos/contra-file.jpg",
+  },
 
-    {
-        id: 11,
-        nome: 'Espetinho Contra Filé',
-        descricao: 'Espetinho de contra filé.',
-        preco: 14.00,
-        categoria: 'espetinho',
-        imagem: './img/produtos/contra-file.jpg'
-    },
+  {
+    id: 12,
+    nome: "Espetinho Frango com Bacon",
+    descricao: "Espetinho de frango com bacon.",
+    preco: 14.0,
+    categoria: "espetinho",
+    imagem: "./img/produtos/frango-bacon.jpg",
+  },
 
-    {
-        id: 12,
-        nome: 'Espetinho Frango com Bacon',
-        descricao: 'Espetinho de frango com bacon.',
-        preco: 14.00,
-        categoria: 'espetinho',
-        imagem: './img/produtos/frango-bacon.jpg'
-    },
+  {
+    id: 13,
+    nome: "Espetinho Linguiça Mista",
+    descricao: "Espetinho de linguiça mista.",
+    preco: 14.0,
+    categoria: "espetinho",
+    imagem: "./img/produtos/linguica-mista.jpg",
+  },
 
-    {
-        id: 13,
-        nome: 'Espetinho Linguiça Mista',
-        descricao: 'Espetinho de linguiça mista.',
-        preco: 14.00,
-        categoria: 'espetinho',
-        imagem: './img/produtos/linguica-mista.jpg'
-    },
+  {
+    id: 14,
+    nome: "Espetinho Tulipa",
+    descricao: "Espetinho de tulipa de frango.",
+    preco: 14.0,
+    categoria: "espetinho",
+    imagem: "./img/produtos/tulipa.jpg",
+  },
 
-    {
-        id: 14,
-        nome: 'Espetinho Tulipa',
-        descricao: 'Espetinho de tulipa de frango.',
-        preco: 14.00,
-        categoria: 'espetinho',
-        imagem: './img/produtos/tulipa.jpg'
-    },
+  {
+    id: 23,
+    nome: "Espetinho Cupim",
+    descricao: "Espetinho de Cupim.",
+    preco: 14.0,
+    categoria: "espetinho",
+    imagem: "./img/produtos/cupim.jpg",
+  },
 
-    {
-        id: 23,
-        nome: 'Espetinho Cupim',
-        descricao: 'Espetinho de Cupim.',
-        preco: 14.00,
-        categoria: 'espetinho',
-        imagem: './img/produtos/cupim.jpg'
-    },
+  {
+    id: 24,
+    nome: "Espetinho Coração",
+    descricao: "Espetinho de Coração de frango.",
+    preco: 14.0,
+    categoria: "espetinho",
+    imagem: "./img/produtos/coracao.jpg",
+  },
 
-    {
-        id: 24,
-        nome: 'Espetinho Coração',
-        descricao: 'Espetinho de Coração de frango.',
-        preco: 14.00,
-        categoria: 'espetinho',
-        imagem: './img/produtos/coracao.jpg'
-    },
+  {
+    id: 25,
+    nome: "Espetinho Linguiça com Pimenta",
+    descricao: "Espetinho de Linguiça com Pimenta.",
+    preco: 14.0,
+    categoria: "espetinho",
+    imagem: "./img/produtos/linguica_pimenta.jpg",
+  },
 
-    {
-        id: 25,
-        nome: 'Espetinho Linguiça com Pimenta',
-        descricao: 'Espetinho de Linguiça com Pimenta.',
-        preco: 14.00,
-        categoria: 'espetinho',
-        imagem: './img/produtos/linguica_pimenta.jpg'
-    },
+  {
+    id: 26,
+    nome: "Pão de Alho",
+    descricao: "Pão de Alho.",
+    preco: 9.0,
+    categoria: "espetinho",
+    imagem: "./img/produtos/pao.jpg",
+  },
 
-    {
-        id: 26,
-        nome: 'Pão de Alho',
-        descricao: 'Pão de Alho.',
-        preco: 9.00,
-        categoria: 'espetinho',
-        imagem: './img/produtos/pao.jpg'
-    },
+  {
+    id: 27,
+    nome: "Queijo Coalho",
+    descricao: "Queijo Coalho.",
+    preco: 14.0,
+    categoria: "espetinho",
+    imagem: "./img/produtos/queijo.jpg",
+  },
 
-    {
-        id: 27,
-        nome: 'Queijo Coalho',
-        descricao: 'Queijo Coalho.',
-        preco: 14.00,
-        categoria: 'espetinho',
-        imagem: './img/produtos/queijo.jpg'
-    },
+  // =========================
+  // PORÇÕES
+  // =========================
 
+  {
+    id: 4,
+    nome: "Porção de Arroz",
+    descricao: "Porção individual de arroz.",
+    preco: 15.0,
+    categoria: "porcao",
+    imagem: "./img/produtos/arroz.jpg",
+  },
 
-    // =========================
-    // PORÇÕES
-    // =========================
+  {
+    id: 5,
+    nome: "Porção de Feijão Tropeiro P",
+    descricao: "Porção de feijão tropeiro.",
+    preco: 18.0,
+    categoria: "porcao",
+    imagem: "./img/produtos/tropeiroP.jpg",
+  },
 
-    {
-        id: 4,
-        nome: 'Porção de Arroz',
-        descricao: 'Porção individual de arroz.',
-        preco: 15.00,
-        categoria: 'porcao',
-        imagem: './img/produtos/arroz.jpg'
-    },
+  {
+    id: 28,
+    nome: "Porção de Feijão Tropeiro G",
+    descricao: "Porção de feijão tropeiro.",
+    preco: 20.0,
+    categoria: "porcao",
+    imagem: "./img/produtos/tropeiroG.jpg",
+  },
 
-    {
-        id: 5,
-        nome: 'Porção de Feijão Tropeiro P',
-        descricao: 'Porção de feijão tropeiro.',
-        preco: 18.00,
-        categoria: 'porcao',
-        imagem: './img/produtos/tropeiroP.jpg'
-    },
+  {
+    id: 29,
+    nome: "Porção de Feijão Tropeiro P + Espetinho",
+    descricao: "Porção de feijão tropeiro + Espetinho de sua preferência.",
+    preco: 22.0,
+    categoria: "porcao",
+    imagem: "./img/produtos/tropeiroE.jpg",
+    precisaEscolherEspetinho: true,
+    exigeEspetinho: true,
+  },
 
-    {
-        id: 28,
-        nome: 'Porção de Feijão Tropeiro G',
-        descricao: 'Porção de feijão tropeiro.',
-        preco: 20.00,
-        categoria: 'porcao',
-        imagem: './img/produtos/tropeiroG.jpg'
-    },
+  {
+    id: 88,
+    nome: "Porção de Feijão Tropeiro G + Espetinho",
+    descricao: "Porção de feijão tropeiro + Espetinho de sua preferência.",
+    preco: 25.0,
+    categoria: "porcao",
+    imagem: "./img/produtos/tropeiroE.jpg",
+    precisaEscolherEspetinho: true,
+    exigeEspetinho: true,
+  },
 
-    {
-        id: 29,
-        nome: 'Porção de Feijão Tropeiro P + Espetinho',
-        descricao: 'Porção de feijão tropeiro + Espetinho de sua preferência.',
-        preco: 22.00,
-        categoria: 'porcao',
-        imagem: './img/produtos/tropeiroE.jpg',
-        precisaEscolherEspetinho: true,
-        exigeEspetinho: true
-    },
+  {
+    id: 6,
+    nome: "Porção de Mandioca",
+    descricao: "Porção de mandioca cozida.",
+    preco: 3.0,
+    categoria: "porcao",
+    imagem: "./img/produtos/mandioca.jpg",
+  },
 
-    {
-        id: 88,
-        nome: 'Porção de Feijão Tropeiro G + Espetinho',
-        descricao: 'Porção de feijão tropeiro + Espetinho de sua preferência.',
-        preco: 25.00,
-        categoria: 'porcao',
-        imagem: './img/produtos/tropeiroE.jpg',
-        precisaEscolherEspetinho: true,
-        exigeEspetinho: true
-    },
+  {
+    id: 7,
+    nome: "Porção de Vinagrete",
+    descricao: "Porção de vinagrete fresco.",
+    preco: 3.0,
+    categoria: "porcao",
+    imagem: "./img/produtos/vinagrete.jpg",
+  },
 
-    {
-        id: 6,
-        nome: 'Porção de Mandioca',
-        descricao: 'Porção de mandioca cozida.',
-        preco: 3.00,
-        categoria: 'porcao',
-        imagem: './img/produtos/mandioca.jpg'
-    },
+  // =========================
+  // BEBIDAS
+  // =========================
 
-    {
-        id: 7,
-        nome: 'Porção de Vinagrete',
-        descricao: 'Porção de vinagrete fresco.',
-        preco: 3.00,
-        categoria: 'porcao',
-        imagem: './img/produtos/vinagrete.jpg'
-    },
+  {
+    id: 15,
+    nome: "Guaraná Zero Antarctica 350ml",
+    descricao: "Lata gelada.",
+    preco: 5.0,
+    categoria: "bebida",
+    imagem: "./img/produtos/guarana-zero.jpg",
+  },
 
-    // =========================
-    // BEBIDAS
-    // =========================
+  {
+    id: 16,
+    nome: "Coca-Cola Zero 350ml",
+    descricao: "Lata 350ml.",
+    preco: 5.0,
+    categoria: "bebida",
+    imagem: "./img/produtos/coca-zero.jpg",
+  },
 
-    {
-        id: 15,
-        nome: 'Guaraná Zero Antarctica 350ml',
-        descricao: 'Lata gelada.',
-        preco: 5.00,
-        categoria: 'bebida',
-        imagem: './img/produtos/guarana-zero.jpg'
-    },
+  {
+    id: 17,
+    nome: "Guaraná Antarctica 350ml",
+    descricao: "Lata 350ml.",
+    preco: 5.0,
+    categoria: "bebida",
+    imagem: "./img/produtos/guarana-antartica.jpg",
+  },
 
-    {
-        id: 16,
-        nome: 'Coca-Cola Zero 350ml',
-        descricao: 'Lata 350ml.',
-        preco: 5.00,
-        categoria: 'bebida',
-        imagem: './img/produtos/coca-zero.jpg'
-    },
+  {
+    id: 18,
+    nome: "Guaraná Mineiro 350ml",
+    descricao: "Lata 350ml.",
+    preco: 5.0,
+    categoria: "bebida",
+    imagem: "./img/produtos/guarana-mineiro.jpg",
+  },
 
-    {
-        id: 17,
-        nome: 'Guaraná Antarctica 350ml',
-        descricao: 'Lata 350ml.',
-        preco: 5.00,
-        categoria: 'bebida',
-        imagem: './img/produtos/guarana-antartica.jpg'
-    },
+  {
+    id: 30,
+    nome: "Guaraná Mineiro Zero 350ml",
+    descricao: "Lata 350ml.",
+    preco: 5.0,
+    categoria: "bebida",
+    imagem: "./img/produtos/guarana-mineiro-zero.jpg",
+  },
 
-    {
-        id: 18,
-        nome: 'Guaraná Mineiro 350ml',
-        descricao: 'Lata 350ml.',
-        preco: 5.00,
-        categoria: 'bebida',
-        imagem: './img/produtos/guarana-mineiro.jpg'
-    },
+  {
+    id: 19,
+    nome: "Coca-Cola 350ml",
+    descricao: "Lata 350ml.",
+    preco: 5.0,
+    categoria: "bebida",
+    imagem: "./img/produtos/coca-cola.jpg",
+  },
 
-    {
-        id: 30,
-        nome: 'Guaraná Mineiro Zero 350ml',
-        descricao: 'Lata 350ml.',
-        preco: 5.00,
-        categoria: 'bebida',
-        imagem: './img/produtos/guarana-mineiro-zero.jpg'
-    },
+  {
+    id: 22,
+    nome: "Sprite 350ml",
+    descricao: "Lata 350ml.",
+    preco: 5.0,
+    categoria: "bebida",
+    imagem: "./img/produtos/sprite.jpg",
+  },
 
-    {
-        id: 19,
-        nome: 'Coca-Cola 350ml',
-        descricao: 'Lata 350ml.',
-        preco: 5.00,
-        categoria: 'bebida',
-        imagem: './img/produtos/coca-cola.jpg'
-    },
+  {
+    id: 20,
+    nome: "Guaraná Mineiro 1,5L",
+    descricao: "Garrafa 1,5 litros.",
+    preco: 8.0,
+    categoria: "bebida",
+    imagem: "./img/produtos/guarana-mineiro-15.jpg",
+  },
 
-    {
-        id: 22,
-        nome: 'Sprite 350ml',
-        descricao: 'Lata 350ml.',
-        preco: 5.00,
-        categoria: 'bebida',
-        imagem: './img/produtos/sprite.jpg'
-    },
+  {
+    id: 89,
+    nome: "Coca-Cola 1,5L",
+    descricao: "Coca-Cola 1,5 litros.",
+    preco: 10.0,
+    categoria: "bebida",
+    imagem: "./img/produtos/coca-cola-15.jpg",
+  },
 
-    {
-        id: 20,
-        nome: 'Guaraná Mineiro 1,5L',
-        descricao: 'Garrafa 1,5 litros.',
-        preco: 8.00,
-        categoria: 'bebida',
-        imagem: './img/produtos/guarana-mineiro-15.jpg'
-    },
+  {
+    id: 90,
+    nome: "Coca-Cola Zero 1,5L",
+    descricao: "Coca-Cola Zero 1,5 litros.",
+    preco: 10.0,
+    categoria: "bebida",
+    imagem: "./img/produtos/coca-cola-zero-15.jpg",
+  },
 
-    {
-        id: 89,
-        nome: 'Coca-Cola 1,5L',
-        descricao: 'Coca-Cola 1,5 litros.',
-        preco: 10.00,
-        categoria: 'bebida',
-        imagem: './img/produtos/coca-cola-15.jpg'
-    },
-
-    {
-        id: 90,
-        nome: 'Coca-Cola Zero 1,5L',
-        descricao: 'Coca-Cola Zero 1,5 litros.',
-        preco: 10.00,
-        categoria: 'bebida',
-        imagem: './img/produtos/coca-cola-zero-15.jpg'
-    },
-
-
-    {
-        id: 21,
-        nome: 'H2O Limoneto 500ml',
-        descricao: 'Garrafa 500ml.',
-        preco: 7.00,
-        categoria: 'bebida',
-        imagem: './img/produtos/h2o.jpg'
-    }
-
+  {
+    id: 21,
+    nome: "H2O Limoneto 500ml",
+    descricao: "Garrafa 500ml.",
+    preco: 7.0,
+    categoria: "bebida",
+    imagem: "./img/produtos/h2o.jpg",
+  },
 ];
 
 const opcoesEspetinho = [
-    'Barrigada',
-    'Contra Filé',
-    'Frango com Bacon',
-    'Linguiça Mista',
-    'Tulipa',
-    'Cupim',
-    'Coração',
-    'Linguiça com Pimenta'
+  "Barrigada",
+  "Contra Filé",
+  "Frango com Bacon",
+  "Linguiça Mista",
+  "Tulipa",
+  "Cupim",
+  "Coração",
+  "Linguiça com Pimenta",
 ];
 
 const sugestoesUpsell = {
-    1: [19, 26, 27],
-    2: [19, 26, 27],
+  1: [19, 26, 27],
+  2: [19, 26, 27],
 
-    8: [19, 26, 10],
-    9: [19, 26, 27],
+  8: [19, 26, 10],
+  9: [19, 26, 27],
 
-    10: [26, 27, 11],
-    11: [26, 27, 10],
-    12: [26, 27, 24],
-    13: [26, 27, 25],
-    14: [26, 27, 11],
-    23: [26, 27, 11],
-    24: [26, 27, 12],
-    25: [26, 27, 13],
+  10: [26, 27, 11],
+  11: [26, 27, 10],
+  12: [26, 27, 24],
+  13: [26, 27, 25],
+  14: [26, 27, 11],
+  23: [26, 27, 11],
+  24: [26, 27, 12],
+  25: [26, 27, 13],
 
-    4: [11, 19, 26],
-    5: [11, 19, 26],
-    28: [11, 19, 26],
+  4: [11, 19, 26],
+  5: [11, 19, 26],
+  28: [11, 19, 26],
 
-    29: [19, 26, 27],
-    88: [19, 26, 27],
+  29: [19, 26, 27],
+  88: [19, 26, 27],
 
-    6: [10, 11, 19],
-    7: [10, 11, 19],
+  6: [10, 11, 19],
+  7: [10, 11, 19],
 
-    15: [26, 27, 10],
-    16: [26, 27, 11],
-    17: [26, 27, 10],
-    18: [26, 27, 11],
-    19: [26, 27, 11],
-    20: [26, 27, 1],
-    21: [26, 27, 10],
-    22: [26, 27, 11],
-    30: [26, 27, 11],
-    89: [26, 27, 1],
-    90: [26, 27, 1]
+  15: [26, 27, 10],
+  16: [26, 27, 11],
+  17: [26, 27, 10],
+  18: [26, 27, 11],
+  19: [26, 27, 11],
+  20: [26, 27, 1],
+  21: [26, 27, 10],
+  22: [26, 27, 11],
+  30: [26, 27, 11],
+  89: [26, 27, 1],
+  90: [26, 27, 1],
 };
 
 const maisPedidos = [
-    1, // Contra Filé
-    8, // Tulipa
-    11,  // Jantinha G
-    12,  // Jantinha P
-    19  // Pão de Alho
+  1, // Contra Filé
+  8, // Tulipa
+  11, // Jantinha G
+  12, // Jantinha P
+  19, // Pão de Alho
 ];
 
 function salvarCarrinho() {
-
-    localStorage.setItem(
-        'carrinho',
-        JSON.stringify(carrinho)
-    );
-
+  localStorage.setItem("carrinho", JSON.stringify(carrinho));
 }
 
-function renderizarMaisPedidos(){
+function renderizarMaisPedidos() {
+  const container = document.getElementById("listaMaisPedidos");
 
-    const container =
-        document.getElementById('listaMaisPedidos');
+  container.innerHTML = "";
 
-    container.innerHTML = '';
+  maisPedidos.forEach((id) => {
+    const produto = produtos.find((p) => p.id === id);
 
-    maisPedidos.forEach(id => {
-
-        const produto =
-            produtos.find(p => p.id === id);
-
-        container.innerHTML += `
+    container.innerHTML += `
             <div class="produto-card">
 
                 <img
@@ -425,10 +416,8 @@ function renderizarMaisPedidos(){
 
             </div>
         `;
-    });
-
+  });
 }
-
 
 let carrinho = [];
 let produtoSelecionado = null;
@@ -439,65 +428,65 @@ let tipoEntrega = "Entrega";
 =================================== */
 
 const bairros = [
-{ nome: 'Água Branca I', valor: 10.00 },
-{ nome: 'Água Branca II', valor: 9.00 },
-{ nome: 'Águas Claras', valor: 8.00 },
-{ nome: 'Alvorada', valor: 10.00 },
-{ nome: 'Amaral', valor: 9.00 },
-{ nome: 'Barroca', valor: 8.00 },
-{ nome: 'Bela Serra', valor: 15.00 },
-{ nome: 'Bela Vista', valor: 8.00 },
-{ nome: 'Cachoeira', valor: 8.00 },
-{ nome: 'Canabrava', valor: 8.00 },
-{ nome: 'Canaã', valor: 8.00 },
-{ nome: 'Capim Branco', valor: 8.00 },
-{ nome: 'Capim Branco II', valor: 8.00 },
-{ nome: 'Capim Branco III', valor: 8.00 },
-{ nome: 'Centro', valor: 8.00 },
-{ nome: 'Chácaras Colina', valor: 25.00 },
-{ nome: 'Chácaras Monjolos', valor: 15.00 },
-{ nome: 'Chácaras Rio Preto', valor: 15.00 },
-{ nome: 'Cidade Nova', valor: 8.00 },
-{ nome: 'Cruzeiro', valor: 8.00 },
-{ nome: 'Curva do Rio', valor: 15.00 },
-{ nome: 'De Lourdes', valor: 8.00 },
-{ nome: 'Divinéia', valor: 8.00 },
-{ nome: 'Dom Bosco', valor: 8.00 },
-{ nome: 'Floresta', valor: 8.00 },
-{ nome: 'Industrial', valor: 15.00 },
-{ nome: 'Itapuã', valor: 8.00 },
-{ nome: 'Iúna', valor: 8.00 },
-{ nome: 'Jacilândia', valor: 8.00 },
-{ nome: 'Jardim', valor: 8.00 },
-{ nome: 'Jardim Amaral', valor: 10.00 },
-{ nome: 'Jardim América', valor: 8.00 },
-{ nome: 'Kamayurã', valor: 10.00 },
-{ nome: 'Laguna', valor: 10.00 },
-{ nome: 'Loteamento Zé Pedro', valor: 8.00 },
-{ nome: 'Mamoeiro', valor: 20.00 },
-{ nome: 'Nossa Senhora Aparecida', valor: 8.00 },
-{ nome: 'Nossa Senhora do Carmo', valor: 8.00 },
-{ nome: 'Nova Divinéia', valor: 8.00 },
-{ nome: 'Novo Horizonte', valor: 8.00 },
-{ nome: 'Novo Jardim', valor: 8.00 },
-{ nome: 'Parque Canabrava', valor: 8.00 },
-{ nome: 'Politécnica', valor: 8.00 },
-{ nome: 'Posto HP', valor: 20.00 },
-{ nome: 'Primavera', valor: 8.00 },
-{ nome: 'Primavera V', valor: 8.00 },
-{ nome: 'Riviera Park', valor: 12.00 },
-{ nome: 'Sagrada Família', valor: 10.00 },
-{ nome: 'Sagarana', valor: 8.00 },
-{ nome: 'Santa Clara', valor: 20.00 },
-{ nome: 'Santa Luzia', valor: 8.00 },
-{ nome: 'Serenata', valor: 8.00 },
-{ nome: 'Setor de Mansões Sul', valor: 20.00 },
-{ nome: 'Terra Nova', valor: 9.00 },
-{ nome: 'Vale do Amanhecer', valor: 12.00 },
-{ nome: 'Vale Verde', valor: 8.00 },
-{ nome: 'Vila do Sol', valor: 10.00 },
-{ nome: 'Vila Militar', valor: 8.00 },
-{ nome: 'Vila São Sebastião', valor: 8.00 }
+  { nome: "Água Branca I", valor: 10.0 },
+  { nome: "Água Branca II", valor: 9.0 },
+  { nome: "Águas Claras", valor: 8.0 },
+  { nome: "Alvorada", valor: 10.0 },
+  { nome: "Amaral", valor: 9.0 },
+  { nome: "Barroca", valor: 8.0 },
+  { nome: "Bela Serra", valor: 15.0 },
+  { nome: "Bela Vista", valor: 8.0 },
+  { nome: "Cachoeira", valor: 8.0 },
+  { nome: "Canabrava", valor: 8.0 },
+  { nome: "Canaã", valor: 8.0 },
+  { nome: "Capim Branco", valor: 8.0 },
+  { nome: "Capim Branco II", valor: 8.0 },
+  { nome: "Capim Branco III", valor: 8.0 },
+  { nome: "Centro", valor: 8.0 },
+  { nome: "Chácaras Colina", valor: 25.0 },
+  { nome: "Chácaras Monjolos", valor: 15.0 },
+  { nome: "Chácaras Rio Preto", valor: 15.0 },
+  { nome: "Cidade Nova", valor: 8.0 },
+  { nome: "Cruzeiro", valor: 8.0 },
+  { nome: "Curva do Rio", valor: 15.0 },
+  { nome: "De Lourdes", valor: 8.0 },
+  { nome: "Divinéia", valor: 8.0 },
+  { nome: "Dom Bosco", valor: 8.0 },
+  { nome: "Floresta", valor: 8.0 },
+  { nome: "Industrial", valor: 15.0 },
+  { nome: "Itapuã", valor: 8.0 },
+  { nome: "Iúna", valor: 8.0 },
+  { nome: "Jacilândia", valor: 8.0 },
+  { nome: "Jardim", valor: 8.0 },
+  { nome: "Jardim Amaral", valor: 10.0 },
+  { nome: "Jardim América", valor: 8.0 },
+  { nome: "Kamayurã", valor: 10.0 },
+  { nome: "Laguna", valor: 10.0 },
+  { nome: "Loteamento Zé Pedro", valor: 8.0 },
+  { nome: "Mamoeiro", valor: 20.0 },
+  { nome: "Nossa Senhora Aparecida", valor: 8.0 },
+  { nome: "Nossa Senhora do Carmo", valor: 8.0 },
+  { nome: "Nova Divinéia", valor: 8.0 },
+  { nome: "Novo Horizonte", valor: 8.0 },
+  { nome: "Novo Jardim", valor: 8.0 },
+  { nome: "Parque Canabrava", valor: 8.0 },
+  { nome: "Politécnica", valor: 8.0 },
+  { nome: "Posto HP", valor: 20.0 },
+  { nome: "Primavera", valor: 8.0 },
+  { nome: "Primavera V", valor: 8.0 },
+  { nome: "Riviera Park", valor: 12.0 },
+  { nome: "Sagrada Família", valor: 10.0 },
+  { nome: "Sagarana", valor: 8.0 },
+  { nome: "Santa Clara", valor: 20.0 },
+  { nome: "Santa Luzia", valor: 8.0 },
+  { nome: "Serenata", valor: 8.0 },
+  { nome: "Setor de Mansões Sul", valor: 20.0 },
+  { nome: "Terra Nova", valor: 9.0 },
+  { nome: "Vale do Amanhecer", valor: 12.0 },
+  { nome: "Vale Verde", valor: 8.0 },
+  { nome: "Vila do Sol", valor: 10.0 },
+  { nome: "Vila Militar", valor: 8.0 },
+  { nome: "Vila São Sebastião", valor: 8.0 },
 ];
 
 let taxaEntrega = 0;
@@ -505,65 +494,62 @@ let bairroSelecionado = "";
 
 let quantidadeAtual = 1;
 
-
 /* ===================================
    RENDERIZAR PRODUTOS
 =================================== */
 
-function atualizarStatusLoja(){
+function atualizarStatusLoja() {
+  const status = document.getElementById("statusLoja");
 
-    const status = document.getElementById('statusLoja');
+  // ================== MODO TESTE ==================
+  // Mude para `false` quando for colocar em produção
+  const modoTeste = true;
 
-    // ================== MODO TESTE ==================
-    // Mude para `false` quando for colocar em produção
-    const modoTeste = false;   
+  if (modoTeste) {
+    status.className = "status-loja aberto";
+    status.innerHTML = "🟢 Aberto agora  • Até 22:40";
+    return; // Sai da função, ignora o horário real
+  }
+  // ================================================
 
-    if (modoTeste) {
-        status.className = 'status-loja aberto';
-        status.innerHTML = '🟢 Aberto agora (Modo Teste) • Até 22:40';
-        return; // Sai da função, ignora o horário real
-    }
-    // ================================================
+  // Horário normal (só funciona quando modoTeste = false)
+  const agora = new Date();
+  const dia = agora.getDay();
+  const hora = agora.getHours();
+  const minuto = agora.getMinutes();
 
-    // Horário normal (só funciona quando modoTeste = false)
-    const agora = new Date();
-    const dia = agora.getDay();
-    const hora = agora.getHours();
-    const minuto = agora.getMinutes();
+  const horarioAtual = hora * 60 + minuto;
+  const abre = 18 * 60;
+  const fecha = 22 * 60 + 40;
 
-    const horarioAtual = hora * 60 + minuto;
-    const abre = 18 * 60;
-    const fecha = 22 * 60 + 40;
+  const abertoHoje = dia >= 0 && dia <= 5;
+  const abertoAgora =
+    abertoHoje && horarioAtual >= abre && horarioAtual <= fecha;
 
-    const abertoHoje = dia >= 0 && dia <= 5;
-    const abertoAgora = abertoHoje && horarioAtual >= abre && horarioAtual <= fecha;
-
-    if(abertoAgora){
-        status.className = 'status-loja aberto';
-        status.innerHTML = '🟢 Aberto agora • Até 22:40';
-    } else {
-        status.className = 'status-loja fechado';
-        status.innerHTML = '🔴 Fechado • Atendimento das 18h às 22h40';
-    }
+  if (abertoAgora) {
+    status.className = "status-loja aberto";
+    status.innerHTML = "🟢 Aberto agora • Até 22:40";
+  } else {
+    status.className = "status-loja fechado";
+    status.innerHTML = "🔴 Fechado • Atendimento das 18h às 22h40";
+  }
 }
 
 function renderizarProdutos(lista) {
+  const categorias = {
+    jantinha: document.getElementById("listaJantinhas"),
+    lanche: document.getElementById("listaLanches"),
+    espetinho: document.getElementById("listaEspetinhos"),
+    porcao: document.getElementById("listaPorcoes"),
+    bebida: document.getElementById("listaBebidas"),
+  };
 
-    const categorias = {
-        jantinha: document.getElementById('listaJantinhas'),
-        lanche: document.getElementById('listaLanches'),
-        espetinho: document.getElementById('listaEspetinhos'),
-        porcao: document.getElementById('listaPorcoes'),
-        bebida: document.getElementById('listaBebidas')
-    };
+  Object.values(categorias).forEach((c) => {
+    if (c) c.innerHTML = "";
+  });
 
-    Object.values(categorias).forEach(c => {
-        if (c) c.innerHTML = '';
-    });
-
-    lista.forEach(produto => {
-
-        const card = `
+  lista.forEach((produto) => {
+    const card = `
             <div class="produto-card">
 
                 <img src="${produto.imagem}" alt="${produto.nome}">
@@ -583,12 +569,12 @@ function renderizarProdutos(lista) {
             </div>
         `;
 
-        const cat = produto.categoria;
+    const cat = produto.categoria;
 
-        if (categorias[cat]) {
-            categorias[cat].innerHTML += card;
-        }
-    });
+    if (categorias[cat]) {
+      categorias[cat].innerHTML += card;
+    }
+  });
 }
 
 /* ===================================
@@ -596,35 +582,35 @@ function renderizarProdutos(lista) {
 =================================== */
 
 // ================== CONTROLE DE ENTREGA COM BOTÕES ==================
-const btnEntrega = document.getElementById('btnEntrega');
-const btnRetirada = document.getElementById('btnRetirada');
-const camposEntrega = document.getElementById('camposEntrega');
-const avisoRetirada = document.getElementById('avisoRetirada');
+const btnEntrega = document.getElementById("btnEntrega");
+const btnRetirada = document.getElementById("btnRetirada");
+const camposEntrega = document.getElementById("camposEntrega");
+const avisoRetirada = document.getElementById("avisoRetirada");
 
 function alternarTipoEntrega(tipo) {
-    tipoEntrega = tipo;
+  tipoEntrega = tipo;
 
-    if (tipo === "Entrega") {
-        btnEntrega.classList.add('ativo');
-        btnRetirada.classList.remove('ativo');
-        camposEntrega.style.display = 'flex';
-        avisoRetirada.style.display = 'none';
-    } else {
-        btnRetirada.classList.add('ativo');
-        btnEntrega.classList.remove('ativo');
-        camposEntrega.style.display = 'none';
-        avisoRetirada.style.display = 'block';
-        taxaEntrega = 0;
-        bairroSelecionado = "Retirada na loja";
-    }
-    atualizarCarrinho();
+  if (tipo === "Entrega") {
+    btnEntrega.classList.add("ativo");
+    btnRetirada.classList.remove("ativo");
+    camposEntrega.style.display = "flex";
+    avisoRetirada.style.display = "none";
+  } else {
+    btnRetirada.classList.add("ativo");
+    btnEntrega.classList.remove("ativo");
+    camposEntrega.style.display = "none";
+    avisoRetirada.style.display = "block";
+    taxaEntrega = 0;
+    bairroSelecionado = "Retirada na loja";
+  }
+  atualizarCarrinho();
 }
 
 // Inicialização
 if (btnEntrega && btnRetirada) {
-    btnEntrega.addEventListener('click', () => alternarTipoEntrega("Entrega"));
-    btnRetirada.addEventListener('click', () => alternarTipoEntrega("Retirada"));
-    alternarTipoEntrega("Entrega"); // padrão
+  btnEntrega.addEventListener("click", () => alternarTipoEntrega("Entrega"));
+  btnRetirada.addEventListener("click", () => alternarTipoEntrega("Retirada"));
+  alternarTipoEntrega("Entrega"); // padrão
 }
 
 /* ===================================
@@ -632,108 +618,84 @@ if (btnEntrega && btnRetirada) {
 =================================== */
 
 function abrirModal(id) {
+  produtoSelecionado = produtos.find((p) => p.id === id);
 
-    produtoSelecionado = produtos.find(p => p.id === id);
+  quantidadeAtual = 1;
 
-    quantidadeAtual = 1;
+  document.getElementById("produtoNome").textContent = produtoSelecionado.nome;
 
-    document.getElementById('produtoNome').textContent =
-        produtoSelecionado.nome;
+  document.getElementById("produtoPreco").textContent =
+    `R$ ${produtoSelecionado.preco.toFixed(2)}`;
 
-    document.getElementById('produtoPreco').textContent =
-        `R$ ${produtoSelecionado.preco.toFixed(2)}`;
+  document.getElementById("quantidadeInput").value = 1;
 
-    document.getElementById('quantidadeInput').value = 1;
+  const campoEspetinho = document.getElementById("campoEspetinho");
 
-    const campoEspetinho =
-    document.getElementById('campoEspetinho');
+  const selectEspetinho = document.getElementById("selectEspetinho");
 
-const selectEspetinho =
-    document.getElementById('selectEspetinho');
+  selectEspetinho.innerHTML = '<option value="">Selecione</option>';
 
-selectEspetinho.innerHTML =
-    '<option value="">Selecione</option>';
+  if (produtoSelecionado.precisaEscolherEspetinho) {
+    campoEspetinho.style.display = "block";
 
-if (produtoSelecionado.precisaEscolherEspetinho) {
-
-    campoEspetinho.style.display = 'block';
-
-    opcoesEspetinho.forEach(espetinho => {
-
-        selectEspetinho.innerHTML += `
+    opcoesEspetinho.forEach((espetinho) => {
+      selectEspetinho.innerHTML += `
             <option value="${espetinho}">
                 ${espetinho}
             </option>
         `;
-
     });
+  } else {
+    campoEspetinho.style.display = "none";
+  }
 
-} else {
+  document.getElementById("observacao").value = "";
 
-    campoEspetinho.style.display = 'none';
+  atualizarSubtotalModal();
 
-}
-
-    document.getElementById('observacao').value = '';
-
-    atualizarSubtotalModal();
-
-    document.getElementById('modalProduto')
-        .classList.add('ativo');
+  document.getElementById("modalProduto").classList.add("ativo");
 }
 
 window.abrirModal = abrirModal;
 
 function fecharModal() {
-    document.getElementById('modalProduto').classList.remove('ativo');
-    document.body.classList.remove('sem-scroll');
+  document.getElementById("modalProduto").classList.remove("ativo");
+  document.body.classList.remove("sem-scroll");
 }
 
-document.getElementById('fecharModal').addEventListener('click', fecharModal);
+document.getElementById("fecharModal").addEventListener("click", fecharModal);
 
-document.getElementById('modalProduto').addEventListener('click', (e) => {
-    if (e.target.id === 'modalProduto') fecharModal();
+document.getElementById("modalProduto").addEventListener("click", (e) => {
+  if (e.target.id === "modalProduto") fecharModal();
 });
 
 function atualizarSubtotalModal() {
+  if (!produtoSelecionado) return;
 
-    if (!produtoSelecionado) return;
+  const quantidade = Number(document.getElementById("quantidadeInput").value);
 
-    const quantidade = Number(
-        document.getElementById('quantidadeInput').value
-    );
+  const subtotal = produtoSelecionado.preco * quantidade;
 
-    const subtotal =
-        produtoSelecionado.preco * quantidade;
-
-    document.getElementById('subtotalModal').textContent =
-        `Total: R$ ${subtotal.toFixed(2)}`;
+  document.getElementById("subtotalModal").textContent =
+    `Total: R$ ${subtotal.toFixed(2)}`;
 }
-document
-.getElementById('quantidadeInput')
-.addEventListener('input', () => {
-
-    atualizarSubtotalModal();
-
+document.getElementById("quantidadeInput").addEventListener("input", () => {
+  atualizarSubtotalModal();
 });
 
-function abrirUpsell(produtoId){
+function abrirUpsell(produtoId) {
+  const ids = sugestoesUpsell[produtoId];
 
-    const ids = sugestoesUpsell[produtoId];
+  if (!ids) return;
 
-    if(!ids) return;
+  const lista = document.getElementById("listaUpsell");
 
-    const lista =
-        document.getElementById('listaUpsell');
+  lista.innerHTML = "";
 
-    lista.innerHTML = '';
+  ids.forEach((id) => {
+    const produto = produtos.find((p) => p.id === id);
 
-    ids.forEach(id => {
-
-        const produto =
-            produtos.find(p => p.id === id);
-
-        lista.innerHTML += `
+    lista.innerHTML += `
             <div class="upsell-item">
 
                 <img
@@ -767,192 +729,153 @@ function abrirUpsell(produtoId){
 
             </div>
         `;
-    });
+  });
 
-    document
-        .getElementById('modalUpsell')
-        .classList.add('ativo');
+  document.getElementById("modalUpsell").classList.add("ativo");
 }
 
-function adicionarUpsell(id){
+function adicionarUpsell(id) {
+  const produto = produtos.find((p) => p.id === id);
 
-    const produto =
-        produtos.find(p => p.id === id);
+  carrinho.push({
+    ...produto,
+    chave: crypto.randomUUID(),
+    quantidade: 1,
+    observacao: "",
+    espetinho: "",
+  });
 
-    carrinho.push({
-        ...produto,
-        chave: crypto.randomUUID(),
-        quantidade: 1,
-        observacao: '',
-        espetinho: ''
-    });
+  salvarCarrinho();
 
-    salvarCarrinho();
+  atualizarCarrinho();
 
-    atualizarCarrinho();
+  const status = document.getElementById(`upsell-status-${id}`);
 
-    const status =
-        document.getElementById(`upsell-status-${id}`);
+  if (status) {
+    let quantidadeAtual = Number(status.dataset.qtd || 0);
 
-    if(status){
+    quantidadeAtual++;
 
-        let quantidadeAtual =
-            Number(status.dataset.qtd || 0);
+    status.dataset.qtd = quantidadeAtual;
 
-        quantidadeAtual++;
+    status.innerHTML = `✓ Adicionado ${quantidadeAtual}x`;
 
-        status.dataset.qtd = quantidadeAtual;
-
-        status.innerHTML =
-            `✓ Adicionado ${quantidadeAtual}x`;
-
-        status.style.display = 'block';
-    }
+    status.style.display = "block";
+  }
 }
 
 window.adicionarUpsell = adicionarUpsell;
 
-document
-.getElementById('fecharUpsell')
-.addEventListener('click', () => {
-
-    document
-    .getElementById('modalUpsell')
-    .classList.remove('ativo');
-
+document.getElementById("fecharUpsell").addEventListener("click", () => {
+  document.getElementById("modalUpsell").classList.remove("ativo");
 });
 
 /* ===================================
    QUANTIDADE
 =================================== */
 
-document.getElementById('maisBtn')
-.addEventListener('click', () => {
+document.getElementById("maisBtn").addEventListener("click", () => {
+  const input = document.getElementById("quantidadeInput");
 
-    const input =
-        document.getElementById('quantidadeInput');
+  input.value = Number(input.value) + 1;
 
-    input.value = Number(input.value) + 1;
-
-    atualizarSubtotalModal();
+  atualizarSubtotalModal();
 });
 
-document.getElementById('menosBtn')
-.addEventListener('click', () => {
+document.getElementById("menosBtn").addEventListener("click", () => {
+  const input = document.getElementById("quantidadeInput");
 
-    const input =
-        document.getElementById('quantidadeInput');
-
-    if (Number(input.value) > 1) {
-
-        input.value = Number(input.value) - 1;
-
-        atualizarSubtotalModal();
-    }
-});
-
-document.getElementById('quantidadeInput')
-.addEventListener('input', () => {
-
-    const input =
-        document.getElementById('quantidadeInput');
-
-    if (Number(input.value) < 1) {
-        input.value = 1;
-    }
+  if (Number(input.value) > 1) {
+    input.value = Number(input.value) - 1;
 
     atualizarSubtotalModal();
+  }
+});
+
+document.getElementById("quantidadeInput").addEventListener("input", () => {
+  const input = document.getElementById("quantidadeInput");
+
+  if (Number(input.value) < 1) {
+    input.value = 1;
+  }
+
+  atualizarSubtotalModal();
 });
 
 /* ===================================
    CARRINHO
 =================================== */
 
-document.getElementById('adicionarCarrinho').addEventListener('click', () => {
+document.getElementById("adicionarCarrinho").addEventListener("click", () => {
+  let espetinhoSelecionado = "";
 
-    let espetinhoSelecionado = '';
+  if (produtoSelecionado.precisaEscolherEspetinho) {
+    espetinhoSelecionado = document.getElementById("selectEspetinho").value;
 
-    if (produtoSelecionado.precisaEscolherEspetinho) {
+    if (!espetinhoSelecionado) {
+      alert("Selecione um espetinho.");
 
-        espetinhoSelecionado =
-            document.getElementById('selectEspetinho').value;
-
-        if (!espetinhoSelecionado) {
-
-            alert('Selecione um espetinho.');
-
-            return;
-        }
-
+      return;
     }
+  }
 
-    const observacao = document.getElementById('observacao').value;
+  const observacao = document.getElementById("observacao").value;
 
-    const index = carrinho.findIndex(item =>
-        item.id === produtoSelecionado.id &&
-        item.observacao === observacao &&
-        item.espetinho === espetinhoSelecionado
-    );
+  const index = carrinho.findIndex(
+    (item) =>
+      item.id === produtoSelecionado.id &&
+      item.observacao === observacao &&
+      item.espetinho === espetinhoSelecionado,
+  );
 
-    const quantidade = Number(
-        document.getElementById('quantidadeInput').value
-    );
+  const quantidade = Number(document.getElementById("quantidadeInput").value);
 
-    if (index !== -1) {
+  if (index !== -1) {
+    carrinho[index].quantidade += quantidade;
+  } else {
+    carrinho.push({
+      ...produtoSelecionado,
+      chave: crypto.randomUUID(),
+      quantidade: Number(document.getElementById("quantidadeInput").value),
+      observacao,
+      espetinho: espetinhoSelecionado,
+    });
+  }
 
-        carrinho[index].quantidade += quantidade;
+  atualizarCarrinho();
 
-    } else {
+  const idProduto = produtoSelecionado.id;
 
-        carrinho.push({
-            ...produtoSelecionado,
-            chave: crypto.randomUUID(),
-            quantidade: Number(
-                document.getElementById('quantidadeInput').value
-            ),
-            observacao,
-            espetinho: espetinhoSelecionado
-        });
+  fecharModal();
 
-    }
-
-    atualizarCarrinho();
-
-const idProduto = produtoSelecionado.id;
-
-fecharModal();
-
-setTimeout(() => {
+  setTimeout(() => {
     abrirUpsell(idProduto);
-}, 300);
-
+  }, 300);
 });
 
 function atualizarCarrinho() {
+  const container = document.getElementById("itensCarrinho");
+  container.innerHTML = "";
 
-    const container = document.getElementById('itensCarrinho');
-    container.innerHTML = '';
+  let total = 0;
 
-    let total = 0;
-    
+  carrinho.forEach((item) => {
+    const subtotal = item.preco * item.quantidade;
+    total += subtotal;
 
-    carrinho.forEach(item => {
-
-        const subtotal = item.preco * item.quantidade;
-        total += subtotal;
-
-        container.innerHTML += `
+    container.innerHTML += `
             <div class="carrinho-item">
 
                 <h4>${item.nome}</h4>
 
                 <p>${item.quantidade}x - R$ ${subtotal.toFixed(2)}</p>
 
-                <small>${item.observacao || ''}</small>
+                <small>${item.observacao || ""}</small>
 
-                ${item.espetinho
-                ? `<small>Espetinho: ${item.espetinho}</small>`
-                : ''
+                ${
+                  item.espetinho
+                    ? `<small>Espetinho: ${item.espetinho}</small>`
+                    : ""
                 }
 
                 <button
@@ -965,38 +888,33 @@ function atualizarCarrinho() {
 
             </div>
         `;
-    });
+  });
 
-    const totalFinal = total + taxaEntrega;
+  const totalFinal = total + taxaEntrega;
 
-    document.getElementById('totalCarrinho').textContent =
-        `Subtotal: R$ ${total.toFixed(2)} + Entrega: R$ ${taxaEntrega.toFixed(2)} = R$ ${totalFinal.toFixed(2)}`;
+  document.getElementById("totalCarrinho").textContent =
+    `Subtotal: R$ ${total.toFixed(2)} + Entrega: R$ ${taxaEntrega.toFixed(2)} = R$ ${totalFinal.toFixed(2)}`;
 
-    const badge = document.getElementById('badgeCarrinho');
+  const badge = document.getElementById("badgeCarrinho");
 
-    if (badge) {
-        badge.textContent = carrinho.reduce(
-            (acc, item) => acc + item.quantidade,
-            0
-        );
-    }
+  if (badge) {
+    badge.textContent = carrinho.reduce(
+      (acc, item) => acc + item.quantidade,
+      0,
+    );
+  }
 
-    localStorage.setItem('carrinho', JSON.stringify(carrinho));
+  localStorage.setItem("carrinho", JSON.stringify(carrinho));
 }
 
 function removerItem(chave) {
+  carrinho = carrinho.filter((item) => item.chave !== chave);
 
-    carrinho = carrinho.filter(
-        item => item.chave !== chave
-    );
-
-    atualizarCarrinho();
-    salvarCarrinho();
+  atualizarCarrinho();
+  salvarCarrinho();
 }
 
 window.removerItem = removerItem;
-
-
 
 /* ===================================
    WHATSAPP FINALIZAR PEDIDO
@@ -1009,270 +927,223 @@ let pixConfirmado = false;
 =================================== */
 
 function atualizarResumoPix() {
+  let total = 0;
+  let html = "";
 
-    let total = 0;
-    let html = '';
+  carrinho.forEach((item) => {
+    const subtotal = item.preco * item.quantidade;
 
-    carrinho.forEach(item => {
+    total += subtotal;
 
-        const subtotal =
-            item.preco * item.quantidade;
-
-        total += subtotal;
-
-        html += `
+    html += `
             <p>
                 ${item.quantidade}x ${item.nome}
             </p>
         `;
-    });
+  });
 
-    total += taxaEntrega;
+  total += taxaEntrega;
 
-    html += `
+  html += `
         <hr>
         <strong>
             Total: R$ ${total.toFixed(2)}
         </strong>
     `;
 
-    document
-        .getElementById('resumoPix')
-        .innerHTML = html;
+  document.getElementById("resumoPix").innerHTML = html;
 }
 
 function abrirModalPix() {
+  atualizarResumoPix();
 
-    atualizarResumoPix();
+  document.getElementById("modalPix").classList.add("ativo");
 
-    document
-        .getElementById('modalPix')
-        .classList.add('ativo');
-
-    localStorage.setItem(
-        'pixPendente',
-        'true'
-    );
+  localStorage.setItem("pixPendente", "true");
 }
-
 
 function fecharModalPix() {
-
-    document
-        .getElementById('modalPix')
-        .classList.remove('ativo');
+  document.getElementById("modalPix").classList.remove("ativo");
 }
 
-document
-.getElementById('fecharPix')
-.addEventListener('click', fecharModalPix);
+document.getElementById("fecharPix").addEventListener("click", fecharModalPix);
 
-document
-.getElementById('modalPix')
-.addEventListener('click', (e) => {
-
-    if (e.target.id === 'modalPix') {
-
-        fecharModalPix();
-
-    }
-
+document.getElementById("modalPix").addEventListener("click", (e) => {
+  if (e.target.id === "modalPix") {
+    fecharModalPix();
+  }
 });
 
 function verificarPixPendente() {
+  const pixPendente = localStorage.getItem("pixPendente");
 
-    const pixPendente =
-        localStorage.getItem('pixPendente');
-
-    if (
-        pixPendente === 'true' &&
-        carrinho.length > 0
-    ) {
-
-        abrirModalPix();
-
-    }
+  if (pixPendente === "true" && carrinho.length > 0) {
+    abrirModalPix();
+  }
 }
 
 /* ===================================
    COPIAR CHAVE PIX
 =================================== */
 
-document
-.getElementById('copiarPix')
-.addEventListener('click', async () => {
+document.getElementById("copiarPix").addEventListener("click", async () => {
+  const chave = document.getElementById("chavePix").value;
 
-    const chave =
-        document.getElementById('chavePix').value;
+  await navigator.clipboard.writeText(chave);
 
-    await navigator.clipboard.writeText(chave);
-
-    alert('Chave PIX copiada!');
+  alert("Chave PIX copiada!");
 });
 
 /* ===================================
    CONFIRMAR PIX
 =================================== */
 
-document
-.getElementById('btnFinalizarPix')
-.addEventListener('click', () => {
+document.getElementById("btnFinalizarPix").addEventListener("click", () => {
+  if (!document.getElementById("pixPago").checked) {
+    alert("Confirme que realizou o pagamento.");
 
-    if (
-        !document.getElementById('pixPago').checked
-    ) {
+    return;
+  }
 
-        alert(
-            'Confirme que realizou o pagamento.'
-        );
+  pixConfirmado = true;
 
-        return;
-    }
+  fecharModalPix();
 
-    pixConfirmado = true;
-
-    fecharModalPix();
-
-    document
-        .getElementById('finalizarPedido')
-        .click();
+  document.getElementById("finalizarPedido").click();
 });
 
 /* ===================================
    FINALIZAR PEDIDO
 =================================== */
 
-document
-.getElementById('finalizarPedido')
-.addEventListener('click', () => {
+document.getElementById("finalizarPedido").addEventListener("click", () => {
+  if (carrinho.length === 0) {
+    alert("Seu carrinho está vazio!");
+    return;
+  }
 
-    if (carrinho.length === 0) {
-        alert("Seu carrinho está vazio!");
-        return;
+  const nome = document.getElementById("nomeCliente").value.trim();
+  const celular = document.getElementById("celularCliente").value.trim();
+  const endereco = document.getElementById("enderecoCliente").value.trim();
+  const referencia = document.getElementById("referenciaCliente").value.trim();
+  const pagamento = document.getElementById("pagamentoCliente").value;
+  const troco = document.getElementById("trocoCliente").value;
+
+  if (!nome) {
+    alert("Informe seu nome.");
+    return;
+  }
+
+  if (!celular) {
+    alert("Informe seu WhatsApp.");
+    return;
+  }
+
+  if (!pagamento) {
+    alert("Selecione a forma de pagamento.");
+    return;
+  }
+
+  if (tipoEntrega === "Entrega") {
+    if (!endereco) {
+      alert("Informe o endereço completo (rua e número).");
+      return;
     }
-
-    const nome = document.getElementById('nomeCliente').value.trim();
-    const celular = document.getElementById('celularCliente').value.trim();
-    const endereco = document.getElementById('enderecoCliente').value.trim();
-    const referencia = document.getElementById('referenciaCliente').value.trim();
-    const pagamento = document.getElementById('pagamentoCliente').value;
-    const troco = document.getElementById('trocoCliente').value;
-
-    if (!nome) {
-        alert('Informe seu nome.');
-        return;
+    if (!bairroSelecionado || bairroSelecionado === "") {
+      alert("Selecione o bairro.");
+      return;
     }
+  }
 
-    if (!celular) {
-        alert('Informe seu WhatsApp.');
-        return;
+  if (pagamento === "Pix" && !pixConfirmado) {
+    abrirModalPix();
+    return;
+  }
+
+  let total = 0;
+  const divisor = `------------------------------\n`;
+
+  let mensagem = `*CHURRASQUINHO DUBOM*\n`;
+  mensagem += `*Novo Pedido*\n`;
+  mensagem += divisor;
+
+  mensagem += `*ITENS DO PEDIDO*\n\n`;
+
+  carrinho.forEach((item) => {
+    const subtotal = item.preco * item.quantidade;
+    total += subtotal;
+
+    mensagem += ` *${item.nome.toUpperCase()}*\n`;
+    mensagem += `   Qtd: ${item.quantidade} | Subtotal: R$ ${subtotal.toFixed(2)}\n`;
+
+    if (item.observacao) {
+      mensagem += `   ► *OBSERVAÇÃO:* ${item.observacao}\n`;
     }
-
-    if (!pagamento) {
-        alert('Selecione a forma de pagamento.');
-        return;
+    if (item.espetinho) {
+      mensagem += `   ► *ESPETINHO:* ${item.espetinho}\n`;
     }
+    mensagem += `\n`;
+  });
 
-    if (tipoEntrega === 'Entrega') {
-        if (!endereco) {
-            alert('Informe o endereço completo (rua e número).');
-            return;
-        }
-        if (!bairroSelecionado || bairroSelecionado === "") {
-            alert('Selecione o bairro.');
-            return;
-        }
-    }
+  const totalFinal = total + taxaEntrega;
 
-    if (pagamento === 'Pix' && !pixConfirmado) {
-        abrirModalPix();
-        return;
-    }
+  mensagem += divisor;
+  mensagem += `*RESUMO DO PEDIDO*\n\n`;
+  mensagem += `Subtotal: R$ ${total.toFixed(2)}\n`;
 
-    let total = 0;
-    const divisor = `------------------------------\n`;
+  if (tipoEntrega === "Entrega") {
+    mensagem += `Taxa de entrega: R$ ${taxaEntrega.toFixed(2)}\n`;
+  } else {
+    mensagem += `Retirada na loja\n`;
+  }
 
-    let mensagem = `*CHURRASQUINHO DUBOM*\n`;
-    mensagem += `*Novo Pedido*\n`;
+  mensagem += `*TOTAL: R$ ${totalFinal.toFixed(2)}*\n`;
+  mensagem += divisor;
+
+  mensagem += `*DADOS DO CLIENTE*\n\n`;
+  mensagem += `Nome: ${nome}\n`;
+  mensagem += `Celular: ${celular}\n`;
+
+  if (tipoEntrega === "Entrega") {
+    mensagem += `Endereço: ${endereco}\n`;
+    if (referencia) mensagem += `Referência: ${referencia}\n`;
+    mensagem += `Bairro: ${bairroSelecionado}\n`;
+  } else {
+    mensagem += `Retirada na loja\n`;
+  }
+
+  mensagem += `Pagamento: ${pagamento}\n`;
+
+  if (pagamento === "Dinheiro" && troco) {
+    const valorRecebido = Number(troco);
+    const valorTroco = valorRecebido - totalFinal;
     mensagem += divisor;
+    mensagem += `*TROCO*\n\n`;
+    mensagem += `Cliente paga com: R$ ${valorRecebido.toFixed(2)}\n`;
+    mensagem += `Troco: R$ ${valorTroco.toFixed(2)}\n`;
+  }
 
-    mensagem += `*ITENS DO PEDIDO*\n\n`;
+  mensagem += divisor;
+  mensagem += `Obrigado pela preferência!`;
 
-    carrinho.forEach(item => {
-        const subtotal = item.preco * item.quantidade;
-        total += subtotal;
+  // Verifica se loja está fechada
+  if (document.getElementById("statusLoja").classList.contains("fechado")) {
+    document.getElementById("modalFechado").classList.add("ativo");
+    return;
+  }
 
-        mensagem += ` *${item.nome.toUpperCase()}*\n`;
-        mensagem += `   Qtd: ${item.quantidade} | Subtotal: R$ ${subtotal.toFixed(2)}\n`;
+  const telefone = "5538998993135";
+  const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
 
-        if (item.observacao) {
-            mensagem += `   ► *OBSERVAÇÃO:* ${item.observacao}\n`;
-        }
-        if (item.espetinho) {
-            mensagem += `   ► *ESPETINHO:* ${item.espetinho}\n`;
-        }
-        mensagem += `\n`;
-    });
+  window.open(url, "_blank");
 
-    const totalFinal = total + taxaEntrega;
+  // Limpeza
+  pixConfirmado = false;
+  localStorage.removeItem("carrinho");
+  localStorage.removeItem("pixPendente");
 
-    mensagem += divisor;
-    mensagem += `*RESUMO DO PEDIDO*\n\n`;
-    mensagem += `Subtotal: R$ ${total.toFixed(2)}\n`;
-
-    if (tipoEntrega === 'Entrega') {
-        mensagem += `Taxa de entrega: R$ ${taxaEntrega.toFixed(2)}\n`;
-    } else {
-        mensagem += `Retirada na loja\n`;
-    }
-
-    mensagem += `*TOTAL: R$ ${totalFinal.toFixed(2)}*\n`;
-    mensagem += divisor;
-
-    mensagem += `*DADOS DO CLIENTE*\n\n`;
-    mensagem += `Nome: ${nome}\n`;
-    mensagem += `Celular: ${celular}\n`;
-
-    if (tipoEntrega === 'Entrega') {
-        mensagem += `Endereço: ${endereco}\n`;
-        if (referencia) mensagem += `Referência: ${referencia}\n`;
-        mensagem += `Bairro: ${bairroSelecionado}\n`;
-    } else {
-        mensagem += `Retirada na loja\n`;
-    }
-
-    mensagem += `Pagamento: ${pagamento}\n`;
-
-    if (pagamento === 'Dinheiro' && troco) {
-        const valorRecebido = Number(troco);
-        const valorTroco = valorRecebido - totalFinal;
-        mensagem += divisor;
-        mensagem += `*TROCO*\n\n`;
-        mensagem += `Cliente paga com: R$ ${valorRecebido.toFixed(2)}\n`;
-        mensagem += `Troco: R$ ${valorTroco.toFixed(2)}\n`;
-    }
-
-    mensagem += divisor;
-    mensagem += `Obrigado pela preferência!`;
-
-    // Verifica se loja está fechada
-    if (document.getElementById('statusLoja').classList.contains('fechado')) {
-        document.getElementById('modalFechado').classList.add('ativo');
-        return;
-    }
-
-    const telefone = "5538998993135";
-    const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
-
-    window.open(url, "_blank");
-
-    // Limpeza
-    pixConfirmado = false;
-    localStorage.removeItem('carrinho');
-    localStorage.removeItem('pixPendente');
-
-    carrinho = [];
-    atualizarCarrinho();
+  carrinho = [];
+  atualizarCarrinho();
 });
 
 /* ===================================
@@ -1280,67 +1151,47 @@ document
 =================================== */
 
 function fecharModalFechado() {
-
-    document
-        .getElementById('modalFechado')
-        .classList.remove('ativo');
+  document.getElementById("modalFechado").classList.remove("ativo");
 }
 
 document
-.getElementById('fecharModalFechado')
-.addEventListener(
-    'click',
-    fecharModalFechado
-);
+  .getElementById("fecharModalFechado")
+  .addEventListener("click", fecharModalFechado);
 
-document
-.getElementById('modalFechado')
-.addEventListener('click', (e) => {
-
-    if (
-        e.target.id === 'modalFechado'
-    ) {
-
-        fecharModalFechado();
-    }
+document.getElementById("modalFechado").addEventListener("click", (e) => {
+  if (e.target.id === "modalFechado") {
+    fecharModalFechado();
+  }
 });
 
 /* ===================================
    CARRINHO TOGGLE
 =================================== */
 
-function toggleTroco(){
+function toggleTroco() {
+  const pagamento = document.getElementById("pagamentoCliente").value;
 
-    const pagamento = document.getElementById('pagamentoCliente').value;
+  const campoTroco = document.getElementById("campoTroco");
 
-    const campoTroco = document.getElementById('campoTroco');
+  const troco = document.getElementById("trocoCliente");
 
-    const troco = document.getElementById('trocoCliente');
+  if (pagamento === "Dinheiro") {
+    campoTroco.style.display = "block";
+  } else {
+    campoTroco.style.display = "none";
 
-
-    if(pagamento === "Dinheiro"){
-
-        campoTroco.style.display = "block";
-
-    }else{
-
-        campoTroco.style.display = "none";
-
-        troco.value = "";
-
-    }
-
+    troco.value = "";
+  }
 }
 
-
 document
-.getElementById('pagamentoCliente')
-.addEventListener('change', toggleTroco);
+  .getElementById("pagamentoCliente")
+  .addEventListener("change", toggleTroco);
 
 window.toggleTroco = toggleTroco;
 
-document.getElementById('btnCarrinho').addEventListener('click', () => {
-    document.getElementById('carrinho').classList.toggle('aberto');
+document.getElementById("btnCarrinho").addEventListener("click", () => {
+  document.getElementById("carrinho").classList.toggle("aberto");
 });
 
 /*==================================
@@ -1348,57 +1199,47 @@ Carregar Bairros
 ==================================*/
 
 function carregarBairros() {
-    const select = document.getElementById('bairroCliente');
+  const select = document.getElementById("bairroCliente");
 
-    bairros.forEach(b => {
-        const option = document.createElement('option');
-        option.value = b.nome;
-        option.textContent = `${b.nome} - R$ ${b.valor.toFixed(2)}`;
-        select.appendChild(option);
-    });
+  bairros.forEach((b) => {
+    const option = document.createElement("option");
+    option.value = b.nome;
+    option.textContent = `${b.nome} - R$ ${b.valor.toFixed(2)}`;
+    select.appendChild(option);
+  });
 
-    select.addEventListener('change', () => {
-    const bairro = bairros.find(b => b.nome === select.value);
+  select.addEventListener("change", () => {
+    const bairro = bairros.find((b) => b.nome === select.value);
 
     if (tipoEntrega === "Entrega" && bairro) {
-        taxaEntrega = bairro.valor;
-        bairroSelecionado = bairro.nome;
+      taxaEntrega = bairro.valor;
+      bairroSelecionado = bairro.nome;
     } else if (tipoEntrega === "Retirada") {
-        taxaEntrega = 0;
-        bairroSelecionado = "Retirada na loja";
+      taxaEntrega = 0;
+      bairroSelecionado = "Retirada na loja";
     } else {
-        taxaEntrega = 0;
-        bairroSelecionado = "";
+      taxaEntrega = 0;
+      bairroSelecionado = "";
     }
 
     atualizarCarrinho();
-});
+  });
 }
 
-const btnFecharCarrinho = document.getElementById('fecharCarrinho');
+const btnFecharCarrinho = document.getElementById("fecharCarrinho");
 
 if (btnFecharCarrinho) {
-    btnFecharCarrinho.addEventListener('click', () => {
-
-        document
-            .getElementById('carrinho')
-            .classList.remove('aberto');
-
-    });
+  btnFecharCarrinho.addEventListener("click", () => {
+    document.getElementById("carrinho").classList.remove("aberto");
+  });
 }
 
-function carregarCarrinhoSalvo(){
+function carregarCarrinhoSalvo() {
+  const carrinhoSalvo = localStorage.getItem("carrinho");
 
-    const carrinhoSalvo =
-        localStorage.getItem('carrinho');
-
-    if(carrinhoSalvo){
-
-        carrinho =
-            JSON.parse(carrinhoSalvo);
-
-    }
-
+  if (carrinhoSalvo) {
+    carrinho = JSON.parse(carrinhoSalvo);
+  }
 }
 
 /* ===================================
