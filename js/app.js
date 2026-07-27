@@ -102,14 +102,14 @@ const produtos = [
     imagem: "./img/produtos/tulipa.jpg",
   },
 
-  {
+  /*{
     id: 23,
     nome: "Espetinho Cupim",
     descricao: "Espetinho de Cupim.",
     preco: 14.0,
     categoria: "espetinho",
     imagem: "./img/produtos/cupim.jpg",
-  },
+  },*/
 
   {
     id: 24,
@@ -328,7 +328,7 @@ const opcoesEspetinho = [
   "Frango com Bacon",
   "Linguiça Mista",
   "Tulipa",
-  "Cupim",
+  //"Cupim",
   "Coração",
   "Linguiça com Pimenta",
 ];
@@ -345,7 +345,7 @@ const sugestoesUpsell = {
   12: [26, 27, 24],
   13: [26, 27, 25],
   14: [26, 27, 11],
-  23: [26, 27, 11],
+  //23: [26, 27, 11],
   24: [26, 27, 12],
   25: [26, 27, 13],
 
