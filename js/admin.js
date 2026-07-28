@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   carregarConfiguracoes();
 
+  carregarPix();
+
   carregarHorario();
 
   carregarPedidos();
@@ -788,59 +790,10 @@ async function excluirProduto(id) {
   carregarProdutos();
 }
 
-async function carregarConfiguracoesHorario() {
-  const { data: horarios } = await window.db
-    .from("horarios_funcionamento")
-    .select("*")
-    .order("dia_semana");
-
-  const lista = document.getElementById("listaHorarios");
-
-  lista.innerHTML = "";
-
-  const dias = [
-    "Domingo",
-    "Segunda",
-    "Terça",
-    "Quarta",
-    "Quinta",
-    "Sexta",
-    "Sábado",
-  ];
-
-  horarios.forEach((h) => {
-    lista.innerHTML += `
-      <div class="card-admin horario-item">
-
-        <h3>${dias[h.dia_semana]}</h3>
-
-        <label>
-          <input
-            type="checkbox"
-            ${h.ativo ? "checked" : ""}
-            onchange="alterarDia(${h.dia_semana}, this.checked)"
-          >
-          Aberto
-        </label>
-
-        <input
-          type="time"
-          value="${h.hora_abertura.substring(0, 5)}"
-          onchange="alterarHoraAbertura(${h.dia_semana}, this.value)"
-        >
-
-        <input
-          type="time"
-          value="${h.hora_fechamento.substring(0, 5)}"
-          onchange="alterarHoraFechamento(${h.dia_semana}, this.value)"
-        >
-
-      </div>
-    `;
-  });
-}
-
-async function carregarConfiguracoes() {
+// carrega os campos da aba PIX (essa função antes tinha o mesmo nome de
+// carregarConfiguracoes() lá embaixo, então nunca era executada — os campos
+// de PIX nunca eram preenchidos ao abrir a aba. Renomeada para não colidir.)
+async function carregarPix() {
   const { data, error } = await window.db
     .from("configuracoes")
     .select("*")
@@ -853,16 +806,8 @@ async function carregarConfiguracoes() {
   }
 
   document.getElementById("pixChave").value = data.pix_chave || "";
-
   document.getElementById("pixTitular").value = data.pix_titular || "";
-
   document.getElementById("pixBanco").value = data.pix_banco || "";
-
-  document.getElementById("corPrincipal").value =
-    data.cor_principal || "#ff6b00";
-
-  document.getElementById("corSecundaria").value =
-    data.cor_secundaria || "#111111";
 }
 
 async function salvarPix() {
@@ -916,19 +861,6 @@ async function carregarConfiguracoes() {
   document.getElementById("statusLoja").value = data.status_manual || "auto";
 }
 
-async function carregarHorario() {
-  const { data, error } = await window.db
-    .from("horarios_funcionamento")
-    .select("*")
-    .eq("id", 1)
-    .single();
-
-  if (error) {
-    console.log(error);
-    return;
-  }
-}
-
 document
   .getElementById("salvarConfig")
   .addEventListener("click", salvarConfiguracoes);
@@ -964,26 +896,15 @@ async function salvarConfiguracoes() {
 
   // ==========================
   // HORÁRIOS
+  // (salvarHorarios já lê os inputs abre-X/fecha-X/ativo-X de cada
+  // linha renderizada em #listaHorarios — reaproveitado aqui em vez de
+  // duplicar a lógica com variáveis que não existiam)
   // ==========================
 
-  const horarios = [];
-
-  for (let dia = 0; dia <= 6; dia++) {
-    horarios.push({
-      dia_semana: dia,
-      ativo: true,
-      hora_abertura: horaAbre,
-      hora_fechamento: horaFecha,
-    });
-  }
-
-  const { error: erroHorario } = await window.db
-    .from("horarios_funcionamento")
-    .upsert(horarios);
+  const erroHorario = await salvarHorarios();
 
   if (erroHorario) {
-    console.error(erroHorario);
-    alert("Erro ao salvar horários");
+    alert("Configurações salvas, mas houve erro ao salvar horários");
     return;
   }
 
@@ -1054,21 +975,28 @@ async function carregarHorario() {
 
 async function salvarHorarios() {
   for (let dia = 0; dia <= 6; dia++) {
-    const hora_abertura = document.getElementById(`abre-${dia}`).value;
+    const campoAbre = document.getElementById(`abre-${dia}`);
+    const campoFecha = document.getElementById(`fecha-${dia}`);
+    const campoAtivo = document.getElementById(`ativo-${dia}`);
 
-    const hora_fechamento = document.getElementById(`fecha-${dia}`).value;
+    if (!campoAbre || !campoFecha || !campoAtivo) continue;
 
-    const ativo = document.getElementById(`ativo-${dia}`).checked;
-
-    await window.db
+    const { error } = await window.db
       .from("horarios_funcionamento")
       .update({
-        hora_abertura,
-        hora_fechamento,
-        ativo,
+        hora_abertura: campoAbre.value,
+        hora_fechamento: campoFecha.value,
+        ativo: campoAtivo.checked,
       })
       .eq("dia_semana", dia);
+
+    if (error) {
+      console.error(error);
+      return error;
+    }
   }
+
+  return null;
 }
 
 let entregadores = [];
@@ -1292,6 +1220,24 @@ async function carregarEntregadores() {
   }
 
   entregadores = data;
+
+  mostrarEntregadores();
+}
+
+function mostrarEntregadores() {
+  const lista = document.getElementById("listaEntregadores");
+
+  if (!lista) return;
+
+  lista.innerHTML = "";
+
+  entregadores.forEach((ent) => {
+    lista.innerHTML += `
+      <div class="entregador-item">
+        <span>${ent.nome}</span>
+      </div>
+    `;
+  });
 }
 
 document.getElementById("salvarTema")?.addEventListener("click", salvarTema);
@@ -1317,10 +1263,6 @@ async function salvarTema() {
 
   alert("Tema salvo com sucesso!");
 }
-
-window.addEventListener("DOMContentLoaded", () => {
-  carregarConfiguracoesHorario();
-});
 
 carregarPedidos();
 

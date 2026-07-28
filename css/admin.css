@@ -304,79 +304,90 @@ body {
 
 /* ==========================================
    HORÁRIOS DE FUNCIONAMENTO
-   Use este padrão de markup na aba Configurações:
+   Marcação real gerada por mostrarHorario() em admin.js:
 
-   <div class="horario-linha">
-     <span class="horario-dia">Segunda-feira</span>
-     <div class="horario-campos">
-       <input type="time" ...>
-       <span>até</span>
-       <input type="time" ...>
+   <div id="listaHorarios">        <!-- fica dentro do .card-admin de Configurações -->
+     <div class="horario-card">
+       <h3>Domingo</h3>
+       <input type="time" id="abre-0" ...>
+       <input type="time" id="fecha-0" ...>
+       <label><input type="checkbox" id="ativo-0" ...> Aberto</label>
      </div>
-     <label class="check-admin horario-fechado"><input type="checkbox"> Fechado</label>
+     ... (uma por dia da semana)
    </div>
 
-   Isso resolve o input de hora "vazando" do card: cada linha vira grid
-   e quebra em coluna única em telas estreitas, ao invés de forçar tudo
-   numa única linha larga demais para o card.
+   CAUSA REAL do input de hora vazando do card: a regra
+   ".card-admin input { width: 100% }" também valia pros dois <input
+   type="time"> dentro de cada linha, então cada um tentava ocupar 100%
+   da largura do card ao mesmo tempo, um do lado do outro — dobrando a
+   largura necessária. A correção é transformar cada linha num grid com
+   colunas definidas, que passa a conter os inputs em vez de deixá-los
+   herdar 100% livremente.
 ========================================== */
 
-.horario-linha {
+#listaHorarios {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.horario-card {
   display: grid;
-  grid-template-columns: 140px 1fr auto;
+  grid-template-columns: 90px 1fr 1fr auto;
   align-items: center;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid #f1ede5;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 14px;
+  background: #faf7f2;
+  border: 1px solid #eee;
+  border-radius: 12px;
 }
 
-.horario-linha:last-child {
-  border-bottom: none;
-}
-
-.horario-dia {
-  font-weight: 600;
+.horario-card h3 {
   font-size: 14px;
+  font-weight: 700;
+  color: var(--carvao);
 }
 
-.horario-campos {
+.horario-card input[type="time"] {
+  width: 100%;
+  height: 42px;
+  min-width: 0;
+  padding: 0 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.horario-card label {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  min-width: 0;
-}
-
-.horario-campos input[type="time"] {
-  flex: 1 1 110px; /* encolhe/cresce mas nunca some, nunca estoura */
-  min-width: 90px;
-  width: auto;
-}
-
-.horario-campos span {
-  color: var(--texto-claro);
+  justify-content: flex-start;
+  gap: 6px;
   font-size: 13px;
+  font-weight: 600;
   white-space: nowrap;
 }
 
-.horario-fechado {
-  padding: 8px 12px;
-  white-space: nowrap;
+.horario-card input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--brasa);
 }
 
 @media (max-width: 560px) {
-  .horario-linha {
-    grid-template-columns: 1fr;
-    gap: 8px;
+  .horario-card {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 8px;
   }
 
-  .horario-campos {
-    order: 2;
+  .horario-card h3 {
+    grid-column: 1 / -1;
   }
 
-  .horario-fechado {
-    order: 3;
-    justify-content: flex-start;
+  .horario-card label {
+    grid-column: 1 / -1;
   }
 }
 
@@ -628,6 +639,11 @@ td {
 .produto-acoes .btn-status {
   background: #f3f3f3;
   color: var(--texto);
+}
+
+.produto-acoes .btn-excluir {
+  background: #fee2e2;
+  color: #991b1b;
 }
 
 /* ==========================================
