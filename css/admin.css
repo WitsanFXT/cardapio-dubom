@@ -334,9 +334,11 @@ body {
 
 .horario-card {
   display: grid;
-  grid-template-columns: 90px 1fr 1fr auto;
+  grid-template-columns: 90px 1fr auto;
+  grid-template-rows: auto auto;
   align-items: center;
-  gap: 10px;
+  column-gap: 10px;
+  row-gap: 6px;
   width: 100%;
   padding: 12px 14px;
   background: #faf7f2;
@@ -345,14 +347,27 @@ body {
 }
 
 .horario-card h3 {
+  grid-column: 1;
+  grid-row: 1 / 3;
   font-size: 14px;
   font-weight: 700;
   color: var(--carvao);
 }
 
+/* abre = primeiro input; fecha = segundo input — empilhados na mesma coluna */
+.horario-card input[type="time"]:nth-of-type(1) {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.horario-card input[type="time"]:nth-of-type(2) {
+  grid-column: 2;
+  grid-row: 2;
+}
+
 .horario-card input[type="time"] {
   width: 100%;
-  height: 42px;
+  height: 38px;
   min-width: 0;
   padding: 0 10px;
   border: 1px solid #ddd;
@@ -361,6 +376,8 @@ body {
 }
 
 .horario-card label {
+  grid-column: 3;
+  grid-row: 1 / 3;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -378,16 +395,27 @@ body {
 
 @media (max-width: 560px) {
   .horario-card {
-    grid-template-columns: 1fr 1fr;
-    row-gap: 8px;
+    grid-template-columns: 1fr auto;
   }
 
   .horario-card h3 {
     grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .horario-card input[type="time"]:nth-of-type(1) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .horario-card input[type="time"]:nth-of-type(2) {
+    grid-column: 1;
+    grid-row: 3;
   }
 
   .horario-card label {
-    grid-column: 1 / -1;
+    grid-column: 2;
+    grid-row: 2 / 4;
   }
 }
 
