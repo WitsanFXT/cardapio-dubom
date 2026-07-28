@@ -1,0 +1,1000 @@
+/* ==========================================
+   CHURRASQUINHO DUBOM
+   ADMIN PANEL PREMIUM (otimizado)
+========================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --carvao: #1b1512;
+  --carvao-claro: #2a2019;
+
+  --brasa: #e8541e;
+  --brasa-escura: #b8290f;
+
+  --dourado: #c9962e;
+
+  --fundo: #f3ece1;
+
+  --branco: #fff;
+
+  --texto: #362b24;
+  --texto-claro: #8a7b6c;
+
+  --cinza: #7a6b5d;
+
+  --erro: #dc2626;
+  --sucesso: #16a34a;
+
+  --sombra: 0 10px 30px rgba(0, 0, 0, 0.15);
+  --sombra-media: 0 8px 25px rgba(0, 0, 0, 0.1);
+
+  --raio: 18px;
+}
+
+/* ==========================================
+   RESET
+========================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--fundo);
+  font-family: "Work Sans", sans-serif;
+  color: var(--texto);
+  min-height: 100vh;
+  overflow-x: hidden;
+  width: 100%;
+  overflow-wrap: break-word;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.admin-header {
+  height: 90px;
+  background: linear-gradient(135deg, var(--carvao), var(--carvao-claro));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 35px;
+  color: white;
+  box-shadow: var(--sombra);
+}
+
+.admin-logo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.admin-logo h1 {
+  font-family: "Anton";
+  font-size: 34px;
+  letter-spacing: 1px;
+}
+
+.admin-logo span {
+  color: var(--dourado);
+  font-weight: 600;
+}
+
+#logoutAdmin {
+  background: var(--brasa);
+  border: none;
+  padding: 12px 25px;
+  border-radius: 12px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#logoutAdmin:hover {
+  transform: translateY(-3px);
+}
+
+/* ==========================================
+   LAYOUT PRINCIPAL
+========================================== */
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: calc(100vh - 90px);
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ==========================================
+   SIDEBAR
+========================================== */
+
+.sidebar {
+  background: white;
+  padding: 25px;
+  border-right: 1px solid #ddd;
+}
+
+.sidebar h3 {
+  font-size: 13px;
+  text-transform: uppercase;
+  color: var(--cinza);
+  margin-bottom: 20px;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar button {
+  width: 100%;
+  height: 48px;
+  border: none;
+  background: #f7f4ef;
+  border-radius: 12px;
+  padding: 0 18px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--texto);
+  text-align: left;
+  transition: 0.25s;
+}
+
+.sidebar button:hover {
+  background: var(--brasa);
+  color: white;
+  transform: translateX(5px);
+}
+
+.sidebar button.ativo {
+  background: linear-gradient(135deg, var(--brasa), var(--brasa-escura));
+  color: white;
+}
+
+/* ==========================================
+   CONTEÚDO
+========================================== */
+
+.admin-content {
+  padding: 35px;
+}
+
+.aba {
+  display: none;
+}
+
+.aba.ativa {
+  display: block;
+}
+
+.aba h1 {
+  font-family: "Anton";
+  font-size: 34px;
+  font-weight: 400;
+  margin-bottom: 25px;
+  color: var(--carvao);
+}
+
+/* ==========================================
+   CARD ADMIN (definição única)
+========================================== */
+
+.card-admin {
+  background: white;
+  padding: 30px;
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 800px;
+}
+
+.card-admin h2 {
+  font-family: "Anton";
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--carvao);
+}
+
+.card-admin label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-weight: 600;
+}
+
+/* ==========================================
+   INPUTS
+========================================== */
+
+.card-admin input,
+.card-admin textarea,
+.card-admin select {
+  width: 100%;
+  height: 52px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 0 15px;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  background: white;
+  transition: 0.2s;
+}
+
+.card-admin textarea {
+  height: 120px;
+  padding-top: 15px;
+  resize: none;
+}
+
+.card-admin input:focus,
+.card-admin textarea:focus,
+.card-admin select:focus {
+  border-color: var(--brasa);
+  box-shadow: 0 0 0 3px rgba(232, 84, 30, 0.15);
+}
+
+.card-admin input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--brasa);
+}
+
+/* CHECKBOX estilizado */
+
+.check-admin {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fafafa;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.check-admin input {
+  width: 18px !important;
+  height: 18px;
+  accent-color: var(--brasa);
+}
+
+/* ==========================================
+   BOTÕES
+========================================== */
+
+.card-admin button,
+.btn-salvar {
+  height: 50px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--brasa), var(--brasa-escura));
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+.card-admin button:hover,
+.btn-salvar:hover {
+  transform: translateY(-2px);
+}
+
+.btn-salvar {
+  width: 100%;
+  padding: 15px;
+  font-weight: 700;
+}
+
+/* ==========================================
+   LISTAS (grids)
+========================================== */
+
+#listaCategorias {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 25px;
+}
+
+#listaProdutos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+#listaPedidos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 20px;
+}
+
+#listaEntregadores {
+  display: grid;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+/* ==========================================
+   TABELAS
+========================================== */
+
+table {
+  width: 100%;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  border-collapse: collapse;
+  box-shadow: var(--sombra);
+}
+
+th {
+  background: var(--carvao);
+  color: white;
+  padding: 15px;
+}
+
+td {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+/* ==========================================
+   BADGES DE STATUS (genérico + pedidos)
+========================================== */
+
+.status {
+  padding: 8px 15px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status.aberto,
+.status.entregue {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status.fechado {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.status.novo {
+  background: #fff4d6;
+  color: #b7791f;
+}
+
+.status.preparando {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status.saiu {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+/* ==========================================
+   CATEGORIAS ADMIN
+========================================== */
+
+.categoria-card {
+  background: white;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: var(--sombra-media);
+  transition: 0.25s;
+  border: 1px solid #eee;
+}
+
+.categoria-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.categoria-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.categoria-icon {
+  width: 55px;
+  height: 55px;
+  background: linear-gradient(135deg, var(--brasa), var(--brasa-escura));
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.categoria-info {
+  flex: 1;
+}
+
+.categoria-info h3 {
+  font-size: 20px;
+  margin-bottom: 5px;
+  color: var(--carvao);
+}
+
+.categoria-info span {
+  color: var(--texto-claro);
+  font-size: 14px;
+}
+
+.categoria-status {
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  width: max-content;
+}
+
+.categoria-status.ativo {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.categoria-status.inativo {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.categoria-footer {
+  display: flex;
+  gap: 12px;
+}
+
+.categoria-footer button,
+.produto-acoes button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: 0.2s;
+}
+
+.categoria-footer button:hover,
+.produto-acoes button:hover {
+  transform: translateY(-2px);
+  filter: brightness(0.95);
+}
+
+.categoria-footer .btn-editar,
+.produto-acoes .btn-editar {
+  background: var(--dourado);
+  color: white;
+}
+
+.categoria-footer .btn-status,
+.produto-acoes .btn-status {
+  background: #f3f3f3;
+  color: var(--texto);
+}
+
+/* ==========================================
+   PRODUTOS ADMIN
+========================================== */
+
+.produto-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  border: 1px solid #eee;
+  transition: 0.25s;
+  display: flex;
+  flex-direction: column;
+}
+
+.produto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+}
+
+.produto-imagem {
+  width: 100%;
+  height: 220px;
+  background: #eee;
+  overflow: hidden;
+}
+
+.produto-imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.3s;
+}
+
+.produto-card:hover .produto-imagem img {
+  transform: scale(1.05);
+}
+
+.produto-info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.produto-info h3 {
+  font-size: 20px;
+  color: var(--carvao);
+  line-height: 1.2;
+}
+
+.produto-info p {
+  color: var(--texto-claro);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.produto-info strong {
+  font-size: 26px;
+  color: var(--brasa);
+  margin-top: 5px;
+}
+
+.produto-info .categoria-status {
+  margin-top: 5px;
+}
+
+.produto-acoes {
+  display: flex;
+  gap: 12px;
+  padding: 0 20px 20px;
+}
+
+/* form de produto usa grid em vez de flex */
+#produtos .card-admin {
+  display: grid;
+  gap: 15px;
+}
+
+#produtos textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* ==========================================
+   PEDIDOS
+========================================== */
+
+.pedido-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 22px;
+  border: 1px solid #ececec;
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.05),
+    0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: 0.25s ease;
+}
+
+.pedido-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.08),
+    0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.pedido-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.pedido-topo h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+}
+
+.pedido-card p {
+  margin: 10px 0;
+  color: #555;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pedido-card p strong {
+  color: #222;
+}
+
+.pedido-total {
+  margin-top: 15px;
+  padding: 15px;
+  background: #f8fafc;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.pedido-total span {
+  display: block;
+  font-size: 13px;
+  color: #666;
+}
+
+.pedido-total strong {
+  font-size: 24px;
+  color: var(--sucesso);
+}
+
+.pago {
+  color: var(--sucesso);
+  font-weight: 700;
+}
+
+.pendente {
+  color: var(--erro);
+  font-weight: 700;
+}
+
+.acoes-pedido {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.acoes-pedido select {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px;
+  outline: none;
+}
+
+.acoes-pedido button {
+  border: none;
+  background: var(--sucesso);
+  color: white;
+  padding: 12px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.acoes-pedido button:hover {
+  background: #15803d;
+}
+
+/* ==========================================
+   ENTREGADORES
+========================================== */
+
+.entregador-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f7f4ef;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+/* ==========================================
+   RESPONSIVO / MOBILE
+========================================== */
+
+/* Tablet: sidebar vira barra de abas horizontal fixa no topo */
+@media (max-width: 900px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .sidebar h3 {
+    display: none;
+  }
+
+  .sidebar nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scroll-padding-inline: 12px;
+    padding: 2px 12px 4px;
+  }
+
+  .sidebar nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* fade nas bordas indicando que dá pra deslizar (efeito carrossel) */
+  .sidebar::before,
+  .sidebar::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    bottom: 4px;
+    width: 24px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .sidebar::before {
+    left: 0;
+    background: linear-gradient(90deg, white, transparent);
+  }
+
+  .sidebar::after {
+    right: 0;
+    background: linear-gradient(-90deg, white, transparent);
+  }
+
+  .sidebar button {
+    width: auto;
+    flex: 0 0 auto;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    white-space: nowrap;
+    background: #f7f4ef;
+    scroll-snap-align: start;
+  }
+
+  .sidebar button:hover {
+    transform: none;
+  }
+
+  .admin-content {
+    padding: 20px;
+  }
+
+  .admin-header {
+    height: auto;
+    padding: 16px 20px;
+    flex-direction: row;
+    gap: 15px;
+  }
+
+  .card-admin {
+    max-width: 100%;
+  }
+
+  #listaPedidos {
+    grid-template-columns: 1fr;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+/* Mobile grande */
+@media (max-width: 768px) {
+  .acoes-pedido {
+    flex-direction: column;
+  }
+
+  .acoes-pedido button {
+    width: 100%;
+  }
+
+  .pedido-topo {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+/* Mobile padrão: produtos e categorias em 2 colunas, cards compactos */
+@media (max-width: 600px) {
+  .admin-logo h1 {
+    font-size: 22px;
+  }
+
+  .admin-logo span {
+    font-size: 12px;
+  }
+
+  .aba h1 {
+    font-size: 22px;
+    margin-bottom: 18px;
+  }
+
+  .admin-content {
+    padding: 12px;
+  }
+
+  .card-admin {
+    padding: 18px;
+    gap: 12px;
+    border-radius: 14px;
+  }
+
+  .card-admin input,
+  .card-admin select,
+  #produtos input,
+  #produtos select {
+    height: 46px;
+    font-size: 14px;
+  }
+
+  #listaCategorias,
+  #listaProdutos {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  /* Categoria compacta */
+  .categoria-card {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .categoria-header {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .categoria-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 20px;
+  }
+
+  .categoria-info h3 {
+    font-size: 15px;
+  }
+
+  .categoria-info span {
+    font-size: 12px;
+  }
+
+  .categoria-status {
+    width: 100%;
+    text-align: center;
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+
+  .categoria-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .categoria-footer button {
+    padding: 9px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+
+  /* Produto compacto */
+  .produto-imagem {
+    height: 110px;
+  }
+
+  .produto-info {
+    padding: 12px;
+    gap: 6px;
+  }
+
+  .produto-info h3 {
+    font-size: 14px;
+  }
+
+  .produto-info p {
+    font-size: 11px;
+  }
+
+  .produto-info strong {
+    font-size: 18px;
+  }
+
+  .produto-info .categoria-status {
+    width: max-content;
+    font-size: 10px;
+    padding: 4px 9px;
+  }
+
+  .produto-acoes {
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 12px 12px;
+  }
+
+  .produto-acoes button {
+    padding: 9px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+
+  .pedido-card {
+    padding: 16px;
+  }
+
+  .pedido-card p {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .entregador-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
+
+/* Telas muito pequenas: produtos/categorias voltam para 1 coluna */
+@media (max-width: 400px) {
+  #listaCategorias,
+  #listaProdutos {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-logo h1 {
+    font-size: 20px;
+  }
+
+  .sidebar button {
+    font-size: 12px;
+    height: 38px;
+    padding: 0 13px;
+  }
+
+  .btn-salvar,
+  .card-admin button {
+    font-size: 14px;
+    height: 46px;
+  }
+}

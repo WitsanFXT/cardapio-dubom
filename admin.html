@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel Administrativo</title>
+    <link rel="stylesheet" href="./css/admin.css" />
+  </head>
+
+  <body>
+    <header class="admin-header">
+      <div class="admin-logo">
+        <h1>Churrasquinho Dubom</h1>
+        <span>Painel Administrativo</span>
+      </div>
+
+      <button id="logoutAdmin">Sair</button>
+    </header>
+
+    <div class="admin-layout">
+      <aside class="sidebar">
+        <h3>Menu</h3>
+
+        <nav>
+          <button data-tab="config">⚙ Configurações</button>
+          <button data-tab="categorias">📂 Categorias</button>
+          <button data-tab="produtos">🍖 Produtos</button>
+          <button data-tab="pix">💳 PIX</button>
+          <button data-tab="pedidos">📦 Pedidos</button>
+        </nav>
+      </aside>
+
+      <main class="admin-content">
+        <!-- CONFIGURAÇÕES -->
+        <section id="config" class="aba ativa">
+          <h1>Configurações da Loja</h1>
+
+          <div class="card-admin">
+            <input id="nomeLoja" placeholder="Nome da loja" />
+            <input id="whatsappNumero" placeholder="Telefone" />
+            <input id="enderecoLoja" placeholder="Endereço" />
+
+            <select id="statusLoja">
+              <option value="auto">Automático</option>
+              <option value="aberto">Aberto</option>
+              <option value="fechado">Fechado</option>
+            </select>
+
+            <div id="listaHorarios"></div>
+
+            <button class="btn-salvar" id="salvarConfig">
+              Salvar Configurações
+            </button>
+          </div>
+        </section>
+
+        <!-- CATEGORIAS -->
+        <section id="categorias" class="aba">
+          <h1>Categorias</h1>
+
+          <div class="card-admin">
+            <input id="novaCategoria" placeholder="Nome da categoria" />
+            <input id="ordemCategoria" type="number" placeholder="Ordem" />
+            <button class="btn-salvar" id="btnCategoria">Adicionar</button>
+          </div>
+
+          <div id="listaCategorias"></div>
+        </section>
+
+        <!-- PRODUTOS -->
+        <section id="produtos" class="aba">
+          <h1>Produtos</h1>
+
+          <div class="card-admin">
+            <input id="produtoNome" placeholder="Nome" />
+            <textarea id="produtoDescricao" placeholder="Descrição"></textarea>
+            <input
+              id="produtoPreco"
+              type="number"
+              step="0.01"
+              placeholder="Preço"
+            />
+
+            <select id="produtoCategoria">
+              <option value="">Selecione categoria</option>
+            </select>
+
+            <input id="produtoImagem" placeholder="URL da imagem" />
+
+            <label class="check-admin">
+              <input id="produtoEspetinho" type="checkbox" />
+              Precisa escolher espetinho
+            </label>
+
+            <label class="check-admin">
+              <input id="produtoAtivo" type="checkbox" checked />
+              Produto ativo
+            </label>
+
+            <button class="btn-salvar" id="salvarProduto">
+              Salvar Produto
+            </button>
+          </div>
+
+          <div id="listaProdutos"></div>
+        </section>
+
+        <!-- PIX -->
+        <section id="pix" class="aba">
+          <div class="card-admin">
+            <h2>PIX</h2>
+
+            <input id="pixChave" placeholder="Chave PIX" />
+            <input id="pixTitular" placeholder="Nome do Titular" />
+            <input id="pixBanco" placeholder="Banco" />
+
+            <button class="btn-salvar" id="salvarPix">Salvar PIX</button>
+          </div>
+        </section>
+
+        <!-- PEDIDOS -->
+        <section id="pedidos" class="aba">
+          <h1>Pedidos</h1>
+
+          <div id="listaPedidos"></div>
+
+          <div class="card-admin">
+            <h2>Entregadores</h2>
+
+            <input
+              type="text"
+              id="novoEntregador"
+              placeholder="Nome do entregador"
+            />
+            <button class="btn-salvar" id="btnNovoEntregador">Adicionar</button>
+
+            <div id="listaEntregadores"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./js/supabase.js"></script>
+    <script src="./js/admin.js"></script>
+  </body>
+</html>

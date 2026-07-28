@@ -1,8 +1,16 @@
-const produtos = [
-  // =========================
-  // JANTINHAS
-  // =========================
+/* ===================================
+   PRODUTOS
+   Agora vêm do Supabase (tabela `produtos`).
+   Este array começa vazio e é preenchido em carregarDadosSupabase().
+=================================== */
 
+let produtos = [];
+
+/* Array antigo mantido comentado apenas como referência do que já
+   foi migrado para o banco via sql/schema.sql — pode apagar quando
+   tiver certeza de que está tudo certo no Supabase.
+
+const produtosAntigos = [
   {
     id: 1,
     nome: "Jantinha Completa G",
@@ -109,7 +117,7 @@ const produtos = [
     preco: 14.0,
     categoria: "espetinho",
     imagem: "./img/produtos/cupim.jpg",
-  },*/
+  },
 
   {
     id: 24,
@@ -321,6 +329,7 @@ const produtos = [
     imagem: "./img/produtos/h2o.jpg",
   },
 ];
+*/
 
 const opcoesEspetinho = [
   "Barrigada",
@@ -328,7 +337,7 @@ const opcoesEspetinho = [
   "Frango com Bacon",
   "Linguiça Mista",
   "Tulipa",
-  //"Cupim",
+  "Cupim",
   "Coração",
   "Linguiça com Pimenta",
 ];
@@ -345,7 +354,7 @@ const sugestoesUpsell = {
   12: [26, 27, 24],
   13: [26, 27, 25],
   14: [26, 27, 11],
-  //23: [26, 27, 11],
+  23: [26, 27, 11],
   24: [26, 27, 12],
   25: [26, 27, 13],
 
@@ -390,8 +399,13 @@ function renderizarMaisPedidos() {
   container.innerHTML = "";
 
   maisPedidos.forEach((id) => {
-    const produto = produtos.find((p) => p.id === id);
+    const produto = produtos.find((p) => Number(p.id) === Number(id));
 
+    if (!produto) {
+      console.warn("Produto não encontrado:", id);
+      return;
+    }
+    console.log(id, produto);
     container.innerHTML += `
             <div class="produto-card">
 
@@ -427,67 +441,121 @@ let tipoEntrega = "Entrega";
    BAIRROS + ENTREGA
 =================================== */
 
-const bairros = [
-  { nome: "Água Branca I", valor: 10.0 },
-  { nome: "Água Branca II", valor: 9.0 },
-  { nome: "Águas Claras", valor: 8.0 },
-  { nome: "Alvorada", valor: 10.0 },
-  { nome: "Amaral", valor: 9.0 },
-  { nome: "Barroca", valor: 8.0 },
-  { nome: "Bela Serra", valor: 15.0 },
-  { nome: "Bela Vista", valor: 8.0 },
-  { nome: "Cachoeira", valor: 8.0 },
-  { nome: "Canabrava", valor: 8.0 },
-  { nome: "Canaã", valor: 8.0 },
-  { nome: "Capim Branco", valor: 8.0 },
-  { nome: "Capim Branco II", valor: 8.0 },
-  { nome: "Capim Branco III", valor: 8.0 },
-  { nome: "Centro", valor: 8.0 },
-  { nome: "Chácaras Colina", valor: 25.0 },
-  { nome: "Chácaras Monjolos", valor: 15.0 },
-  { nome: "Chácaras Rio Preto", valor: 15.0 },
-  { nome: "Cidade Nova", valor: 8.0 },
-  { nome: "Cruzeiro", valor: 8.0 },
-  { nome: "Curva do Rio", valor: 15.0 },
-  { nome: "De Lourdes", valor: 8.0 },
-  { nome: "Divinéia", valor: 8.0 },
-  { nome: "Dom Bosco", valor: 8.0 },
-  { nome: "Floresta", valor: 8.0 },
-  { nome: "Industrial", valor: 15.0 },
-  { nome: "Itapuã", valor: 8.0 },
-  { nome: "Iúna", valor: 8.0 },
-  { nome: "Jacilândia", valor: 8.0 },
-  { nome: "Jardim", valor: 8.0 },
-  { nome: "Jardim Amaral", valor: 10.0 },
-  { nome: "Jardim América", valor: 8.0 },
-  { nome: "Kamayurã", valor: 10.0 },
-  { nome: "Laguna", valor: 10.0 },
-  { nome: "Loteamento Zé Pedro", valor: 8.0 },
-  { nome: "Mamoeiro", valor: 20.0 },
-  { nome: "Nossa Senhora Aparecida", valor: 8.0 },
-  { nome: "Nossa Senhora do Carmo", valor: 8.0 },
-  { nome: "Nova Divinéia", valor: 8.0 },
-  { nome: "Novo Horizonte", valor: 8.0 },
-  { nome: "Novo Jardim", valor: 8.0 },
-  { nome: "Parque Canabrava", valor: 8.0 },
-  { nome: "Politécnica", valor: 8.0 },
-  { nome: "Posto HP", valor: 20.0 },
-  { nome: "Primavera", valor: 8.0 },
-  { nome: "Primavera V", valor: 8.0 },
-  { nome: "Riviera Park", valor: 12.0 },
-  { nome: "Sagrada Família", valor: 10.0 },
-  { nome: "Sagarana", valor: 8.0 },
-  { nome: "Santa Clara", valor: 20.0 },
-  { nome: "Santa Luzia", valor: 8.0 },
-  { nome: "Serenata", valor: 8.0 },
-  { nome: "Setor de Mansões Sul", valor: 20.0 },
-  { nome: "Terra Nova", valor: 9.0 },
-  { nome: "Vale do Amanhecer", valor: 12.0 },
-  { nome: "Vale Verde", valor: 8.0 },
-  { nome: "Vila do Sol", valor: 10.0 },
-  { nome: "Vila Militar", valor: 8.0 },
-  { nome: "Vila São Sebastião", valor: 8.0 },
-];
+// Agora vem do Supabase (tabela `bairros`) — populado em carregarDadosSupabase()
+let bairros = [];
+
+// Configurações da loja (tabela `configuracoes`) e horários (tabela
+// `horarios_funcionamento`) — também populados em carregarDadosSupabase()
+let configuracoes = {
+  nome_loja: "Churrasquinho Dubom",
+  whatsapp_numero: "5538998993135",
+  pix_chave: "",
+  pix_titular: "",
+  pix_banco: "",
+  status_manual: "auto",
+};
+let horariosFuncionamento = [];
+
+/* ===================================
+   CARREGAR TUDO DO SUPABASE
+=================================== */
+
+async function carregarDadosSupabase() {
+  const [
+    { data: produtosData, error: erroProdutos },
+    { data: bairrosData, error: erroBairros },
+    { data: configData, error: erroConfig },
+    { data: horariosData, error: erroHorarios },
+  ] = await Promise.all([
+    window.db
+      .from("produtos")
+      .select(
+        `
+      *,
+      categorias(nome)
+    `,
+      )
+      .eq("ativo", true)
+      .order("ordem", { ascending: true }),
+    window.db
+      .from("bairros")
+      .select("*")
+      .eq("ativo", true)
+      .order("ordem", { ascending: true }),
+    window.db.from("configuracoes").select("*").eq("id", 1).single(),
+    window.db
+      .from("horarios_funcionamento")
+      .select("*")
+      .order("dia_semana", { ascending: true }),
+  ]);
+
+  if (erroProdutos || erroBairros || erroConfig || erroHorarios) {
+    console.error(
+      "Erro ao carregar dados do Supabase:",
+      erroProdutos || erroBairros || erroConfig || erroHorarios,
+    );
+    return;
+  }
+
+  produtos = produtosData.map((p) => ({
+    id: p.id,
+    nome: p.nome,
+    descricao: p.descricao,
+    preco: Number(p.preco),
+
+    categoria: p.categorias?.nome
+      ?.toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace("ç", "c"),
+
+    imagem: p.imagem_url,
+
+    precisaEscolherEspetinho: p.precisa_espetinho,
+    exigeEspetinho: p.precisa_espetinho,
+  }));
+
+  console.log("Produtos carregados:");
+  console.table(produtos);
+
+  bairros = bairrosData.map((b) => ({ nome: b.nome, valor: Number(b.valor) }));
+
+  configuracoes = configData;
+
+  horariosFuncionamento = horariosData;
+}
+
+function aplicarConfiguracoesNaUI() {
+  const nomeTitulo = document.getElementById("nomeLojaTitulo");
+  if (nomeTitulo) nomeTitulo.textContent = configuracoes.nome_loja;
+
+  const chavePix = document.getElementById("chavePix");
+  if (chavePix) chavePix.value = configuracoes.pix_chave;
+
+  const pixTitular = document.getElementById("pixTitular");
+  if (pixTitular) pixTitular.textContent = configuracoes.pix_titular;
+
+  const pixBanco = document.getElementById("pixBanco");
+  if (pixBanco) pixBanco.textContent = configuracoes.pix_banco;
+
+  const horarioModalFechado = document.getElementById("horarioModalFechado");
+  if (horarioModalFechado) {
+    const hoje = horarioDeHoje();
+    if (hoje) {
+      horarioModalFechado.textContent = `${formatarHora(hoje.hora_abertura)} às ${formatarHora(hoje.hora_fechamento)}`;
+    }
+  }
+
+  document.documentElement.style.setProperty(
+    "--cor-principal",
+    configuracoes.cor_principal || "#ff6b00",
+  );
+
+  document.documentElement.style.setProperty(
+    "--cor-secundaria",
+    configuracoes.cor_secundaria || "#111111",
+  );
+}
 
 let taxaEntrega = 0;
 let bairroSelecionado = "";
@@ -498,40 +566,59 @@ let quantidadeAtual = 1;
    RENDERIZAR PRODUTOS
 =================================== */
 
+function formatarHora(horaStr) {
+  // horaStr vem do Supabase como "18:00:00" -> exibe "18:00"
+  if (!horaStr) return "";
+  return horaStr.slice(0, 5);
+}
+
+function horarioDeHoje() {
+  const dia = new Date().getDay();
+  return horariosFuncionamento.find((h) => h.dia_semana === dia) || null;
+}
+
 function atualizarStatusLoja() {
   const status = document.getElementById("statusLoja");
 
-  // ================== MODO TESTE ==================
-  // Mude para `false` quando for colocar em produção
-  const modoTeste = true;
-
-  if (modoTeste) {
+  // Override manual definido no painel admin tem prioridade total
+  if (configuracoes.status_manual === "aberto") {
     status.className = "status-loja aberto";
-    status.innerHTML = "🟢 Aberto agora  • Até 22:40";
-    return; // Sai da função, ignora o horário real
+    status.innerHTML = "🟢 Aberto agora";
+    return;
   }
-  // ================================================
 
-  // Horário normal (só funciona quando modoTeste = false)
+  if (configuracoes.status_manual === "fechado") {
+    status.className = "status-loja fechado";
+    status.innerHTML = "🔴 Fechado no momento";
+    return;
+  }
+
+  // Modo automático: segue o horário de funcionamento cadastrado
+  const hoje = horarioDeHoje();
+
+  if (!hoje) {
+    status.className = "status-loja fechado";
+    status.innerHTML = "🔴 Fechado no momento";
+    return;
+  }
+
   const agora = new Date();
-  const dia = agora.getDay();
-  const hora = agora.getHours();
-  const minuto = agora.getMinutes();
+  const horarioAtual = agora.getHours() * 60 + agora.getMinutes();
 
-  const horarioAtual = hora * 60 + minuto;
-  const abre = 18 * 60;
-  const fecha = 22 * 60 + 40;
+  const [horaAbreH, horaAbreM] = hoje.hora_abertura.split(":").map(Number);
+  const [horaFechaH, horaFechaM] = hoje.hora_fechamento.split(":").map(Number);
+  const abre = horaAbreH * 60 + horaAbreM;
+  const fecha = horaFechaH * 60 + horaFechaM;
 
-  const abertoHoje = dia >= 0 && dia <= 5;
   const abertoAgora =
-    abertoHoje && horarioAtual >= abre && horarioAtual <= fecha;
+    hoje.ativo && horarioAtual >= abre && horarioAtual <= fecha;
 
   if (abertoAgora) {
     status.className = "status-loja aberto";
-    status.innerHTML = "🟢 Aberto agora • Até 22:40";
+    status.innerHTML = `🟢 Aberto agora • Até ${formatarHora(hoje.hora_fechamento)}`;
   } else {
     status.className = "status-loja fechado";
-    status.innerHTML = "🔴 Fechado • Atendimento das 18h às 22h40";
+    status.innerHTML = `🔴 Fechado • Atendimento das ${formatarHora(hoje.hora_abertura)} às ${formatarHora(hoje.hora_fechamento)}`;
   }
 }
 
@@ -1016,135 +1103,193 @@ document.getElementById("btnFinalizarPix").addEventListener("click", () => {
    FINALIZAR PEDIDO
 =================================== */
 
-document.getElementById("finalizarPedido").addEventListener("click", () => {
-  if (carrinho.length === 0) {
-    alert("Seu carrinho está vazio!");
-    return;
-  }
-
-  const nome = document.getElementById("nomeCliente").value.trim();
-  const celular = document.getElementById("celularCliente").value.trim();
-  const endereco = document.getElementById("enderecoCliente").value.trim();
-  const referencia = document.getElementById("referenciaCliente").value.trim();
-  const pagamento = document.getElementById("pagamentoCliente").value;
-  const troco = document.getElementById("trocoCliente").value;
-
-  if (!nome) {
-    alert("Informe seu nome.");
-    return;
-  }
-
-  if (!celular) {
-    alert("Informe seu WhatsApp.");
-    return;
-  }
-
-  if (!pagamento) {
-    alert("Selecione a forma de pagamento.");
-    return;
-  }
-
-  if (tipoEntrega === "Entrega") {
-    if (!endereco) {
-      alert("Informe o endereço completo (rua e número).");
+document
+  .getElementById("finalizarPedido")
+  .addEventListener("click", async () => {
+    if (carrinho.length === 0) {
+      alert("Seu carrinho está vazio!");
       return;
     }
-    if (!bairroSelecionado || bairroSelecionado === "") {
-      alert("Selecione o bairro.");
+
+    const nome = document.getElementById("nomeCliente").value.trim();
+    const celular = document.getElementById("celularCliente").value.trim();
+    const endereco = document.getElementById("enderecoCliente").value.trim();
+    const referencia = document
+      .getElementById("referenciaCliente")
+      .value.trim();
+    const pagamento = document.getElementById("pagamentoCliente").value;
+    const troco = document.getElementById("trocoCliente").value;
+
+    if (!nome) {
+      alert("Informe seu nome.");
       return;
     }
-  }
 
-  if (pagamento === "Pix" && !pixConfirmado) {
-    abrirModalPix();
-    return;
-  }
-
-  let total = 0;
-  const divisor = `------------------------------\n`;
-
-  let mensagem = `*CHURRASQUINHO DUBOM*\n`;
-  mensagem += `*Novo Pedido*\n`;
-  mensagem += divisor;
-
-  mensagem += `*ITENS DO PEDIDO*\n\n`;
-
-  carrinho.forEach((item) => {
-    const subtotal = item.preco * item.quantidade;
-    total += subtotal;
-
-    mensagem += ` *${item.nome.toUpperCase()}*\n`;
-    mensagem += `   Qtd: ${item.quantidade} | Subtotal: R$ ${subtotal.toFixed(2)}\n`;
-
-    if (item.observacao) {
-      mensagem += `   ► *OBSERVAÇÃO:* ${item.observacao}\n`;
+    if (!celular) {
+      alert("Informe seu WhatsApp.");
+      return;
     }
-    if (item.espetinho) {
-      mensagem += `   ► *ESPETINHO:* ${item.espetinho}\n`;
+
+    if (!pagamento) {
+      alert("Selecione a forma de pagamento.");
+      return;
     }
-    mensagem += `\n`;
-  });
 
-  const totalFinal = total + taxaEntrega;
+    if (tipoEntrega === "Entrega") {
+      if (!endereco) {
+        alert("Informe o endereço completo (rua e número).");
+        return;
+      }
+      if (!bairroSelecionado || bairroSelecionado === "") {
+        alert("Selecione o bairro.");
+        return;
+      }
+    }
 
-  mensagem += divisor;
-  mensagem += `*RESUMO DO PEDIDO*\n\n`;
-  mensagem += `Subtotal: R$ ${total.toFixed(2)}\n`;
+    if (pagamento === "Pix" && !pixConfirmado) {
+      abrirModalPix();
+      return;
+    }
 
-  if (tipoEntrega === "Entrega") {
-    mensagem += `Taxa de entrega: R$ ${taxaEntrega.toFixed(2)}\n`;
-  } else {
-    mensagem += `Retirada na loja\n`;
-  }
+    let total = 0;
+    const divisor = `------------------------------\n`;
 
-  mensagem += `*TOTAL: R$ ${totalFinal.toFixed(2)}*\n`;
-  mensagem += divisor;
-
-  mensagem += `*DADOS DO CLIENTE*\n\n`;
-  mensagem += `Nome: ${nome}\n`;
-  mensagem += `Celular: ${celular}\n`;
-
-  if (tipoEntrega === "Entrega") {
-    mensagem += `Endereço: ${endereco}\n`;
-    if (referencia) mensagem += `Referência: ${referencia}\n`;
-    mensagem += `Bairro: ${bairroSelecionado}\n`;
-  } else {
-    mensagem += `Retirada na loja\n`;
-  }
-
-  mensagem += `Pagamento: ${pagamento}\n`;
-
-  if (pagamento === "Dinheiro" && troco) {
-    const valorRecebido = Number(troco);
-    const valorTroco = valorRecebido - totalFinal;
+    let mensagem = `*${configuracoes.nome_loja.toUpperCase()}*\n`;
+    mensagem += `*Novo Pedido*\n`;
     mensagem += divisor;
-    mensagem += `*TROCO*\n\n`;
-    mensagem += `Cliente paga com: R$ ${valorRecebido.toFixed(2)}\n`;
-    mensagem += `Troco: R$ ${valorTroco.toFixed(2)}\n`;
-  }
 
-  mensagem += divisor;
-  mensagem += `Obrigado pela preferência!`;
+    mensagem += `*ITENS DO PEDIDO*\n\n`;
 
-  // Verifica se loja está fechada
-  if (document.getElementById("statusLoja").classList.contains("fechado")) {
-    document.getElementById("modalFechado").classList.add("ativo");
-    return;
-  }
+    carrinho.forEach((item) => {
+      const subtotal = item.preco * item.quantidade;
+      total += subtotal;
 
-  const telefone = "5538998993135";
-  const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+      mensagem += ` *${item.nome.toUpperCase()}*\n`;
+      mensagem += `   Qtd: ${item.quantidade} | Subtotal: R$ ${subtotal.toFixed(2)}\n`;
 
-  window.open(url, "_blank");
+      if (item.observacao) {
+        mensagem += `   ► *OBSERVAÇÃO:* ${item.observacao}\n`;
+      }
+      if (item.espetinho) {
+        mensagem += `   ► *ESPETINHO:* ${item.espetinho}\n`;
+      }
+      mensagem += `\n`;
+    });
 
-  // Limpeza
-  pixConfirmado = false;
-  localStorage.removeItem("carrinho");
-  localStorage.removeItem("pixPendente");
+    const totalFinal = total + taxaEntrega;
 
-  carrinho = [];
-  atualizarCarrinho();
-});
+    mensagem += divisor;
+    mensagem += `*RESUMO DO PEDIDO*\n\n`;
+    mensagem += `Subtotal: R$ ${total.toFixed(2)}\n`;
+
+    if (tipoEntrega === "Entrega") {
+      mensagem += `Taxa de entrega: R$ ${taxaEntrega.toFixed(2)}\n`;
+    } else {
+      mensagem += `Retirada na loja\n`;
+    }
+
+    mensagem += `*TOTAL: R$ ${totalFinal.toFixed(2)}*\n`;
+    mensagem += divisor;
+
+    mensagem += `*DADOS DO CLIENTE*\n\n`;
+    mensagem += `Nome: ${nome}\n`;
+    mensagem += `Celular: ${celular}\n`;
+
+    if (tipoEntrega === "Entrega") {
+      mensagem += `Endereço: ${endereco}\n`;
+      if (referencia) mensagem += `Referência: ${referencia}\n`;
+      mensagem += `Bairro: ${bairroSelecionado}\n`;
+    } else {
+      mensagem += `Retirada na loja\n`;
+    }
+
+    mensagem += `Pagamento: ${pagamento}\n`;
+
+    if (pagamento === "Dinheiro" && troco) {
+      const valorRecebido = Number(troco);
+      const valorTroco = valorRecebido - totalFinal;
+      mensagem += divisor;
+      mensagem += `*TROCO*\n\n`;
+      mensagem += `Cliente paga com: R$ ${valorRecebido.toFixed(2)}\n`;
+      mensagem += `Troco: R$ ${valorTroco.toFixed(2)}\n`;
+    }
+
+    mensagem += divisor;
+    mensagem += `Obrigado pela preferência!`;
+
+    // Verifica se loja está fechada
+    if (document.getElementById("statusLoja").classList.contains("fechado")) {
+      document.getElementById("modalFechado").classList.add("ativo");
+      return;
+    }
+
+    const telefone = configuracoes.whatsapp_numero;
+    const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+
+    async function salvarPedido() {
+      const pedido = {
+        codigo: "PED-" + Date.now(),
+
+        cliente_nome: nome,
+
+        cliente_whatsapp: celular,
+
+        endereco,
+
+        referencia,
+
+        bairro: bairroSelecionado,
+
+        tipo_entrega: tipoEntrega,
+
+        forma_pagamento: pagamento,
+
+        subtotal: total,
+
+        taxa_entrega: taxaEntrega,
+
+        total: totalFinal,
+
+        status: "novo",
+      };
+
+      const { data: pedidoCriado, error } = await window.db
+        .from("pedidos")
+        .insert(pedido)
+        .select()
+        .single();
+
+      for (const item of carrinho) {
+        await window.db.from("itens_pedido").insert({
+          pedido_id: pedidoCriado.id,
+
+          produto_id: item.id,
+
+          produto_nome: item.nome,
+
+          preco: item.preco,
+
+          quantidade: item.quantidade,
+
+          observacao: item.observacao,
+
+          espetinho: item.espetinho,
+        });
+      }
+    }
+
+    await salvarPedido();
+
+    window.open(url, "_blank");
+
+    // Limpeza
+    pixConfirmado = false;
+    localStorage.removeItem("carrinho");
+    localStorage.removeItem("pixPendente");
+
+    carrinho = [];
+    atualizarCarrinho();
+  });
 
 /* ===================================
    MODAL FECHADO
@@ -1201,6 +1346,8 @@ Carregar Bairros
 function carregarBairros() {
   const select = document.getElementById("bairroCliente");
 
+  select.innerHTML = '<option value="">Selecione o bairro</option>';
+
   bairros.forEach((b) => {
     const option = document.createElement("option");
     option.value = b.nome;
@@ -1246,11 +1393,22 @@ function carregarCarrinhoSalvo() {
    INIT
 =================================== */
 
-verificarPixPendente();
-carregarCarrinhoSalvo();
-renderizarProdutos(produtos);
-carregarBairros();
-atualizarCarrinho();
-atualizarStatusLoja();
-renderizarMaisPedidos();
-toggleTroco();
+async function init() {
+  await carregarDadosSupabase();
+
+  aplicarConfiguracoesNaUI();
+
+  verificarPixPendente();
+  carregarCarrinhoSalvo();
+
+  renderizarProdutos(produtos);
+  carregarBairros();
+
+  atualizarCarrinho();
+  atualizarStatusLoja();
+
+  renderizarMaisPedidos();
+  toggleTroco();
+}
+
+init();

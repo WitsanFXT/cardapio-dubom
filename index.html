@@ -16,12 +16,13 @@
         <div class="overlay">
 
             <img
+                id="logoLoja"
                 src="./img/logo.png"
                 alt="Logo Churrasquinho Dubom"
                 class="logo"
             >
 
-            <h1>Churrasquinho Dubom</h1>
+            <h1 id="nomeLojaTitulo">Churrasquinho Dubom</h1>
 
             <p>
                 Os melhores espetinhos e jantinhas da cidade.
@@ -41,8 +42,9 @@
         <h3>Loja Fechada</h3>
 
         <p>
-            Estamos atendendo de
-            <strong>18:00 às 22:40</strong>.
+            <strong id="horarioModalFechado">
+                18:00 às 22:40
+            </strong>
         </p>
 
         <button id="fecharModalFechado">
@@ -50,6 +52,45 @@
         </button>
 
     </div>
+
+</div>
+
+
+<!-- LOGIN ADMIN -->
+
+<div id="modalAdmin" class="modal-admin">
+
+    <div class="modal-admin-content">
+
+        <button
+            id="fecharModalAdmin"
+            class="fechar-admin">
+            ×
+        </button>
+
+        <h2>Painel Admin</h2>
+
+        <input
+            type="email"
+            id="adminEmail"
+            placeholder="Digite seu e-mail"
+        >
+
+        <input
+            type="password"
+            id="adminSenha"
+            placeholder="Digite sua senha"
+        >
+
+        <button id="btnLoginAdmin">
+            Entrar no Painel
+        </button>
+
+        <p id="erroAdmin"></p>
+
+    </div>
+
+</div>
 
 </div>
             
@@ -402,8 +443,8 @@
 
             <small class="pix-titular">
             <strong>Recebedor:</strong><br>
-            Isabele Pereira<br>
-            Banco NuBank
+            <span id="pixTitular">Isabele Pereira</span><br>
+            Banco <span id="pixBanco">NuBank</span>
             </small>
 
             <button id="copiarPix">
@@ -457,8 +498,17 @@
 
     </footer>
 
+        <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+    <!-- Conexão Supabase -->
+    <script src="./js/supabase.js"></script>
+
+    <!-- Sistema do cardápio -->
     <script src="./js/app.js"></script>
+
+    <!-- Área Admin -->
+    <script src="./js/login-admin.js"></script>
 
 </body>
 
