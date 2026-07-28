@@ -33,7 +33,7 @@
 
   /* tamanhos base dos cards de produto/categoria — mude aqui pra controlar
      quantos aparecem por linha em cada breakpoint */
-  --card-min: 240px;
+  --card-min: 190px;
   --card-min-produto: 200px;
 }
 
