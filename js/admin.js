@@ -2,6 +2,8 @@
 // ADMIN DUBOM
 // =====================================
 
+let filtroPedidos = "hoje";
+
 // =====================================
 // INICIALIZAÇÃO
 // =====================================
@@ -1001,10 +1003,67 @@ async function salvarHorarios() {
 
 let entregadores = [];
 
+// Mapeia o status interno do pedido para um texto amigável — inclui os
+// status "aguardando pagamento" e "aguardando confirmação PIX" gravados
+// pelo cardápio antes mesmo do cliente terminar de enviar o pedido pelo
+// WhatsApp. A cor de cada status é definida no CSS (classe .status.<status>).
+function textoStatusPedido(status) {
+  const mapa = {
+    aguardando_pagamento: "💳 Aguardando PIX",
+
+    aguardando_entregador: "🛵 Aguardando Entregador",
+
+    em_preparo: "👨‍🍳 Em Preparo",
+
+    saiu_para_entrega: "🚚 Saiu para Entrega",
+
+    entregue: "✅ Entregue",
+
+    cancelado: "❌ Cancelado",
+  };
+
+  return mapa[status] || status;
+}
+
+// Monta um link direto pro WhatsApp do cliente (assume DDI 55 quando
+// o número não veio com ele) para o admin conseguir chamar mesmo que
+// o pedido nunca tenha sido enviado pelo cliente.
+function linkWhatsappCliente(numero) {
+  const digitos = (numero || "").replace(/\D/g, "");
+  if (!digitos) return null;
+  const comDDI = digitos.startsWith("55") ? digitos : `55${digitos}`;
+  return `https://wa.me/${comDDI}`;
+}
+
+function escapeHtml(texto) {
+  if (texto === null || texto === undefined) return "";
+  return String(texto)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function filtrarPedidos(filtro) {
+  filtroPedidos = filtro;
+
+  document
+    .querySelectorAll(".filtros-pedidos button")
+    .forEach((btn) => btn.classList.remove("ativo"));
+
+  event.target.classList.add("ativo");
+
+  carregarPedidos();
+}
+
+window.filtrarPedidos = filtrarPedidos;
+
 async function carregarPedidos() {
+  // Busca os pedidos junto com os itens de cada um (join pela FK
+  // pedido_id em itens_pedido), assim o admin vê exatamente o que o
+  // cliente montou no carrinho — mesmo que ele nunca tenha finalizado.
   const { data: pedidos, error } = await window.db
     .from("pedidos")
-    .select("*")
+    .select("*, itens_pedido(*)")
     .order("id", { ascending: false });
 
   if (error) {
@@ -1014,21 +1073,92 @@ async function carregarPedidos() {
 
   const container = document.getElementById("listaPedidos");
 
+  let pedidosFiltrados = pedidos;
+
+  console.log("Filtro:", filtroPedidos, "Pedidos:", pedidos.length);
+
+  if (filtroPedidos === "hoje") {
+    const hoje = new Date();
+
+    pedidosFiltrados = pedidos.filter((p) => {
+      const data = new Date(p.created_at);
+
+      return (
+        data.getDate() === hoje.getDate() &&
+        data.getMonth() === hoje.getMonth() &&
+        data.getFullYear() === hoje.getFullYear()
+      );
+    });
+  }
+
+  if (filtroPedidos === "semana") {
+    const hoje = new Date();
+
+    const inicioSemana = new Date(hoje);
+
+    const dia = hoje.getDay();
+
+    const diferenca = dia === 0 ? 6 : dia - 1;
+
+    inicioSemana.setDate(hoje.getDate() - diferenca);
+
+    inicioSemana.setHours(0, 0, 0, 0);
+
+    pedidosFiltrados = pedidos.filter((p) => {
+      const dataPedido = new Date(p.created_at);
+
+      return dataPedido >= inicioSemana;
+    });
+  }
+
+  if (filtroPedidos === "mes") {
+    const hoje = new Date();
+
+    const trintaDiasAtras = new Date();
+
+    trintaDiasAtras.setDate(hoje.getDate() - 30);
+
+    pedidosFiltrados = pedidos.filter((p) => {
+      const dataPedido = new Date(p.created_at);
+
+      return dataPedido >= trintaDiasAtras;
+    });
+  }
+
   container.innerHTML = "";
 
-  pedidos.forEach((pedido) => {
-    const opcoes = entregadores
-      .map(
-        (ent) => `
-      <option
-        value="${ent.nome}"
-        ${pedido.entregador === ent.nome ? "selected" : ""}
-      >
-        ${ent.nome}
-      </option>
-    `,
-      )
-      .join("");
+  pedidosFiltrados.forEach((pedido) => {
+    const statusTexto = textoStatusPedido(pedido.status);
+
+    const itens = pedido.itens_pedido || [];
+
+    const listaItensHtml = itens.length
+      ? `
+        <ul class="itens-pedido">
+          ${itens
+            .map(
+              (item) => `
+            <li>
+              ${item.quantidade}x ${escapeHtml(item.produto_nome)}
+              ${item.espetinho ? ` — Espetinho: ${escapeHtml(item.espetinho)}` : ""}
+              ${item.observacao ? ` — Obs: ${escapeHtml(item.observacao)}` : ""}
+            </li>
+          `,
+            )
+            .join("")}
+        </ul>
+      `
+      : `<p class="itens-pedido-vazio">Nenhum item registrado.</p>`;
+
+    const linkWhats = linkWhatsappCliente(pedido.cliente_whatsapp);
+
+    // "pago" continua sendo o pagamento recebido NA ENTREGA (dinheiro
+    // ou cartão, coletado pelo entregador). "pix_confirmado" é um campo
+    // separado — só existe pra pedidos pagos via PIX, e é o admin quem
+    // confirma olhando o extrato do banco. São coisas diferentes: um
+    // pedido no PIX não tem nada pro entregador cobrar, e um pedido em
+    // dinheiro não passa pelo banco.
+
     container.innerHTML += `
         
         <div class="pedido-card">
@@ -1036,149 +1166,119 @@ async function carregarPedidos() {
             <div class="pedido-topo">
 
                 <h3>
-                    Pedido #${pedido.id}
+                    Pedido #${pedido.id}${pedido.codigo ? ` <span class="pedido-codigo">(${escapeHtml(pedido.codigo)})</span>` : ""}
                 </h3>
 
-                <span class="status ${pedido.status}">
-                    ${pedido.status}
-                </span>
+                
 
             </div>
 
-            <p>
-                <strong>Cliente:</strong>
-                ${pedido.cliente_nome}
-            </p>
 
             <p>
                 <strong>WhatsApp:</strong>
-                ${pedido.cliente_whatsapp}
+                <span>
+                    ${escapeHtml(pedido.cliente_whatsapp)}
+                    ${linkWhats ? `<a class="link-whatsapp" href="${linkWhats}" target="_blank" rel="noopener">💬 Chamar no WhatsApp</a>` : ""}
+                </span>
             </p>
 
-            <p>
-                <strong>Total:</strong>
-                R$ ${Number(pedido.total).toFixed(2)}
-            </p>
+            <div class="pedido-comanda">
 
-            <p>
-                <strong>Entregador:</strong>
-                ${pedido.entregador || "Não definido"}
-            </p>
+    <div class="comanda-topo">
 
-            <p>
-                <strong>Pagamento:</strong>
-                ${pedido.pago ? "✅ Pago" : "❌ Pendente"}
-            </p>
+        <h2>PEDIDO #${pedido.id}</h2>
 
-            <div class="acoes-pedido">
+        <span>
+            ${new Date(pedido.created_at).toLocaleString("pt-BR")}
+        </span>
 
-                <select
-  onchange="atribuirEntregador(${pedido.id}, this.value)"
->
-  <option value="">
-    Selecione
-  </option>
+    </div>
 
-  ${opcoes}
-</select>
+    <div class="linha"></div>
 
-                <button
-                    onclick="marcarPago(${pedido.id})"
-                >
-                    Marcar Pago
-                </button>
+    <div class="cliente">
 
-            </div>
+        <h4>DADOS DO CLIENTE</h4>
+
+        <p>
+            <strong>Nome:</strong>
+            ${pedido.cliente_nome || "-"}
+        </p>
+
+        <p>
+            <strong>Telefone:</strong>
+            ${pedido.cliente_whatsapp || "-"}
+        </p>
+
+        <p>
+            <strong>Endereço:</strong>
+            ${pedido.endereco || "-"}
+        </p>
+
+        <p>
+            <strong>Bairro:</strong>
+            ${pedido.bairro || "-"}
+        </p>
+
+    </div>
+
+    <div class="linha"></div>
+
+    <div class="itens">
+
+        <h4>ITENS DO PEDIDO</h4>
+
+        ${listaItensHtml}
+
+    </div>
+
+    <div class="linha"></div>
+
+    <div class="resumo">
+
+        <p>
+            Subtotal:
+            <strong>
+                R$ ${Number(pedido.subtotal || 0).toFixed(2)}
+            </strong>
+        </p>
+
+        <p>
+            Entrega:
+            <strong>
+                R$ ${Number(pedido.taxa_entrega || 0).toFixed(2)}
+            </strong>
+        </p>
+
+        <p class="total">
+
+            TOTAL
+
+            <strong>
+                R$ ${Number(pedido.total || 0).toFixed(2)}
+            </strong>
+
+        </p>
+
+    </div>
+
+    <div class="linha"></div>
+
+    <div class="pagamento">
+
+        <h4>PAGAMENTO</h4>
+
+        <p>
+            ${pedido.forma_pagamento || "-"}
+        </p>
+
+    </div>
+
+</div>
 
         </div>
 
         `;
-  });
-}
-
-async function atribuirEntregador(pedidoId, entregador) {
-  await window.db
-    .from("pedidos")
-    .update({
-      entregador,
-    })
-    .eq("id", pedidoId);
-
-  carregarPedidos();
-}
-
-window.atribuirEntregador = atribuirEntregador;
-
-async function marcarPago(pedidoId) {
-  await window.db
-    .from("pedidos")
-    .update({
-      pago: true,
-    })
-    .eq("id", pedidoId);
-
-  carregarPedidos();
-}
-
-window.marcarPago = marcarPago;
-
-function mostrarPedidos(pedidos) {
-  const lista = document.getElementById("listaPedidos");
-
-  lista.innerHTML = "";
-
-  pedidos.forEach((pedido) => {
-    lista.innerHTML += `
-
-   <div class="card-admin pedido-card">
-
-      <h3>
-
-      #${pedido.codigo}
-
-      </h3>
-
-      <p>
-
-      Cliente:
-      ${pedido.cliente_nome}
-
-      </p>
-
-      <p>
-
-      WhatsApp:
-      ${pedido.cliente_whatsapp}
-
-      </p>
-
-      <p>
-
-      Total:
-      R$ ${Number(pedido.total).toFixed(2)}
-
-      </p>
-
-      <p>
-
-      Status:
-      ${pedido.status}
-
-      </p>
-
-      <button
-       onclick="
-       verPedido(
-       ${pedido.id}
-       )">
-
-       Ver Pedido
-
-      </button>
-
-   </div>
-
-   `;
   });
 }
 

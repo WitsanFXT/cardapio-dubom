@@ -122,19 +122,17 @@
         <section id="pedidos" class="aba">
           <h1>Pedidos</h1>
 
+          <div class="filtros-pedidos">
+            <button onclick="filtrarPedidos('hoje')">Hoje</button>
+
+            <button onclick="filtrarPedidos('semana')">Semana</button>
+
+            <button onclick="filtrarPedidos('mes')">Mês</button>
+
+            <button onclick="filtrarPedidos('todos')">Todos</button>
+          </div>
+
           <div id="listaPedidos"></div>
-
-          <div class="card-admin">
-            <h2>Entregadores</h2>
-
-            <input
-              type="text"
-              id="novoEntregador"
-              placeholder="Nome do entregador"
-            />
-            <button class="btn-salvar" id="btnNovoEntregador">Adicionar</button>
-
-            <div id="listaEntregadores"></div>
           </div>
         </section>
       </main>

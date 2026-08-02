@@ -391,6 +391,74 @@ const maisPedidos = [
 
 function salvarCarrinho() {
   localStorage.setItem("carrinho", JSON.stringify(carrinho));
+  tocarSessao();
+}
+
+function salvarFormulario() {
+  const campo = (id) => document.getElementById(id);
+
+  const formulario = {
+    nome: campo("nomeCliente")?.value || "",
+    celular: campo("celularCliente")?.value || "",
+    endereco: campo("enderecoCliente")?.value || "",
+    referencia: campo("referenciaCliente")?.value || "",
+    bairro: bairroSelecionado,
+    pagamento: campo("pagamentoCliente")?.value || "",
+    troco: campo("trocoCliente")?.value || "",
+    tipoEntrega,
+  };
+
+  localStorage.setItem("checkoutForm", JSON.stringify(formulario));
+  tocarSessao();
+}
+
+function carregarFormularioSalvo() {
+  const salvo = localStorage.getItem("checkoutForm");
+
+  if (!salvo) return;
+
+  try {
+    const formulario = JSON.parse(salvo);
+    const campo = (id) => document.getElementById(id);
+
+    if (campo("nomeCliente"))
+      campo("nomeCliente").value = formulario.nome || "";
+    if (campo("celularCliente"))
+      campo("celularCliente").value = formulario.celular || "";
+    if (campo("enderecoCliente"))
+      campo("enderecoCliente").value = formulario.endereco || "";
+    if (campo("referenciaCliente"))
+      campo("referenciaCliente").value = formulario.referencia || "";
+    if (campo("trocoCliente"))
+      campo("trocoCliente").value = formulario.troco || "";
+
+    if (formulario.pagamento && campo("pagamentoCliente")) {
+      campo("pagamentoCliente").value = formulario.pagamento;
+    }
+
+    alternarTipoEntrega(
+      formulario.tipoEntrega === "Retirada" ? "Retirada" : "Entrega",
+    );
+
+    if (formulario.bairro && formulario.tipoEntrega !== "Retirada") {
+      const selectBairro = campo("bairroCliente");
+
+      if (selectBairro) {
+        selectBairro.value = formulario.bairro;
+
+        const bairroObj = bairros.find((b) => b.nome === formulario.bairro);
+
+        if (bairroObj) {
+          taxaEntrega = bairroObj.valor;
+          bairroSelecionado = bairroObj.nome;
+        }
+      }
+    }
+
+    toggleTroco();
+  } catch (err) {
+    console.error("Erro ao restaurar formulário salvo:", err);
+  }
 }
 
 function renderizarMaisPedidos() {
@@ -691,6 +759,7 @@ function alternarTipoEntrega(tipo) {
     bairroSelecionado = "Retirada na loja";
   }
   atualizarCarrinho();
+  salvarFormulario();
 }
 
 // Inicialização
@@ -991,7 +1060,10 @@ function atualizarCarrinho() {
     );
   }
 
-  localStorage.setItem("carrinho", JSON.stringify(carrinho));
+  // Sempre que o carrinho é re-renderizado, ele também é persistido —
+  // garante que qualquer alteração (adicionar, remover, trocar
+  // quantidade) sobreviva a um reload/fechamento da página.
+  salvarCarrinho();
 }
 
 function removerItem(chave) {
@@ -1041,12 +1113,126 @@ function atualizarResumoPix() {
   document.getElementById("resumoPix").innerHTML = html;
 }
 
-function abrirModalPix() {
+/* ===================================
+   SALVAR / ATUALIZAR PEDIDO NO SUPABASE
+   Usada tanto para gravar o pedido cedo (assim que o
+   cliente abre o PIX, antes de pagar) quanto para
+   atualizá-lo quando ele finaliza. Isso garante que o
+   pedido apareça no painel admin mesmo que o cliente
+   pague e não volte a finalizar pelo WhatsApp.
+=================================== */
+
+async function salvarOuAtualizarPedido(status, pago) {
+  if (carrinho.length === 0) return null;
+
+  const nome = document.getElementById("nomeCliente").value.trim();
+  const celular = document.getElementById("celularCliente").value.trim();
+  const endereco = document.getElementById("enderecoCliente").value.trim();
+  const referencia = document.getElementById("referenciaCliente").value.trim();
+  const pagamento = document.getElementById("pagamentoCliente").value;
+
+  if (!nome || !celular) return null;
+
+  let total = 0;
+  carrinho.forEach((item) => {
+    total += item.preco * item.quantidade;
+  });
+  const totalFinal = total + taxaEntrega;
+
+  const ehPix = pagamento === "Pix";
+
+  const dadosPedido = {
+    cliente_nome: nome,
+    cliente_whatsapp: celular,
+    endereco,
+    referencia,
+    bairro: bairroSelecionado,
+    tipo_entrega: tipoEntrega,
+    forma_pagamento: pagamento,
+    subtotal: total,
+    taxa_entrega: taxaEntrega,
+    total: totalFinal,
+
+    status: ehPix ? "aguardando_pagamento" : "aguardando_entregador",
+
+    pago: false,
+
+    pix_confirmado: false,
+  };
+
+  let pendente = null;
+  try {
+    pendente = JSON.parse(localStorage.getItem("pedidoPendenteId") || "null");
+  } catch (e) {
+    pendente = null;
+  }
+
+  try {
+    let pedidoId;
+
+    if (pendente && pendente.id) {
+      const { error: erroUpdate } = await window.db
+        .from("pedidos")
+        .update(dadosPedido)
+        .eq("id", pendente.id);
+
+      if (erroUpdate) throw erroUpdate;
+
+      pedidoId = pendente.id;
+
+      // Itens podem ter mudado desde o último salvamento
+      // (ex: cliente voltou e editou o carrinho) — recria a lista.
+      await window.db.from("itens_pedido").delete().eq("pedido_id", pedidoId);
+    } else {
+      dadosPedido.codigo = "PED-" + Date.now();
+
+      const { data: pedidoCriado, error: erroInsert } = await window.db
+        .from("pedidos")
+        .insert(dadosPedido)
+        .select()
+        .single();
+
+      if (erroInsert) throw erroInsert;
+
+      pedidoId = pedidoCriado.id;
+
+      localStorage.setItem(
+        "pedidoPendenteId",
+        JSON.stringify({ id: pedidoId, codigo: dadosPedido.codigo }),
+      );
+    }
+
+    for (const item of carrinho) {
+      await window.db.from("itens_pedido").insert({
+        pedido_id: pedidoId,
+        produto_id: item.id,
+        produto_nome: item.nome,
+        preco: item.preco,
+        quantidade: item.quantidade,
+        observacao: item.observacao,
+        espetinho: item.espetinho,
+      });
+    }
+
+    return pedidoId;
+  } catch (err) {
+    console.error("Erro ao salvar/atualizar pedido:", err);
+    return null;
+  }
+}
+
+async function abrirModalPix() {
   atualizarResumoPix();
 
   document.getElementById("modalPix").classList.add("ativo");
 
   localStorage.setItem("pixPendente", "true");
+
+  salvarFormulario();
+
+  // Grava o pedido no banco AGORA, antes do pagamento, para que
+  // apareça no painel admin mesmo se o cliente pagar e sumir.
+  await salvarOuAtualizarPedido("aguardando_pagamento", false);
 }
 
 function fecharModalPix() {
@@ -1226,59 +1412,20 @@ document
     const telefone = configuracoes.whatsapp_numero;
     const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
 
-    async function salvarPedido() {
-      const pedido = {
-        codigo: "PED-" + Date.now(),
+    // Se veio de um PIX (pedido já foi gravado como "aguardando_pagamento"
+    // quando o modal PIX abriu), aqui apenas atualizamos o mesmo registro.
+    // Se não for PIX, cria o pedido agora (comportamento original).
+    const statusFinal =
+      pagamento === "Pix" ? "aguardando_pagamento" : "aguardando_entregador";
 
-        cliente_nome: nome,
+    const pedidoSalvo = await salvarOuAtualizarPedido(statusFinal, false);
 
-        cliente_whatsapp: celular,
-
-        endereco,
-
-        referencia,
-
-        bairro: bairroSelecionado,
-
-        tipo_entrega: tipoEntrega,
-
-        forma_pagamento: pagamento,
-
-        subtotal: total,
-
-        taxa_entrega: taxaEntrega,
-
-        total: totalFinal,
-
-        status: "novo",
-      };
-
-      const { data: pedidoCriado, error } = await window.db
-        .from("pedidos")
-        .insert(pedido)
-        .select()
-        .single();
-
-      for (const item of carrinho) {
-        await window.db.from("itens_pedido").insert({
-          pedido_id: pedidoCriado.id,
-
-          produto_id: item.id,
-
-          produto_nome: item.nome,
-
-          preco: item.preco,
-
-          quantidade: item.quantidade,
-
-          observacao: item.observacao,
-
-          espetinho: item.espetinho,
-        });
-      }
+    if (!pedidoSalvo) {
+      alert(
+        "Não foi possível registrar seu pedido no sistema. Verifique sua internet e tente novamente. Se o problema continuar, chame no WhatsApp diretamente.",
+      );
+      return;
     }
-
-    await salvarPedido();
 
     window.open(url, "_blank");
 
@@ -1286,6 +1433,8 @@ document
     pixConfirmado = false;
     localStorage.removeItem("carrinho");
     localStorage.removeItem("pixPendente");
+    localStorage.removeItem("pedidoPendenteId");
+    localStorage.removeItem("checkoutForm");
 
     carrinho = [];
     atualizarCarrinho();
@@ -1335,6 +1484,28 @@ document
 
 window.toggleTroco = toggleTroco;
 
+/* ===================================
+   AUTOSAVE DO FORMULÁRIO DE CHECKOUT
+   Garante que, se a página recarregar (ou o app for
+   fechado/reaberto), os dados digitados pelo cliente
+   não se percam.
+=================================== */
+
+[
+  "nomeCliente",
+  "celularCliente",
+  "enderecoCliente",
+  "referenciaCliente",
+  "trocoCliente",
+].forEach((id) => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener("input", salvarFormulario);
+});
+
+document
+  .getElementById("pagamentoCliente")
+  .addEventListener("change", salvarFormulario);
+
 document.getElementById("btnCarrinho").addEventListener("click", () => {
   document.getElementById("carrinho").classList.toggle("aberto");
 });
@@ -1370,6 +1541,7 @@ function carregarBairros() {
     }
 
     atualizarCarrinho();
+    salvarFormulario();
   });
 }
 
@@ -1390,25 +1562,90 @@ function carregarCarrinhoSalvo() {
 }
 
 /* ===================================
+   SESSÃO DO PEDIDO (validade de 3 horas)
+
+   Cada vez que salvamos carrinho ou formulário, também gravamos
+   "sessaoAtualizadaEm" com o horário atual. Ao abrir a página,
+   comparamos com agora: se já se passaram mais de 3h desde a
+   última atividade, descartamos tudo (carrinho, formulário, PIX
+   pendente) e o cliente começa do zero — evita reabrir, por
+   exemplo, um pedido de 2 dias atrás com preços desatualizados.
+   Dentro da janela de 3h, ele pode fechar o site, voltar depois
+   e continuar exatamente de onde parou.
+=================================== */
+
+const SESSAO_VALIDADE_MS = 3 * 60 * 60 * 1000; // 3 horas
+
+function tocarSessao() {
+  localStorage.setItem("sessaoAtualizadaEm", Date.now().toString());
+}
+
+function limparSessaoStorage() {
+  localStorage.removeItem("carrinho");
+  localStorage.removeItem("checkoutForm");
+  localStorage.removeItem("pixPendente");
+  localStorage.removeItem("pedidoPendenteId");
+  localStorage.removeItem("sessaoAtualizadaEm");
+}
+
+function limparSessaoSeExpirada() {
+  const ultimaAtividade = Number(
+    localStorage.getItem("sessaoAtualizadaEm") || 0,
+  );
+
+  // Sem marca de sessão (cliente novo, ou já limpo antes) — nada a fazer.
+  if (!ultimaAtividade) return;
+
+  if (Date.now() - ultimaAtividade > SESSAO_VALIDADE_MS) {
+    limparSessaoStorage();
+    console.log(
+      "Sessão anterior expirada (mais de 3h sem atividade) — carrinho reiniciado.",
+    );
+  }
+}
+
+// Salvamento de segurança: garante que carrinho e formulário fiquem
+// gravados mesmo se o cliente sair da página (trocar de app, fechar
+// aba, dar reload) no meio de uma ação que ainda não disparou o
+// autosave normal. "pagehide" é mais confiável que "beforeunload"
+// em navegadores mobile/PWA.
+window.addEventListener("pagehide", () => {
+  salvarCarrinho();
+  salvarFormulario();
+});
+
+/* ===================================
    INIT
 =================================== */
 
 async function init() {
+  // Primeiro de tudo: decide se a sessão salva ainda vale ou se
+  // já passou das 3h e deve ser descartada.
+  limparSessaoSeExpirada();
+
   await carregarDadosSupabase();
 
   aplicarConfiguracoesNaUI();
 
-  verificarPixPendente();
   carregarCarrinhoSalvo();
 
   renderizarProdutos(produtos);
   carregarBairros();
+
+  // Restaura o que o cliente já tinha digitado (nome, endereço,
+  // bairro, forma de pagamento...) antes de qualquer reload/queda.
+  carregarFormularioSalvo();
 
   atualizarCarrinho();
   atualizarStatusLoja();
 
   renderizarMaisPedidos();
   toggleTroco();
+
+  // Por último: se havia um PIX pendente, reabre o modal
+  // (o pedido correspondente já foi salvo no Supabase quando
+  // o modal PIX foi aberto pela primeira vez).
+  verificarPixPendente();
 }
 
 init();
