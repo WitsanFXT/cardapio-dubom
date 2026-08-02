@@ -1071,6 +1071,7 @@ function removerItem(chave) {
 
   atualizarCarrinho();
   salvarCarrinho();
+  tocarSessao();
 }
 
 window.removerItem = removerItem;
@@ -1121,6 +1122,58 @@ function atualizarResumoPix() {
    pedido apareça no painel admin mesmo que o cliente
    pague e não volte a finalizar pelo WhatsApp.
 =================================== */
+
+async function restaurarPedidoPendente() {
+  try {
+    const pendente = JSON.parse(
+      localStorage.getItem("pedidoPendenteId") || "null",
+    );
+
+    if (!pendente?.id) return false;
+
+    const { data: pedido, error: erroPedido } = await window.db
+      .from("pedidos")
+      .select("*")
+      .eq("id", pendente.id)
+      .single();
+
+    if (erroPedido || !pedido) {
+      return false;
+    }
+
+    const { data: itens, error: erroItens } = await window.db
+      .from("itens_pedido")
+      .select("*")
+      .eq("pedido_id", pedido.id);
+
+    if (erroItens) {
+      return false;
+    }
+
+    carrinho = itens.map((item) => ({
+      id: item.produto_id,
+      nome: item.produto_nome,
+      preco: Number(item.preco),
+      quantidade: item.quantidade,
+      observacao: item.observacao || "",
+      espetinho: item.espetinho || "",
+      chave: crypto.randomUUID(),
+    }));
+
+    bairroSelecionado = pedido.bairro || "";
+    taxaEntrega = Number(pedido.taxa_entrega || 0);
+
+    atualizarCarrinho();
+
+    console.log("Pedido restaurado:", pedido.codigo);
+
+    return true;
+  } catch (err) {
+    console.error("Erro restaurando pedido:", err);
+
+    return false;
+  }
+}
 
 async function salvarOuAtualizarPedido(status, pago) {
   if (carrinho.length === 0) return null;
@@ -1561,6 +1614,18 @@ function carregarCarrinhoSalvo() {
   }
 }
 
+function limparCarrinho() {
+  carrinho = [];
+
+  atualizarCarrinho();
+
+  salvarCarrinho();
+
+  tocarSessao();
+}
+
+window.limparCarrinho = limparCarrinho;
+
 /* ===================================
    SESSÃO DO PEDIDO (validade de 3 horas)
 
@@ -1574,7 +1639,7 @@ function carregarCarrinhoSalvo() {
    e continuar exatamente de onde parou.
 =================================== */
 
-const SESSAO_VALIDADE_MS = 3 * 60 * 60 * 1000; // 3 horas
+const SESSAO_VALIDADE_MS = 30 * 24 * 60 * 60 * 1000;
 
 function tocarSessao() {
   localStorage.setItem("sessaoAtualizadaEm", Date.now().toString());
@@ -1614,6 +1679,13 @@ window.addEventListener("pagehide", () => {
   salvarFormulario();
 });
 
+window.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    salvarCarrinho();
+    salvarFormulario();
+  }
+});
+
 /* ===================================
    INIT
 =================================== */
@@ -1627,7 +1699,11 @@ async function init() {
 
   aplicarConfiguracoesNaUI();
 
-  carregarCarrinhoSalvo();
+  const pedidoRestaurado = await restaurarPedidoPendente();
+
+  if (!pedidoRestaurado) {
+    carregarCarrinhoSalvo();
+  }
 
   renderizarProdutos(produtos);
   carregarBairros();
